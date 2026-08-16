@@ -225,28 +225,35 @@
             .header-agi-metrics {
                 margin-left: 0;
                 width: 100%;
-                justify-content: space-around;
-                flex-wrap: nowrap;
-                gap: 8px;
+                display: flex;
+                justify-content: center;
             }
 
-            .agi-metric-item {
+            .agi-metrics {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr !important;
+                gap: 5px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .agi-metric {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                font-size: 12px;
-                min-width: fit-content;
+                gap: 2px;
             }
 
             .agi-metric-label {
-                font-size: 10px;
+                font-size: 9px;
                 color: var(--color-text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
 
             .agi-metric-value {
-                font-size: 13px;
+                font-size: 11px;
                 font-weight: bold;
-                color: var(--color-primary);
+                color: #BF8F60;
             }
         }
 
