@@ -729,14 +729,15 @@
                 `;
 
                 project.items.forEach(item => {
+                    const progressPercent = Math.min(99, item.progress).toFixed(1);
                     html += `
                         <div class="project-item">
                             <div class="project-name">
                                 <span class="project-title">${item.name}</span>
-                                <span class="project-percent">${item.progress}%</span>
+                                <span class="project-percent">${progressPercent}%</span>
                             </div>
                             <div class="project-bar">
-                                <div class="project-progress" style="width: ${item.progress}%"></div>
+                                <div class="project-progress" style="width: ${progressPercent}%"></div>
                             </div>
                         </div>
                     `;

@@ -12,6 +12,7 @@ from datetime import datetime
 import re
 
 ACTIVITY_LOG_FILE = './data/activity_log.json'
+PROJECTS_FILE = './data/projects.json'
 
 # ==================== 1️⃣ YouTube 드롭쉬핑 분석 ====================
 def collect_youtube_dropshipping():
@@ -206,6 +207,26 @@ def add_new_activity():
 
         except Exception as e:
             print(f"⚠️ {task_name} 수집 실패: {e}")
+
+    # 📊 프로젝트 진행도 업데이트
+    try:
+        with open(PROJECTS_FILE, 'r', encoding='utf-8') as f:
+            projects_data = json.load(f)
+
+        # 모든 프로젝트 진행도 자동 증가 (최대 99%)
+        for project_group in projects_data.get("projects", []):
+            for item in project_group.get("items", []):
+                if item["progress"] < 99:
+                    item["progress"] = min(99, item["progress"] + 0.5)
+
+        projects_data["lastUpdate"] = datetime.now().isoformat() + 'Z'
+
+        with open(PROJECTS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(projects_data, f, ensure_ascii=False, indent=2)
+
+        print(f"✅ 프로젝트 진행도 업데이트 완료")
+    except Exception as e:
+        print(f"⚠️ 프로젝트 진행도 업데이트 실패: {e}")
 
     # 최대 20개까지만 유지
     if len(data['activities']) > 20:
