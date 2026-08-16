@@ -1,0 +1,57 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "category": "🤖 JARVIS 진화",
+      "items": [
+        {
+          "name": "Phase 1: MoE 라우터",
+          "progress": 95
+        },
+        {
+          "name": "Phase 2: 신경심볼릭 AI",
+          "progress": 90
+        },
+        {
+          "name": "Phase 3: 양자 알고리즘",
+          "progress": 85
+        },
+        {
+          "name": "Phase 4: 메타진화",
+          "progress": 75
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "💼 사업준비",
+      "items": [
+        {
+          "name": "다이소 드롭쉬핑 (기본)",
+          "progress": 100
+        },
+        {
+          "name": "다이소 마케팅 고도화",
+          "progress": 45
+        },
+        {
+          "name": "다이소 YouTube 정보 수집",
+          "progress": 35
+        },
+        {
+          "name": "의료 AI SaaS",
+          "progress": 75
+        },
+        {
+          "name": "Satellite AI",
+          "progress": 60
+        },
+        {
+          "name": "자율에이전트 SaaS",
+          "progress": 55
+        }
+      ]
+    }
+  ],
+  "lastUpdate": "2026-08-16T12:35:00Z"
+}
