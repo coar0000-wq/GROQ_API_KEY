@@ -167,9 +167,10 @@
 
         .hero-image img {
             width: 100%;
-            height: auto;
+            height: 100%;
             will-change: transform, opacity;
             max-width: 100%;
+            object-fit: contain;
         }
 
         /* ==================== 반응형 디자인 ==================== */
@@ -1021,10 +1022,11 @@
                 const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
                 const scrollPercent = scrollY / maxScroll;
 
-                // 1️⃣ 스크롤에 따라 이미지 인덱스 변경 (1-12)
-                const imageIndex = Math.floor(scrollPercent * 11) + 1;
+                // 1️⃣ 스크롤에 따라 이미지 인덱스 변경 (1-6, 8-12 / 7번 제외)
+                const baseIndex = Math.floor(scrollPercent * 11) + 1;
+                const imageIndex = baseIndex < 7 ? baseIndex : baseIndex + 1;
 
-                if (imageIndex !== currentImageIndex && imageIndex >= 1 && imageIndex <= 12) {
+                if (imageIndex !== currentImageIndex && imageIndex >= 1 && imageIndex <= 12 && imageIndex !== 7) {
                     currentImageIndex = imageIndex;
                     dogImage.src = `./images/${imageIndex}.png`;
 
