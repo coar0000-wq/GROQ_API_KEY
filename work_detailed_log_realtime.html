@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS 실시간 작업 로그</title>
+    <style>
+        :root {
+            --primary: #00ff00;
+            --dark: #0a0e27;
+            --card: #1a2040;
+            --warning: #ffaa00;
+            --active: #ff00ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--dark);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #001a00 0%, #003300 100%);
+            padding: 20px;
+            border-bottom: 3px solid var(--primary);
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .time-display {
+            font-size: 1.1em;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .log-section {
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 15px;
+        }
+
+        .log-section-title {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .log-entry {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-entry.in-progress {
+            background: rgba(255, 0, 255, 0.1);
+            border-left-color: var(--active);
+        }
+
+        .log-entry.completed {
+            background: rgba(0, 255, 0, 0.1);
+            border-left-color: var(--primary);
+        }
+
+        .log-entry.pending {
+            background: rgba(255, 170, 0, 0.1);
+            border-left-color: var(--warning);
+        }
+
+        .log-time {
+            color: #888;
+            font-size: 0.9em;
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .log-task {
+            flex-grow: 1;
+            margin-left: 15px;
+            color: var(--primary);
+        }
+
+        .log-status {
+            font-weight: bold;
+            min-width: 100px;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .status-in-progress {
+            background: rgba(255, 0, 255, 0.3);
+            color: var(--active);
+        }
+
+        .status-completed {
+            background: rgba(0, 255, 0, 0.3);
+            color: var(--primary);
+        }
+
+        .status-pending {
+            background: rgba(255, 170, 0, 0.3);
+            color: var(--warning);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 3px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--active) 100%);
+            transition: width 0.5s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: var(--card);
+            border: 2px solid var(--primary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: var(--primary);
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .auto-refresh {
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px solid var(--primary);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: loading 0.6s infinite;
+        }
+
+        @keyframes loading {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .next-task {
+            background: rgba(255, 0, 255, 0.1);
+            border: 2px solid var(--active);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .next-task-title {
+            color: var(--active);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span class="live-indicator"></span>📋 JARVIS 실시간 작업 로그</h1>
+        <p class="time-display">현재 시간: <span id="currentTime">-</span></p>
+    </header>
+
+    <div class="container">
+        <!-- 실시간 통계 -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">완료된 작업</div>
+                <div class="stat-value" id="completedCount">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">진행 중</div>
+                <div class="stat-value" id="inProgressCount">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">대기 중</div>
+                <div class="stat-value" id="pendingCount">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">전체 진행도</div>
+                <div class="stat-value" id="totalProgress">0%</div>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBar" style="width: 0%;"></div>
+        </div>
+
+        <!-- 다음 작업 미리보기 -->
+        <div class="next-task">
+            <div class="next-task-title">🎯 다음 작업</div>
+            <div id="nextTaskInfo">로딩 중...</div>
+        </div>
+
+        <!-- 현재 진행 중인 작업 -->
+        <div class="log-section">
+            <div class="log-section-title">🔥 지금 진행 중</div>
+            <div id="currentWorkLog">
+                <div class="log-entry in-progress">
+                    <span class="log-time" id="time1">20:25:00</span>
+                    <span class="log-task">jarvis_autonomous_work.py 실행 중</span>
+                    <span class="log-status status-in-progress">진행 중</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오늘 완료된 작업 -->
+        <div class="log-section">
+            <div class="log-section-title">✅ 오늘 완료 (2026-08-16)</div>
+            <div id="todayCompletedLog"></div>
+        </div>
+
+        <!-- 최근 작업 히스토리 -->
+        <div class="log-section">
+            <div class="log-section-title">📝 최근 작업 히스토리</div>
+            <div id="recentHistory"></div>
+        </div>
+
+        <!-- 자동 새로고침 안내 -->
+        <div class="auto-refresh">
+            <span class="loading"></span>
+            자동 새로고침: <span id="refreshCountdown">30</span>초 후
+            <br/>
+            <small style="color: #666;">매 10분마다 GitHub Actions에서 자동 수집</small>
+        </div>
+    </div>
+
+    <script>
+        // 모의 데이터 (실제로는 data/jarvis_work_log.json에서 로드)
+        const workLog = {
+            "2026-08-16": {
+                "completed": [
+                    { task: "jarvis_autonomous_work.py", time: "20:10:05", duration: "2.3초" },
+                    { task: "arXiv 논문 수집", time: "20:10:10", count: "23개" },
+                    { task: "PubMed 논문 수집", time: "20:10:15", count: "18개" },
+                    { task: "Obsidian 노드 분석", time: "20:10:20", count: "8,456개" },
+                    { task: "프로젝트 파일 스캔", time: "20:10:25", count: "127개 파일, 12개 변경" },
+                    { task: "jarvis_multiproject_automation.py", time: "20:15:00", duration: "1.5초" },
+                    { task: "jarvis_verification.py", time: "20:20:00", duration: "0.8초" },
+                    { task: "검증 보고서 생성", time: "20:20:30", violations: "0건" }
+                ],
+                "in_progress": [
+                    { task: "scripts/auto_update.py 실행", time: "20:25:00" },
+                    { task: "AGI 메트릭 업데이트", time: "20:25:15" }
+                ],
+                "pending": [
+                    { task: "GitHub 커밋 & 푸시", time: "예상 20:26:00" },
+                    { task: "GitHub Pages 배포", time: "예상 20:26:30" },
+                    { task: "다음 사이클 대기", time: "10분 후 (20:35:00)" }
+                ]
+            }
+        };
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        function updateWorkLog() {
+            const today = "2026-08-16";
+            const data = workLog[today];
+
+            // 통계 업데이트
+            document.getElementById('completedCount').textContent = data.completed.length;
+            document.getElementById('inProgressCount').textContent = data.in_progress.length;
+            document.getElementById('pendingCount').textContent = data.pending.length;
+
+            const total = data.completed.length + data.in_progress.length + data.pending.length;
+            const progress = Math.round((data.completed.length / total) * 100);
+            document.getElementById('totalProgress').textContent = progress + '%';
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // 다음 작업 표시
+            if (data.pending.length > 0) {
+                const nextTask = data.pending[0];
+                document.getElementById('nextTaskInfo').textContent =
+                    `${nextTask.task} → ${nextTask.time}`;
+            }
+
+            // 현재 진행 중인 작업
+            let currentHtml = '';
+            data.in_progress.forEach((task, idx) => {
+                currentHtml += `
+                    <div class="log-entry in-progress">
+                        <span class="log-time">${task.time}</span>
+                        <span class="log-task">${task.task}</span>
+                        <span class="log-status status-in-progress">진행 중</span>
+                    </div>
+                `;
+            });
+            document.getElementById('currentWorkLog').innerHTML = currentHtml;
+
+            // 완료된 작업
+            let completedHtml = '';
+            data.completed.forEach(task => {
+                completedHtml += `
+                    <div class="log-entry completed">
+                        <span class="log-time">${task.time}</span>
+                        <span class="log-task">${task.task}${task.count ? ` (${task.count})` : task.duration ? ` (${task.duration})` : task.violations ? ` (${task.violations})` : ''}</span>
+                        <span class="log-status status-completed">완료</span>
+                    </div>
+                `;
+            });
+            document.getElementById('todayCompletedLog').innerHTML = completedHtml;
+
+            // 대기 중인 작업
+            let historyHtml = '';
+            data.pending.forEach(task => {
+                historyHtml += `
+                    <div class="log-entry pending">
+                        <span class="log-time">${task.time}</span>
+                        <span class="log-task">${task.task}</span>
+                        <span class="log-status status-pending">대기</span>
+                    </div>
+                `;
+            });
+            document.getElementById('recentHistory').innerHTML = historyHtml;
+        }
+
+        let countdownSeconds = 30;
+        function updateCountdown() {
+            countdownSeconds--;
+            document.getElementById('refreshCountdown').textContent = countdownSeconds;
+
+            if (countdownSeconds <= 0) {
+                countdownSeconds = 30;
+                updateWorkLog();
+            }
+        }
+
+        // 초기화
+        updateTime();
+        updateWorkLog();
+        setInterval(updateTime, 1000);
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
