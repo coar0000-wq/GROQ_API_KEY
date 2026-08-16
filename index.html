@@ -511,9 +511,10 @@
             let html = '';
             const rightDetails = document.getElementById('task-details-right');
 
+            // 실제 데이터만 표시 (거짓 데이터 제거)
             if (tasks && tasks.length > 0) {
                 tasks.forEach(task => {
-                    const timestamp = task.timestamp ? new Date(task.timestamp).toLocaleString('ko-KR') : new Date().toLocaleString('ko-KR');
+                    const timestamp = task.timestamp ? new Date(task.timestamp).toLocaleString('ko-KR') : '';
                     html += `<div class="status-item">
                         <span class="status-dot"></span>
                         <div style="display: flex; justify-content: space-between; width: 100%;">
@@ -522,32 +523,9 @@
                         </div>
                     </div>`;
                 });
-            } else {
-                // 기본 데이터
-                const now = new Date();
-                const tasks_default = [
-                    { name: 'YouTube Dropshipping 분석', offset: 0 },
-                    { name: 'Google 검색 데이터 수집', offset: -1 },
-                    { name: '신경망 훈련', offset: -2 },
-                    { name: '성능 벤치마킹', offset: -3 },
-                    { name: 'Obsidian 동기화', offset: -4 },
-                    { name: 'GitHub Actions', offset: -5 }
-                ];
-
-                tasks_default.forEach(t => {
-                    const time = new Date(now.getTime() + t.offset * 60000);
-                    const timestamp = time.toLocaleString('ko-KR');
-                    html += `<div class="status-item">
-                        <span class="status-dot"></span>
-                        <div style="display: flex; justify-content: space-between; width: 100%;">
-                            <span>${t.name}</span>
-                            <span style="font-size: 11px; color: #666;">${timestamp}</span>
-                        </div>
-                    </div>`;
-                });
             }
 
-            if (rightDetails) rightDetails.innerHTML = html;
+            if (rightDetails) rightDetails.innerHTML = html || '<div style="color: #666; font-size: 12px; padding: 10px;">데이터 로딩 중...</div>';
         }
 
         function displayTasks(tasks) {
