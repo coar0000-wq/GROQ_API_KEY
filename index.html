@@ -20,13 +20,28 @@
             width: 100%;
         }
 
-        /* 왼쪽 섹션: 기존 페이지 (50%) */
+        /* 왼쪽 섹션: 이미지 영역 (50%) */
         .left-panel {
             flex: 0 0 50%;
-            padding: 20px;
-            overflow-y: auto;
+            padding: 0;
+            overflow: hidden;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-right: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .left-panel-placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            font-size: 18px;
         }
 
         /* 오른쪽 섹션: 새 패널 (50%) */
@@ -385,47 +400,10 @@
 </head>
 <body>
     <div class="main-wrapper">
-        <!-- 왼쪽 패널: 기존 기능 유지 -->
+        <!-- 왼쪽 패널: 이미지 영역 -->
         <div class="left-panel">
-            <div class="container">
-                <header>
-                    <h1>🤖 JARVIS LUNA</h1>
-                    <p>AGI 진화 실시간 대시보드</p>
-                </header>
-
-                <div class="metrics">
-                    <div class="metric">
-                        <div class="metric-label">AGI 레벨</div>
-                        <div class="metric-value">3.0</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-label">진화도</div>
-                        <div class="metric-value">50%</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-label">정확도</div>
-                        <div class="metric-value">99.8%</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-label">가용성</div>
-                        <div class="metric-value">99.9%</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2>📋 작업 상세 로그</h2>
-                    <div id="task-details">로딩 중...</div>
-                </div>
-
-                <div class="section">
-                    <h2>👥 팀원 실시간 상태</h2>
-                    <div id="team-status">로딩 중...</div>
-                </div>
-
-                <div class="section">
-                    <h2>📊 프로젝트 진행도</h2>
-                    <div id="project-progress">로딩 중...</div>
-                </div>
+            <div class="left-panel-placeholder">
+                이미지 추가 예정
             </div>
         </div>
 
@@ -557,41 +535,16 @@
                     <div style="color: #999; font-size: 12px; margin-top: 5px;">${task.duration || ''}</div>
                 </div>`;
             });
-            const leftDetails = document.getElementById('task-details');
             const rightDetails = document.getElementById('task-details-right');
-            if (leftDetails) leftDetails.innerHTML = html || '<p style="color: #999;">작업 데이터 없음</p>';
+            // 오른쪽에만 표시
         }
 
         function displayTeam(members) {
-            let html = '';
-            members.forEach(member => {
-                html += `<div class="team-member">
-                    <div>
-                        <strong>${member.name}</strong>
-                        <div class="role">${member.role}</div>
-                    </div>
-                    <div>${member.status}</div>
-                </div>`;
-            });
-            const teamStatus = document.getElementById('team-status');
-            if (teamStatus) teamStatus.innerHTML = html || '<p style="color: #999;">팀원 데이터 없음</p>';
+            // 데이터 로드만 함 (오른쪽 패널에서 표시)
         }
 
         function displayProjects(projects) {
-            let html = '';
-            projects.forEach(proj => {
-                html += `<div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <strong>${proj.name || proj.category}</strong>
-                        <span style="color: #667eea; font-weight: bold;">${proj.progress || 0}%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress" style="--progress: ${proj.progress || 0}%"></div>
-                    </div>
-                </div>`;
-            });
-            const projectProgress = document.getElementById('project-progress');
-            if (projectProgress) projectProgress.innerHTML = html || '<p style="color: #999;">프로젝트 데이터 없음</p>';
+            // 데이터 로드만 함 (오른쪽 패널에서 표시)
         }
 
         // 페이지 로드 시 데이터 불러오기
