@@ -514,10 +514,20 @@
             // 실제 데이터만 표시 (거짓 데이터 제거)
             if (tasks && tasks.length > 0) {
                 tasks.forEach(task => {
-                    const timestamp = task.timestamp ? new Date(task.timestamp).toLocaleString('ko-KR') : '';
+                    let timestamp = '';
+                    if (task.timestamp) {
+                        const date = new Date(task.timestamp);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const hours = String(date.getHours()).padStart(2, '0');
+                        const minutes = String(date.getMinutes()).padStart(2, '0');
+                        const seconds = String(date.getSeconds()).padStart(2, '0');
+                        timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                    }
                     html += `<div class="status-item">
                         <span class="status-dot"></span>
-                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; flex-direction: column; gap: 4px;">
                             <span>${task.task || task.name || '작업'}</span>
                             <span style="font-size: 11px; color: #666;">${timestamp}</span>
                         </div>
