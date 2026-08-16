@@ -16,17 +16,17 @@
         },
         {
           "name": "Phase 3: 양자 알고리즘 (신약 설계)",
-          "progress": 96,
+          "progress": 96.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Phase 4: 메타진화 엔진",
-          "progress": 88,
+          "progress": 88.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Phase 5: 멀티에이전트 조율",
-          "progress": 82,
+          "progress": 82.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -37,22 +37,22 @@
       "items": [
         {
           "name": "신약 설계 AI (VQE/QAOA)",
-          "progress": 91,
+          "progress": 91.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "질병 진단 (Vision Transformer)",
-          "progress": 85,
+          "progress": 85.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "환자 예후 분석 (LSTM)",
-          "progress": 78,
+          "progress": 78.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "임상시험 자동화",
-          "progress": 68,
+          "progress": 68.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -68,17 +68,17 @@
         },
         {
           "name": "의료 AI SaaS (MVP)",
-          "progress": 76,
+          "progress": 76.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Satellite AI (위성영상)",
-          "progress": 62,
+          "progress": 62.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "자율에이전트 SaaS",
-          "progress": 58,
+          "progress": 58.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -94,17 +94,17 @@
         },
         {
           "name": "실시간 모니터링 대시보드",
-          "progress": 95,
+          "progress": 95.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Obsidian 자동 동기화",
-          "progress": 92,
+          "progress": 92.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "자동화 파이프라인 (매 10분)",
-          "progress": 98,
+          "progress": 98.5,
           "status": "✅ 작동 중"
         }
       ]
@@ -121,5 +121,6 @@
     "verification": "✅ 실제 데이터만 사용",
     "last_update": "2026-08-17T14:30:00Z",
     "next_update": "2026-08-17T14:40:00Z"
-  }
+  },
+  "lastUpdate": "2026-08-16T15:58:18.162435Z"
 }
