@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-08-16T19:04:41.382475",
+  "timestamp": "2026-08-16T19:28:30.646233",
   "tasks": [
     {
       "source": "arXiv",
       "papers_collected": 20,
-      "timestamp": "2026-08-16T19:04:42.029657",
+      "timestamp": "2026-08-16T19:28:30.886941",
       "status": "✅ 완료"
     },
     {
       "source": "PubMed",
       "papers_collected": 15,
-      "timestamp": "2026-08-16T19:04:42.382047",
+      "timestamp": "2026-08-16T19:28:31.185811",
       "status": "✅ 완료"
     },
     {
@@ -44,13 +44,13 @@
           "status": "accelerating"
         }
       },
-      "timestamp": "2026-08-16T19:04:42.382842",
+      "timestamp": "2026-08-16T19:28:31.186676",
       "status": "✅ 수집 완료"
     },
     {
       "metrics_updated": true,
       "file": "data/agi_metrics.json",
-      "timestamp": "2026-08-16T19:04:42.383107"
+      "timestamp": "2026-08-16T19:28:31.186943"
     }
   ],
   "summary": {

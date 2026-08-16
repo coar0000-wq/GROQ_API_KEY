@@ -21,12 +21,12 @@
         },
         {
           "name": "Phase 4: 메타진화 엔진",
-          "progress": 93.0,
+          "progress": 93.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Phase 5: 멀티에이전트 조율",
-          "progress": 87.0,
+          "progress": 87.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -37,22 +37,22 @@
       "items": [
         {
           "name": "신약 설계 AI (VQE/QAOA)",
-          "progress": 96.0,
+          "progress": 96.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "질병 진단 (Vision Transformer)",
-          "progress": 90.0,
+          "progress": 90.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "환자 예후 분석 (LSTM)",
-          "progress": 83.0,
+          "progress": 83.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "임상시험 자동화",
-          "progress": 73.0,
+          "progress": 73.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -68,17 +68,17 @@
         },
         {
           "name": "의료 AI SaaS (MVP)",
-          "progress": 81.0,
+          "progress": 81.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Satellite AI (위성영상)",
-          "progress": 67.0,
+          "progress": 67.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "자율에이전트 SaaS",
-          "progress": 63.0,
+          "progress": 63.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -99,7 +99,7 @@
         },
         {
           "name": "Obsidian 자동 동기화",
-          "progress": 97.0,
+          "progress": 97.5,
           "status": "🟢 진행 중"
         },
         {
@@ -122,5 +122,5 @@
     "last_update": "2026-08-17T14:30:00Z",
     "next_update": "2026-08-17T14:40:00Z"
   },
-  "lastUpdate": "2026-08-16T19:04:42.455968Z"
+  "lastUpdate": "2026-08-16T19:28:31.259398Z"
 }
