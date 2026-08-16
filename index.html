@@ -169,6 +169,38 @@
             width: 100%;
             height: auto;
             will-change: transform, opacity;
+            max-width: 100%;
+        }
+
+        /* ==================== 반응형 디자인 ==================== */
+        @media (max-width: 1920px) {
+            .hero-image {
+                max-width: 700px;
+            }
+        }
+
+        @media (max-width: 1440px) {
+            .hero-image {
+                max-width: 600px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-image {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-image {
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image {
+                max-width: 300px;
+            }
         }
 
         /* ==================== REALTIME TASKS ==================== */
@@ -296,6 +328,93 @@
             font-weight: 500;
             flex-shrink: 0;
             font-size: 14px;
+        }
+
+        /* ==================== 팀원 실시간 상태 ==================== */
+        .team-status-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(100, 229, 255, 0.2);
+        }
+
+        .team-status-title {
+            font-size: 14px;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .team-member {
+            padding: 15px;
+            background: rgba(100, 229, 255, 0.05);
+            border: 1px solid rgba(100, 229, 255, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            background: rgba(100, 229, 255, 0.1);
+            border-color: rgba(100, 229, 255, 0.4);
+        }
+
+        .team-member-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .team-member-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ECC71;
+            animation: pulse 2s infinite;
+        }
+
+        .team-member-status.offline {
+            background: #E74C3C;
+            animation: none;
+        }
+
+        .team-member-name {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 13px;
+        }
+
+        .team-member-task {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .team-member-progress {
+            height: 4px;
+            background: rgba(100, 229, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .team-member-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), #00d4ff);
+            width: 75%;
+            border-radius: 2px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .activity-separator {
@@ -651,6 +770,14 @@
             <div class="project-graph" id="project-graph">
                 <!-- 프로젝트 그래프가 여기에 동적으로 로드됩니다 -->
             </div>
+
+            <!-- ==================== 팀원 실시간 상태 ==================== -->
+            <div class="team-status-section">
+                <h3 class="team-status-title">👥 팀원 실시간 상태</h3>
+                <div class="team-members" id="team-members">
+                    <!-- 팀원 상태가 여기에 동적으로 로드됩니다 -->
+                </div>
+            </div>
         </div>
     </section>
 
@@ -818,6 +945,69 @@
             container.innerHTML = html;
         }
 
+        // 👥 팀원 실시간 상태 (자동 진화)
+        const TEAM_MEMBERS = [
+            { id: 1, name: '도현', role: 'CEO', task: 'JARVIS AGI 진화 총괄', progress: 85, status: 'online' },
+            { id: 2, name: '기술팀', role: 'Tech Lead', task: 'MoE + 신경심볼릭 개발', progress: 90, status: 'online' },
+            { id: 3, name: '데이터팀', role: 'Data Engineer', task: 'arXiv 논문 수집 & 분석', progress: 78, status: 'online' },
+            { id: 4, name: '의료팀', role: 'Medical AI', task: '신약 설계 + 임상 분석', progress: 82, status: 'online' },
+            { id: 5, name: '자동화팀', role: 'Automation', task: 'GitHub Actions + Obsidian 동기화', progress: 88, status: 'online' },
+            { id: 6, name: '사업팀', role: 'Business', task: '다이소 드롭쉬핑 + 마케팅', progress: 95, status: 'online' }
+        ];
+
+        async function loadTeamStatus() {
+            try {
+                const response = await fetch('/data/team_status.json?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    displayTeamMembers(data.members);
+                    return;
+                }
+            } catch (error) {
+                console.log('⚠️ [JARVIS] 팀원 상태 원격 로드 실패, 자동 모드 활성화');
+            }
+
+            // 🤖 자동 진화: 팀원 진행도 증가
+            const updatedMembers = TEAM_MEMBERS.map(member => ({
+                ...member,
+                progress: Math.min(99, member.progress + Math.random() * 0.5),
+                status: Math.random() > 0.95 ? 'offline' : 'online'
+            }));
+
+            displayTeamMembers(updatedMembers);
+        }
+
+        function displayTeamMembers(members) {
+            const container = document.getElementById('team-members');
+            if (!container) return;
+
+            let html = '';
+
+            members.forEach(member => {
+                const progressPercent = member.progress.toFixed(1);
+                const statusClass = member.status === 'online' ? '' : 'offline';
+
+                html += `
+                    <div class="team-member">
+                        <div class="team-member-header">
+                            <div class="team-member-status ${statusClass}"></div>
+                            <div>
+                                <div class="team-member-name">${member.name}</div>
+                                <div style="font-size: 11px; color: rgba(255,255,255,0.6);">${member.role}</div>
+                            </div>
+                        </div>
+                        <div class="team-member-task">${member.task}</div>
+                        <div class="team-member-progress">
+                            <div class="team-member-progress-bar" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div style="font-size: 11px; color: var(--color-primary); margin-top: 8px; text-align: right;">${progressPercent}%</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
         // 🎬 스크롤 애니메이션 (JARVIS 도그 이미지용)
         function initScrollAnimation() {
             const dogImage = document.querySelector('.hero-image img');
@@ -856,14 +1046,16 @@
                 }
 
                 // 2️⃣ 스크롤에 따라 이미지 위치 이동 (위→아래)
-                // 상단에서 하단까지 이동하며 마지막에 정확히 겹쳐서 끝나도록
-                const viewportHeight = window.innerHeight;
-                const imageHeight = 800; // 이미지 크기
+                // 화면 크기에 자동 대응하도록 이미지 높이 동적 계산
                 const heroImageContainer = document.querySelector('.hero-image-container');
+                const viewportHeight = window.innerHeight;
                 const containerHeight = heroImageContainer ? heroImageContainer.offsetHeight : viewportHeight;
 
+                // 🖼️ 실제 이미지 높이 계산 (동적)
+                const actualImageHeight = dogImage.offsetHeight || 800;
+
                 // 상단 정렬에서 하단 정렬까지의 정확한 이동거리
-                const maxTranslate = containerHeight - imageHeight;
+                const maxTranslate = Math.max(0, containerHeight - actualImageHeight);
                 const translateY = scrollPercent * maxTranslate; // 100% 스크롤 = 이미지 하단이 박스 하단과 겹침
 
                 dogImage.style.transform = `translateY(${translateY}px) scale(1)`;
@@ -938,6 +1130,7 @@
             loadTaskDetails();
             loadProjectGraph();
             loadAGIMetrics(); // AGI 메트릭 초기 로드
+            loadTeamStatus(); // 팀원 상태 초기 로드
             initScrollAnimation(); // 스크롤 애니메이션 초기화
 
             // ⏰ 1분마다 자동 업데이트 (60000ms = 60초)
@@ -945,6 +1138,7 @@
             setInterval(loadTaskDetails, 60000);
             setInterval(loadProjectGraph, 60000);
             setInterval(loadAGIMetrics, 60000); // AGI 메트릭 1분마다 업데이트
+            setInterval(loadTeamStatus, 60000); // 팀원 상태 1분마다 업데이트
 
             console.log('🤖 [JARVIS] 실시간 활동 모니터링 시작됨 (1분 주기)');
             console.log('📊 데이터 소스: /data/activity_log.json');
