@@ -1156,25 +1156,8 @@
             availability: 99.99
         };
 
-        async function loadAGIMetrics() {
-            try {
-                const response = await fetch('/data/agi_metrics.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    AGI_METRICS = data;
-                    updateAGIMetrics(AGI_METRICS);
-                    return;
-                }
-            } catch (error) {
-                console.log('⚠️ [JARVIS] 원격 메트릭 로드 실패, 자동 진화 모드 활성화');
-            }
-
-            // 🤖 자동 진화: 1분마다 자동 증가
-            AGI_METRICS.level = Math.min(3.0, AGI_METRICS.level + 0.0015);
-            AGI_METRICS.evolution = Math.min(100, AGI_METRICS.evolution + 0.15);
-            AGI_METRICS.accuracy = Math.min(99.95, AGI_METRICS.accuracy + 0.01);
-            AGI_METRICS.availability = Math.min(99.99, AGI_METRICS.availability + 0.001);
-
+        // 메트릭 로드 함수 - 단순화됨
+        function loadAGIMetrics() {
             updateAGIMetrics(AGI_METRICS);
         }
 
