@@ -959,48 +959,54 @@
             graphContainer.innerHTML = html;
         }
 
-        // 📋 작업 상세 로그 로드
+        // 📋 작업 상세 로그 로드 (실제 데이터만 - 거짓말 없음)
         async function loadTaskDetails() {
             try {
-                const response = await fetch('/data/activity_log.json?t=' + Date.now());
+                const response = await fetch('./data/jarvis_work_detailed_log.json?t=' + Date.now());
                 if (response.ok) {
                     const data = await response.json();
-                    displayTaskDetails(data.tasks || {});
-                    console.log('✅ [JARVIS] 작업 상세 로그 로드됨');
+                    displayTaskDetailsFromRealData(data);
+                    console.log('✅ [JARVIS] 실제 작업 상세 로그 로드됨');
                     return;
                 }
             } catch (error) {
-                console.log('⚠️ [JARVIS] 작업 상세 로그 로드 실패:', error);
+                console.log('⚠️ [JARVIS] 실제 데이터 로드 실패 - 데이터 없음 표시:', error);
             }
+            // 실제 데이터 없으면 "데이터 없음" 표시 (거짓 데이터 절대 금지)
+            displayNoData();
         }
 
-        function displayTaskDetails(tasks) {
+        function displayTaskDetailsFromRealData(data) {
             const container = document.getElementById('task-details-container');
             if (!container) return;
 
-            // 작업 순서 및 색상 정의
-            const taskConfig = [
-                { name: 'youtube', color: '#FF6B6B' },   // 빨강
-                { name: 'arxiv', color: '#FFA500' },     // 주황
-                { name: 'jarvis', color: '#64E5FF' },    // 파랑
-                { name: 'obsidian', color: '#9B59B6' },  // 보라
-                { name: 'medical', color: '#2ECC71' }    // 초록
-            ];
             let html = '';
+            const completed = data.completed_today || [];
 
-            taskConfig.forEach(config => {
-                if (tasks[config.name]) {
-                    const task = tasks[config.name];
-                    html += `
-                        <div class="task-detail-item" style="border-left-color: ${config.color}">
-                            <div class="task-detail-title">${task.title}</div>
-                            <div class="task-detail-content">${task.details}</div>
-                        </div>
-                    `;
-                }
+            if (completed.length === 0) {
+                container.innerHTML = '<div style="color: #888; padding: 20px; text-align: center;">⚠️ 실제 데이터 없음</div>';
+                return;
+            }
+
+            // 실제 완료된 작업만 표시
+            completed.slice(0, 5).forEach((task, idx) => {
+                const colors = ['#FF6B6B', '#FFA500', '#64E5FF', '#9B59B6', '#2ECC71'];
+                html += `
+                    <div class="task-detail-item" style="border-left-color: ${colors[idx % colors.length]}">
+                        <div class="task-detail-title">${task.task}</div>
+                        <div class="task-detail-content">${task.start_time || '-'} → ${task.end_time || '-'} (${task.duration || '-'})</div>
+                    </div>
+                `;
             });
 
             container.innerHTML = html;
+        }
+
+        function displayNoData() {
+            const container = document.getElementById('task-details-container');
+            if (container) {
+                container.innerHTML = '<div style="color: #ff6b6b; padding: 20px; text-align: center;">⚠️ 실제 데이터 없음 - 거짓말 하지 않음</div>';
+            }
         }
 
         // 👥 팀원 실시간 상태 (자동 진화)
