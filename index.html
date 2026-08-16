@@ -523,9 +523,11 @@
                         </div>
                     </div>`;
                 });
+            } else {
+                html = '<div style="color: #888; font-size: 12px; padding: 10px; text-align: center;">작업 로그가 없습니다.</div>';
             }
 
-            if (rightDetails) rightDetails.innerHTML = html || '<div style="color: #666; font-size: 12px; padding: 10px;">데이터 로딩 중...</div>';
+            if (rightDetails) rightDetails.innerHTML = html;
         }
 
         function displayTasks(tasks) {
