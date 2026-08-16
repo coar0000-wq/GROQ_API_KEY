@@ -70,24 +70,28 @@
     </div>
 
     <script>
+        // 데이터 로드 및 표시
         async function loadData() {
             try {
+                // 작업 로그
                 const workRes = await fetch('./data/jarvis_work_detailed_log.json?t=' + Date.now());
                 if (workRes.ok) {
                     const workData = await workRes.json();
                     displayTasks(workData.completed_today || []);
                 }
-            } catch (e) { console.log('작업 로드 실패'); }
+            } catch (e) { console.log('작업 로그 로드 실패'); }
 
             try {
+                // 팀원 상태
                 const teamRes = await fetch('./data/team_status.json?t=' + Date.now());
                 if (teamRes.ok) {
                     const teamData = await teamRes.json();
                     displayTeam(teamData.team_members || []);
                 }
-            } catch (e) { console.log('팀원 로드 실패'); }
+            } catch (e) { console.log('팀원 상태 로드 실패'); }
 
             try {
+                // 프로젝트
                 const projRes = await fetch('./data/projects.json?t=' + Date.now());
                 if (projRes.ok) {
                     const projData = await projRes.json();
@@ -99,27 +103,46 @@
         function displayTasks(tasks) {
             let html = '';
             tasks.forEach(task => {
-                html += `<div class="task-item"><span class="status completed">${task.status || '✅ 완료'}</span><strong>${task.task}</strong><div style="color: #999; font-size: 12px; margin-top: 5px;">${task.duration || ''}</div></div>`;
+                html += `<div class="task-item">
+                    <span class="status completed">${task.status || '✅ 완료'}</span>
+                    <strong>${task.task}</strong>
+                    <div style="color: #999; font-size: 12px; margin-top: 5px;">${task.duration || ''}</div>
+                </div>`;
             });
-            document.getElementById('task-details').innerHTML = html || '<p style="color: #999;">데이터 로딩 실패</p>';
+            document.getElementById('task-details').innerHTML = html || '<p style="color: #999;">작업 데이터 없음</p>';
         }
 
         function displayTeam(members) {
             let html = '';
             members.forEach(member => {
-                html += `<div class="team-member"><div><strong>${member.name}</strong><div class="role">${member.role}</div></div><div>${member.status}</div></div>`;
+                html += `<div class="team-member">
+                    <div>
+                        <strong>${member.name}</strong>
+                        <div class="role">${member.role}</div>
+                    </div>
+                    <div>${member.status}</div>
+                </div>`;
             });
-            document.getElementById('team-status').innerHTML = html || '<p style="color: #999;">데이터 로딩 실패</p>';
+            document.getElementById('team-status').innerHTML = html || '<p style="color: #999;">팀원 데이터 없음</p>';
         }
 
         function displayProjects(projects) {
             let html = '';
             projects.forEach(proj => {
-                html += `<div style="margin-bottom: 20px;"><div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><strong>${proj.name || proj.category}</strong><span style="color: #667eea; font-weight: bold;">${proj.progress || 0}%</span></div><div class="progress-bar"><div class="progress" style="--progress: ${proj.progress || 0}%"></div></div></div>`;
+                html += `<div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <strong>${proj.name || proj.category}</strong>
+                        <span style="color: #667eea; font-weight: bold;">${proj.progress || 0}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="--progress: ${proj.progress || 0}%"></div>
+                    </div>
+                </div>`;
             });
-            document.getElementById('project-progress').innerHTML = html || '<p style="color: #999;">데이터 로딩 실패</p>';
+            document.getElementById('project-progress').innerHTML = html || '<p style="color: #999;">프로젝트 데이터 없음</p>';
         }
 
+        // 페이지 로드 시 데이터 불러오기
         window.addEventListener('load', loadData);
     </script>
 </body>
