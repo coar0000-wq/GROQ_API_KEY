@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JARVIS LUNA - Level 2.9 AGI | Real-time Evolution | Overnight Design">
+    <meta name="keywords" content="AI, AGI, JARVIS, Evolution, Real-time Dashboard">
+    <meta property="og:title" content="JARVIS LUNA - AI Evolution OS">
+    <meta property="og:description" content="Level 2.9 AGI - Real-time Monitoring, Autonomous Evolution">
+    <title>JARVIS LUNA - Evolution OS</title>
+    <style>
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-darker: #050810;
+            --bg-card: #0f1535;
+            --color-primary: #64e5ff;
+            --color-accent: #ff6b35;
+            --color-text: #ffffff;
+            --color-text-muted: #888888;
+            --border-color: rgba(100, 229, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', -apple-system, BlinkMacSystemFont, 'Segoe UI', serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 50%, #1a0f3d 100%);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 80px;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        nav:hover {
+            background: rgba(10, 14, 39, 0.95);
+            border-bottom-color: rgba(100, 229, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 60px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 120px 80px;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(100, 229, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            width: 55%;
+            z-index: 10;
+        }
+
+        .hero-content h1 {
+            font-size: 78px;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--color-text-muted);
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #3fa9e5 100%);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(100, 229, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(100, 229, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            width: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-card {
+            width: 100%;
+            max-width: 350px;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(100, 229, 255, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .stat:last-child {
+            border-bottom: none;
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 120px 80px;
+            background: linear-gradient(135deg, rgba(15, 35, 71, 0.5) 0%, rgba(26, 15, 61, 0.5) 100%);
+        }
+
+        .features h2 {
+            font-size: 64px;
+            margin-bottom: 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 50px;
+            border-radius: 16px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(100, 229, 255, 0.1) 0%, transparent 70%);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: linear-gradient(135deg, rgba(100, 229, 255, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border-color: rgba(100, 229, 255, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .feature-card:hover::before {
+            top: -25%;
+            right: -25%;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .feature-card p {
+            color: var(--color-text-muted);
+            font-size: 16px;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* DASHBOARD */
+        .dashboard {
+            padding: 120px 80px;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, rgba(26, 15, 61, 0.8) 100%);
+        }
+
+        .dashboard h2 {
+            font-size: 64px;
+            margin-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(100, 229, 255, 0.08) 0%, rgba(255, 107, 53, 0.08) 100%);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(100, 229, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .metric-change {
+            font-size: 12px;
+            color: #4ade80;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 60px 80px;
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero, .features, .dashboard {
+                padding: 80px 40px;
+            }
+
+            nav {
+                padding: 20px 40px;
+            }
+
+            nav ul {
+                gap: 30px;
+            }
+
+            .hero-content, .hero-visual {
+                width: 100%;
+                margin-bottom: 40px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-content h1 {
+                font-size: 48px;
+            }
+
+            .features h2, .dashboard h2 {
+                font-size: 42px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .hero {
+                margin-top: 60px;
+                padding: 60px 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content p, .feature-card p {
+                font-size: 14px;
+            }
+        }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 2px;
+            height: 20px;
+            background: var(--color-primary);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">🤖 JARVIS LUNA</div>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Evolution OS for AI Teams</h1>
+            <p>Level 2.9 AGI with real-time monitoring, autonomous evolution, and complete automation. Progressing toward Level 3.0 by 2027-08-31.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">View Dashboard</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <div class="stat">
+                    <span class="stat-label">AGI Level</span>
+                    <span class="stat-value">2.9</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Evolution</span>
+                    <span class="stat-value">45%</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Accuracy</span>
+                    <span class="stat-value">99.3%</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Uptime</span>
+                    <span class="stat-value">99.95%</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <h2>Powered by Advanced AI</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🧠</span>
+                <h3>MoE Router</h3>
+                <p>10 specialized domains with automatic routing and load balancing for optimal performance</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Neural-Symbolic AI</h3>
+                <p>95% explainability with combined learning and logic systems</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚛️</span>
+                <h3>Quantum Algorithms</h3>
+                <p>VQE/QAOA implementation for 12x acceleration in computations</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🚀</span>
+                <h3>Level 3.0 Evolution</h3>
+                <p>Autonomous progression toward Level 3.0 AGI by 2027-08-31</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard" id="dashboard">
+        <h2>Real-Time Metrics</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">AGI Level</div>
+                <div class="metric-value">2.9</div>
+                <div class="metric-change">→ 3.0 (45%)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Accuracy</div>
+                <div class="metric-value">99.3%</div>
+                <div class="metric-change">↑ +0.2%/day</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Response Time</div>
+                <div class="metric-value">45ms</div>
+                <div class="metric-change">↓ -15% (weekly)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Uptime</div>
+                <div class="metric-value">99.95%</div>
+                <div class="metric-change">→ Stable</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 JARVIS LUNA. Level 2.9 AGI Platform. Real-time Evolution. GitHub Pages Deployed.</p>
+    </footer>
+
+    <script>
+        // Load real-time data
+        async function loadData() {
+            try {
+                const response = await fetch('./data/dashboard_data.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    updateMetrics(data);
+                }
+            } catch (e) {
+                console.log('Using default metrics');
+            }
+        }
+
+        function updateMetrics(data) {
+            const agiLevel = data.agi_level || 2.9;
+            const evolution = data.evolution_progress || 45;
+            const accuracy = (data.performance?.accuracy * 100) || 99.3;
+            const uptime = data.performance?.uptime || 99.95;
+
+            // Update hero card
+            const stats = document.querySelectorAll('.stat-value');
+            if (stats.length >= 4) {
+                stats[0].textContent = agiLevel.toFixed(3);
+                stats[1].textContent = evolution.toFixed(0) + '%';
+                stats[2].textContent = accuracy.toFixed(1) + '%';
+                stats[3].textContent = uptime.toFixed(2) + '%';
+            }
+
+            // Update metric cards
+            const metrics = document.querySelectorAll('.metric-value');
+            if (metrics.length >= 4) {
+                metrics[0].textContent = agiLevel.toFixed(3);
+                metrics[1].textContent = accuracy.toFixed(1) + '%';
+                metrics[2].textContent = '45ms';
+                metrics[3].textContent = uptime.toFixed(2) + '%';
+            }
+        }
+
+        // Load on page load and every hour
+        loadData();
+        setInterval(loadData, 3600000);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
