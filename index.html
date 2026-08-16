@@ -230,24 +230,28 @@
             }
 
             .agi-metrics {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr !important;
-                gap: 5px;
-                text-align: center;
+                display: flex !important;
+                flex-direction: row;
+                gap: 15px;
+                text-align: left;
                 width: 100%;
+                justify-content: space-around;
+                grid-template-columns: unset !important;
             }
 
             .agi-metric {
                 display: flex;
-                flex-direction: column;
-                gap: 2px;
+                flex-direction: row;
+                gap: 3px;
+                align-items: center;
+                white-space: nowrap;
             }
 
             .agi-metric-label {
-                font-size: 9px;
+                font-size: 10px;
                 color: var(--color-text-muted);
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
+                text-transform: none;
+                letter-spacing: normal;
             }
 
             .agi-metric-value {
