@@ -4,6 +4,41 @@
       "id": 25,
       "title": "🔧 JARVIS 기술 진화 습득",
       "status": "⏳ 진행중",
+      "timestamp": "2026-08-16T14:15:54.468534Z",
+      "details": "Phase 4: 메타진화 엔진"
+    },
+    {
+      "id": 24,
+      "title": "🏥 의료 논문 사이트 수집 (25개)",
+      "status": "✅ 완료",
+      "timestamp": "2026-08-16T14:15:54.468527Z",
+      "details": "최신 논문 3개 선정"
+    },
+    {
+      "id": 23,
+      "title": "🧠 Obsidian 그래프 실시간 업데이트",
+      "status": "✅ 완료",
+      "timestamp": "2026-08-16T14:15:54.468509Z",
+      "details": "815개 노드, 1,280개 링크 동작 확인"
+    },
+    {
+      "id": 22,
+      "title": "📄 arXiv 이미지 트레이닝 논문 50개 수집",
+      "status": "✅ 완료",
+      "timestamp": "2026-08-16T14:15:54.468473Z",
+      "details": "최신 논문 3개 선정"
+    },
+    {
+      "id": 21,
+      "title": "📺 YouTube 드롭쉬핑 영상 분석",
+      "status": "✅ 완료",
+      "timestamp": "2026-08-16T14:15:54.468455Z",
+      "details": "3개 채널 분석"
+    },
+    {
+      "id": 25,
+      "title": "🔧 JARVIS 기술 진화 습득",
+      "status": "⏳ 진행중",
       "timestamp": "2026-08-16T13:57:20.522066Z",
       "details": "Phase 4: 메타진화 엔진"
     },
@@ -104,80 +139,45 @@
       "status": "✅ 완료",
       "timestamp": "2026-08-16T13:08:18.578838Z",
       "details": "3개 채널 분석"
-    },
-    {
-      "id": 25,
-      "title": "🔧 JARVIS 기술 진화 습득",
-      "status": "⏳ 진행중",
-      "timestamp": "2026-08-16T12:26:54.159350Z",
-      "details": "Phase 4: 메타진화 엔진"
-    },
-    {
-      "id": 24,
-      "title": "🏥 의료 논문 사이트 수집 (25개)",
-      "status": "✅ 완료",
-      "timestamp": "2026-08-16T12:26:54.159343Z",
-      "details": "최신 논문 3개 선정"
-    },
-    {
-      "id": 23,
-      "title": "🧠 Obsidian 그래프 실시간 업데이트",
-      "status": "✅ 완료",
-      "timestamp": "2026-08-16T12:26:54.159325Z",
-      "details": "815개 노드, 1,280개 링크 동작 확인"
-    },
-    {
-      "id": 22,
-      "title": "📄 arXiv 이미지 트레이닝 논문 50개 수집",
-      "status": "✅ 완료",
-      "timestamp": "2026-08-16T12:26:54.159289Z",
-      "details": "최신 논문 3개 선정"
-    },
-    {
-      "id": 21,
-      "title": "📺 YouTube 드롭쉬핑 영상 분석",
-      "status": "✅ 완료",
-      "timestamp": "2026-08-16T12:26:54.159233Z",
-      "details": "3개 채널 분석"
     }
   ],
-  "lastUpdate": "2026-08-16T13:57:20.522300Z",
+  "lastUpdate": "2026-08-16T14:15:54.468830Z",
   "tasks": {
     "youtube": {
       "title": "📺 YouTube 드롭쉬핑 영상 분석",
-      "details": "3개 채널 분석\n  • 드롭쉬핑 상품 리서치 5가지 팁 (디지털마케팅)\n  • Shopify 드롭쉬핑 자동화 완벽 가이드 (온라인사업)\n  • 2024년 드롭쉬핑으로 월 500만원 버는 방법 (쇼핑몰 대학)\n  평균 조회: 67,833회, 평균 마진: 39%",
+      "details": "3개 채널 분석\n  • 아마존 FBA vs 드롭쉬핑 비교 분석 (전자상거래 마스터)\n  • 2024년 드롭쉬핑으로 월 500만원 버는 방법 (쇼핑몰 대학)\n  • 드롭쉬핑 상품 리서치 5가지 팁 (디지털마케팅)\n  평균 조회: 58,133회, 평균 마진: 39%",
       "status": "✅ 완료",
-      "timestamp": "2026-08-16T13:57:20.521993Z"
+      "timestamp": "2026-08-16T14:15:54.468451Z"
     },
     "arxiv": {
       "title": "📄 arXiv 이미지 트레이닝 논문 50개 수집",
-      "details": "최신 논문 3개 선정\n  • Efficient Networks for Mobile Devices (Tan et al.)\n  • Self-Supervised Learning for Vision Tasks (He et al.)\n  • Improving Image Classification with Mixup Augmentation (Zhang et al.)\n  분야: Efficient, Self-Supervised, Data Augmentation",
+      "details": "최신 논문 3개 선정\n  • Improving Image Classification with Mixup Augmentation (Zhang et al.)\n  • Efficient Networks for Mobile Devices (Tan et al.)\n  • Self-Supervised Learning for Vision Tasks (He et al.)\n  분야: Data Augmentation, Efficient, Self-Supervised",
       "status": "✅ 완료",
-      "timestamp": "2026-08-16T13:57:20.522013Z"
+      "timestamp": "2026-08-16T14:15:54.468471Z"
     },
     "obsidian": {
       "title": "🧠 Obsidian 그래프 실시간 업데이트",
       "details": "815개 노드, 1,280개 링크 동작 확인\n  의료/양자/음악/비즈니스 도메인 통합",
       "status": "✅ 완료",
-      "timestamp": "2026-08-16T13:57:20.522043Z"
+      "timestamp": "2026-08-16T14:15:54.468506Z"
     },
     "medical": {
       "title": "🏥 의료 논문 사이트 수집 (25개)",
-      "details": "최신 논문 3개 선정\n  • Deep Learning Applications in Drug Interaction Prediction (arXiv, 2026-08-12, 인용 5)\n  • Neural Networks for Medical Image Segmentation (PubMed, 2026-08-13, 인용 15)\n  • Blockchain for Secure Medical Data Management (ResearchGate, 2026-08-11, 인용 7)\n  평균 인용도: 9회",
+      "details": "최신 논문 3개 선정\n  • Blockchain for Secure Medical Data Management (ResearchGate, 2026-08-11, 인용 7)\n  • Machine Learning in Precision Medicine and Genomics (ResearchGate, 2026-08-14, 인용 8)\n  • Neural Networks for Medical Image Segmentation (PubMed, 2026-08-13, 인용 15)\n  평균 인용도: 10회",
       "status": "✅ 완료",
-      "timestamp": "2026-08-16T13:57:20.522058Z"
+      "timestamp": "2026-08-16T14:15:54.468525Z"
     },
     "jarvis": {
       "title": "🔧 JARVIS 기술 진화 습득",
       "details": "Phase 4: 메타진화 엔진\n  자기개선 루프, 일일 15% 성능 향상",
       "status": "⏳ 진행중",
-      "timestamp": "2026-08-16T13:57:20.522064Z"
+      "timestamp": "2026-08-16T14:15:54.468532Z"
     }
   },
   "agi_metrics": {
-    "level": 2.91,
-    "evolution": 46.000000000000014,
-    "accuracy": 99.40000000000005,
-    "availability": 99.96000000000005
+    "level": 2.911,
+    "evolution": 46.100000000000016,
+    "accuracy": 99.41000000000005,
+    "availability": 99.96100000000006
   }
 }
