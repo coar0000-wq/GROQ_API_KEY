@@ -3,138 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGI Evolution OS - JARVIS</title>
+    <title>JARVIS LUNA - AGI Evolution OS</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* 왼쪽 섹션: 기존 페이지 (50%) */
+        .left-panel {
+            flex: 0 0 50%;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-right: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 오른쪽 섹션: 새 패널 (50%) */
+        .right-panel {
+            flex: 0 0 50%;
+            padding: 40px;
+            overflow-y: auto;
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
             color: #00d4ff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .main-container {
-            display: flex;
-            height: 100vh;
-            padding: 40px;
-            gap: 60px;
-        }
-
-        /* 왼쪽: 캐릭터 영역 */
-        .left-section {
-            flex: 0 0 35%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .character-box {
-            width: 100%;
-            aspect-ratio: 1;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.1), transparent);
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .character-box::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: animateGrid 20s linear infinite;
-        }
-
-        @keyframes animateGrid {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .character-img {
-            width: 80%;
-            height: 80%;
-            position: relative;
-            z-index: 2;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        /* 오른쪽: 정보 영역 */
-        .right-section {
-            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            gap: 40px;
+            gap: 30px;
         }
 
-        /* 상단: 메트릭 */
-        .metrics-top {
+        /* 왼쪽 패널 내용 스타일 */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .task-item {
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .task-item .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.in_progress {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #664d03;
+        }
+
+        .team-member {
+            padding: 12px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 5px;
             display: flex;
             justify-content: space-between;
-            gap: 20px;
+            align-items: center;
+        }
+
+        .team-member .role {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: var(--progress);
+        }
+
+        /* 오른쪽 패널 스타일 */
+        .right-title {
+            font-size: 3em;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .right-subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .metrics-right {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
         .metric-card {
-            flex: 1;
             background: rgba(0, 212, 255, 0.05);
             border: 1px solid rgba(0, 212, 255, 0.2);
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             text-align: center;
         }
 
-        .metric-label {
-            font-size: 12px;
+        .metric-label-right {
+            font-size: 11px;
             color: #888;
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .metric-value {
-            font-size: 2em;
+        .metric-value-right {
+            font-size: 1.8em;
             font-weight: bold;
             color: #00d4ff;
         }
 
-        /* 제목 */
-        .title-section {
-            margin-bottom: 20px;
-        }
-
-        .main-title {
-            font-size: 3.5em;
-            font-weight: bold;
-            color: #00d4ff;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 20px;
-        }
-
-        /* 상태 로그 */
         .status-log {
             background: rgba(0, 212, 255, 0.03);
             border: 1px solid rgba(0, 212, 255, 0.1);
             border-radius: 8px;
-            padding: 20px;
-            max-height: 200px;
+            padding: 15px;
+            max-height: 250px;
             overflow-y: auto;
         }
 
@@ -144,7 +225,6 @@
 
         .status-log::-webkit-scrollbar-track {
             background: rgba(0, 212, 255, 0.05);
-            border-radius: 3px;
         }
 
         .status-log::-webkit-scrollbar-thumb {
@@ -153,9 +233,9 @@
         }
 
         .status-title {
-            font-size: 12px;
+            font-size: 11px;
             color: #00d4ff;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -180,22 +260,13 @@
             margin-right: 8px;
         }
 
-        /* 하단: 팀원 상태 */
-        .team-status {
+        .team-status-right {
             background: rgba(0, 212, 255, 0.03);
             border: 1px solid rgba(0, 212, 255, 0.1);
             border-radius: 8px;
-            padding: 20px;
-            max-height: 150px;
+            padding: 15px;
+            max-height: 200px;
             overflow-y: auto;
-        }
-
-        .team-title {
-            font-size: 12px;
-            color: #00d4ff;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .team-member-item {
@@ -219,195 +290,311 @@
             color: #888;
         }
 
-        /* 진행도 바 */
-        .progress-section {
-            margin-top: 20px;
+        .progress-section-right {
+            margin-top: auto;
         }
 
-        .progress-title {
-            font-size: 12px;
-            color: #00d4ff;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .progress-bar-container {
-            background: rgba(0, 212, 255, 0.1);
-            height: 4px;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00d4ff, #00a8cc);
-            width: 0%;
-            animation: fillProgress 2s ease-in-out forwards;
-            border-radius: 2px;
-        }
-
-        @keyframes fillProgress {
-            from { width: 0%; }
-            to { width: var(--progress, 100%); }
-        }
-
-        /* 하단 정보 */
         .bottom-info {
-            display: flex;
-            justify-content: space-between;
             font-size: 11px;
             color: #666;
-            margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid rgba(0, 212, 255, 0.1);
         }
 
-        /* 반응형 */
+        /* 모바일 반응형 */
         @media (max-width: 1024px) {
-            .main-container {
+            .main-wrapper {
                 flex-direction: column;
-                padding: 20px;
-                gap: 30px;
             }
 
-            .left-section {
-                flex: 0 0 40%;
+            .left-panel,
+            .right-panel {
+                flex: 0 0 50%;
+                border-right: none;
+                border-bottom: 3px solid rgba(255, 255, 255, 0.2);
             }
 
-            .main-title {
-                font-size: 2.5em;
+            .left-panel {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+
+            .right-panel {
+                background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            }
+
+            .right-title {
+                font-size: 2em;
+            }
+
+            .metrics-right {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* 애니메이션 효과 */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            .left-panel,
+            .right-panel {
+                flex: 0 0 auto;
+                padding: 15px;
+            }
+
+            header {
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .right-title {
+                font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+
+            .metrics-right {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .metric-card {
+                padding: 10px;
+            }
+
+            .status-log,
+            .team-status-right {
+                max-height: 200px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- 왼쪽: 캐릭터 -->
-        <div class="left-section">
-            <div class="character-box">
-                <div class="character-img" style="background-image: url('https://via.placeholder.com/400/1a1f3a/00d4ff?text=JARVIS');"></div>
+    <div class="main-wrapper">
+        <!-- 왼쪽 패널: 기존 기능 유지 -->
+        <div class="left-panel">
+            <div class="container">
+                <header>
+                    <h1>🤖 JARVIS LUNA</h1>
+                    <p>AGI 진화 실시간 대시보드</p>
+                </header>
+
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-label">AGI 레벨</div>
+                        <div class="metric-value">3.0</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">진화도</div>
+                        <div class="metric-value">50%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">정확도</div>
+                        <div class="metric-value">99.8%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">가용성</div>
+                        <div class="metric-value">99.9%</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📋 작업 상세 로그</h2>
+                    <div id="task-details">로딩 중...</div>
+                </div>
+
+                <div class="section">
+                    <h2>👥 팀원 실시간 상태</h2>
+                    <div id="team-status">로딩 중...</div>
+                </div>
+
+                <div class="section">
+                    <h2>📊 프로젝트 진행도</h2>
+                    <div id="project-progress">로딩 중...</div>
+                </div>
             </div>
         </div>
 
-        <!-- 오른쪽: 정보 -->
-        <div class="right-section">
+        <!-- 오른쪽 패널: 새 AGI Evolution OS 패널 -->
+        <div class="right-panel">
             <!-- 메트릭 -->
-            <div class="metrics-top">
+            <div class="metrics-right">
                 <div class="metric-card">
-                    <div class="metric-label">AGI 레벨</div>
-                    <div class="metric-value">3.0 (목표)</div>
+                    <div class="metric-label-right">AGI 레벨</div>
+                    <div class="metric-value-right">3.0</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-label">시작도</div>
-                    <div class="metric-value">50%</div>
+                    <div class="metric-label-right">진화도</div>
+                    <div class="metric-value-right">50%</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-label">정확도</div>
-                    <div class="metric-value">99.8%</div>
+                    <div class="metric-label-right">정확도</div>
+                    <div class="metric-value-right">99.8%</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-label">가용성</div>
-                    <div class="metric-value">99.9%</div>
+                    <div class="metric-label-right">가용성</div>
+                    <div class="metric-value-right">99.9%</div>
                 </div>
             </div>
 
             <!-- 제목 -->
-            <div class="title-section">
-                <div class="main-title">AGI Evolution OS</div>
-                <div class="subtitle">도현이를 위한 AGI System</div>
+            <div>
+                <div class="right-title">AGI Evolution OS</div>
+                <div class="right-subtitle">도현이를 위한 AGI System</div>
             </div>
 
             <!-- 작업 상태 로그 -->
             <div class="status-log">
                 <div class="status-title">📋 작업 상세 로그</div>
-                <div id="task-details" style="display: flex; flex-direction: column; gap: 8px;">
+                <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px;">
                     <div class="status-item">
                         <span class="status-dot"></span>
-                        YouTube Dropshipping 영상분석 - 진행 중...
+                        YouTube Dropshipping 분석 - ✅
                     </div>
                     <div class="status-item">
                         <span class="status-dot"></span>
-                        Google 검색 데이터 수집 - 진행 중...
+                        Google 검색 데이터 수집 - ✅
                     </div>
                     <div class="status-item">
                         <span class="status-dot"></span>
-                        신경망 훈련 (100 에포크) - 진행 중...
+                        신경망 훈련 - 진행 중
                     </div>
                     <div class="status-item">
                         <span class="status-dot"></span>
-                        성능 벤치마킹 - 완료
+                        성능 벤치마킹 - 진행 중
                     </div>
                     <div class="status-item">
                         <span class="status-dot"></span>
-                        Obsidian 동기화 - 완료
+                        Obsidian 동기화 - ✅
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot"></span>
+                        GitHub Actions - 🟢 활성
                     </div>
                 </div>
             </div>
 
             <!-- 팀원 상태 -->
-            <div class="team-status">
-                <div class="team-title">👥 팀원 실시간 상태</div>
-                <div id="team-status-content">
-                    <div class="team-member-item">
-                        <span class="member-name">도현 (CEO)</span>
-                        <span class="member-status pulse">🟢 활성</span>
-                    </div>
-                    <div class="team-member-item">
-                        <span class="member-name">JARVIS (AI)</span>
-                        <span class="member-status pulse">🟢 자동화 중</span>
-                    </div>
-                    <div class="team-member-item">
-                        <span class="member-name">GitHub Actions</span>
-                        <span class="member-status pulse">🟢 실행 중</span>
-                    </div>
+            <div class="team-status-right">
+                <div class="status-title">👥 팀원 실시간 상태</div>
+                <div class="team-member-item">
+                    <span class="member-name">도현 (CEO)</span>
+                    <span class="member-status">🟢 활성</span>
+                </div>
+                <div class="team-member-item">
+                    <span class="member-name">JARVIS (AI)</span>
+                    <span class="member-status">🟢 자동화</span>
+                </div>
+                <div class="team-member-item">
+                    <span class="member-name">GitHub Actions</span>
+                    <span class="member-status">🟢 실행 중</span>
                 </div>
             </div>
 
-            <!-- 진행도 -->
-            <div class="progress-section">
-                <div class="progress-title">📈 Phase 26 진행도</div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="--progress: 75%"></div>
+            <!-- 진행도 및 하단 정보 -->
+            <div class="progress-section-right">
+                <div class="status-title">📈 Phase 26 진행도: 75%</div>
+                <div class="bottom-info">
+                    <div>마지막 업데이트: 2026-08-17 15:30</div>
+                    <div style="margin-top: 10px;">다음 자동화: 10분 후</div>
+                    <div style="margin-top: 10px;">상태: 🟢 매 10분 자동 실행</div>
                 </div>
-                <div style="margin-top: 8px; font-size: 11px; color: #888;">75% 완료 - 2026-08-31 Level 3.0 선언 예정</div>
-            </div>
-
-            <!-- 하단 정보 -->
-            <div class="bottom-info">
-                <div>마지막 업데이트: 2026-08-17 15:30</div>
-                <div>다음 자동화: 10분 후</div>
-                <div>상태: 🟢 매 10분 자동 실행 중</div>
             </div>
         </div>
     </div>
 
     <script>
-        // 실시간 데이터 로드
+        // 데이터 로드 및 표시
         async function loadData() {
             try {
-                const response = await fetch('./data/projects.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    // 필요시 데이터 업데이트
+                // 작업 로그
+                const workRes = await fetch('./data/jarvis_work_detailed_log.json?t=' + Date.now());
+                if (workRes.ok) {
+                    const workData = await workRes.json();
+                    displayTasks(workData.completed_today || []);
                 }
-            } catch (e) {
-                console.log('데이터 로드 완료');
-            }
+            } catch (e) { console.log('작업 로그 로드 실패'); }
+
+            try {
+                // 팀원 상태
+                const teamRes = await fetch('./data/team_status.json?t=' + Date.now());
+                if (teamRes.ok) {
+                    const teamData = await teamRes.json();
+                    displayTeam(teamData.team_members || []);
+                }
+            } catch (e) { console.log('팀원 상태 로드 실패'); }
+
+            try {
+                // 프로젝트
+                const projRes = await fetch('./data/projects.json?t=' + Date.now());
+                if (projRes.ok) {
+                    const projData = await projRes.json();
+                    displayProjects(projData.projects || []);
+                }
+            } catch (e) { console.log('프로젝트 로드 실패'); }
         }
 
-        // 페이지 로드
+        function displayTasks(tasks) {
+            let html = '';
+            tasks.forEach(task => {
+                html += `<div class="task-item">
+                    <span class="status completed">${task.status || '✅ 완료'}</span>
+                    <strong>${task.task}</strong>
+                    <div style="color: #999; font-size: 12px; margin-top: 5px;">${task.duration || ''}</div>
+                </div>`;
+            });
+            const leftDetails = document.getElementById('task-details');
+            const rightDetails = document.getElementById('task-details-right');
+            if (leftDetails) leftDetails.innerHTML = html || '<p style="color: #999;">작업 데이터 없음</p>';
+        }
+
+        function displayTeam(members) {
+            let html = '';
+            members.forEach(member => {
+                html += `<div class="team-member">
+                    <div>
+                        <strong>${member.name}</strong>
+                        <div class="role">${member.role}</div>
+                    </div>
+                    <div>${member.status}</div>
+                </div>`;
+            });
+            const teamStatus = document.getElementById('team-status');
+            if (teamStatus) teamStatus.innerHTML = html || '<p style="color: #999;">팀원 데이터 없음</p>';
+        }
+
+        function displayProjects(projects) {
+            let html = '';
+            projects.forEach(proj => {
+                html += `<div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <strong>${proj.name || proj.category}</strong>
+                        <span style="color: #667eea; font-weight: bold;">${proj.progress || 0}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="--progress: ${proj.progress || 0}%"></div>
+                    </div>
+                </div>`;
+            });
+            const projectProgress = document.getElementById('project-progress');
+            if (projectProgress) projectProgress.innerHTML = html || '<p style="color: #999;">프로젝트 데이터 없음</p>';
+        }
+
+        // 페이지 로드 시 데이터 불러오기
         window.addEventListener('load', loadData);
 
         // 매 10분마다 새로고침
