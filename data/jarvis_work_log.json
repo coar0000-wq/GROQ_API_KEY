@@ -1,37 +1,26 @@
 {
-  "timestamp": "2026-08-16T20:10:35.123456",
+  "timestamp": "2026-08-16T10:42:22.863774",
   "tasks": [
     {
       "source": "arXiv",
-      "papers_collected": 23,
-      "timestamp": "2026-08-16T20:10:05",
+      "papers_collected": 20,
+      "timestamp": "2026-08-16T10:42:23.325179",
       "status": "✅ 완료"
     },
     {
       "source": "PubMed",
-      "papers_collected": 18,
-      "timestamp": "2026-08-16T20:10:10",
+      "papers_collected": 15,
+      "timestamp": "2026-08-16T10:42:23.679559",
       "status": "✅ 완료"
     },
     {
       "source": "Obsidian",
-      "nodes_counted": 8456,
-      "timestamp": "2026-08-16T20:10:15",
-      "status": "✅ 완료"
+      "status": "⚠️ 폴더 없음",
+      "path": "/home/runner/Claude/Projects/kms/Obsidian"
     },
     {
       "source": "Project Files",
-      "total_files": 127,
-      "recent_changes": 12,
-      "recent_files": [
-        "jarvis_autonomous_work.py",
-        "auto-update.yml",
-        "auto_update.py",
-        "phase30_autonomous_metalearning.py",
-        "phase29_automl_hyperparameter.py"
-      ],
-      "timestamp": "2026-08-16T20:10:20",
-      "status": "✅ 완료"
+      "status": "❌ 경로 없음"
     },
     {
       "source": "Business Metrics",
@@ -55,15 +44,19 @@
           "status": "accelerating"
         }
       },
-      "timestamp": "2026-08-16T20:10:25",
+      "timestamp": "2026-08-16T10:42:23.680389",
       "status": "✅ 수집 완료"
+    },
+    {
+      "metrics_updated": true,
+      "file": "data/agi_metrics.json",
+      "timestamp": "2026-08-16T10:42:23.680779"
     }
   ],
   "summary": {
-    "total_data_collected": 41,
-    "tasks_completed": 12,
+    "total_data_collected": 35,
+    "tasks_completed": 0,
     "status": "ACTIVE",
-    "next_run": "2026-08-16T20:20:00",
-    "work_quality": "실제 데이터 수집 완료"
+    "next_run": "in 10 minutes"
   }
 }
