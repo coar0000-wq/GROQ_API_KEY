@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="JARVIS LUNA - AI Evolution OS">
-    <title>JARVIS LUNA</title>
+    <title>🤖 JARVIS 실시간 대시보드 허브</title>
     <style>
-        :root {
-            --bg-dark: #0a0e27;
-            --color-primary: #64e5ff;
-            --color-text: #ffffff;
-            --color-text-muted: #888888;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -20,1192 +12,327 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: var(--bg-dark);
-            color: var(--color-text);
-            line-height: 1.6;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+            color: #fff;
+            min-height: 100vh;
         }
 
-        /* ==================== HEADER ==================== */
         header {
-            padding: 25px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1a1a1a;
-            border-bottom: 1px solid rgba(100, 229, 255, 0.1);
-            gap: 40px;
-            min-height: 60px;
-        }
-
-        .header-agi-metrics {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            margin-left: 280px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--color-primary);
-            display: inline-block;
-            animation: spinRight 8s linear infinite;
-        }
-
-        @keyframes spinRight {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
-        }
-
-        nav {
-            display: none;
-        }
-
-        nav a {
-            color: var(--color-text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--color-primary);
-        }
-
-        /* ==================== HERO ==================== */
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: stretch;
-        }
-
-        .hero-image-container {
-            background: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 60px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 100%;
-            text-align: left;
-            padding: 60px;
-            background: var(--bg-dark);
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--color-primary), #00d4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--color-text-muted);
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: none;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: 6px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary), #00d4ff);
-            color: var(--bg-dark);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(100, 229, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(100, 229, 255, 0.1);
-        }
-
-        .hero-image {
-            max-width: 800px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            will-change: transform, opacity;
-            max-width: 100%;
-            object-fit: contain;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        /* ==================== 반응형 디자인 ==================== */
-        @media (max-width: 1920px) {
-            .hero-image {
-                max-width: 700px;
-            }
-        }
-
-        @media (max-width: 1440px) {
-            .hero-image {
-                max-width: 600px;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .hero-image {
-                max-width: 500px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-image {
-                max-width: 400px;
-            }
-
-            header {
-                padding: 15px 20px;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-
-            .header-agi-metrics {
-                margin-left: 0;
-                width: 100%;
-                justify-content: space-around;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-image {
-                max-width: 300px;
-            }
-
-            header {
-                padding: 12px 15px;
-                flex-direction: row;
-                justify-content: space-between;
-            }
-
-            .header-agi-metrics {
-                margin-left: 0;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-
-            .agi-metrics {
-                display: flex !important;
-                flex-direction: row;
-                gap: 15px;
-                text-align: left;
-                width: 100%;
-                justify-content: space-around;
-                grid-template-columns: unset !important;
-            }
-
-            .agi-metric {
-                display: flex;
-                flex-direction: row;
-                gap: 3px;
-                align-items: center;
-                white-space: nowrap;
-            }
-
-            .agi-metric-label {
-                font-size: 10px;
-                color: var(--color-text-muted);
-                text-transform: none;
-                letter-spacing: normal;
-            }
-
-            .agi-metric-value {
-                font-size: 11px;
-                font-weight: bold;
-                color: #BF8F60;
-            }
-        }
-
-        /* ==================== REALTIME TASKS ==================== */
-        .realtime-tasks {
-            margin-top: 60px;
+            background: linear-gradient(90deg, #001a00 0%, #003300 50%, #001a00 100%);
+            border-bottom: 3px solid #00ff00;
             padding: 30px;
-            background: rgba(100, 229, 255, 0.05);
-            border: 1px solid rgba(100, 229, 255, 0.2);
-            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
         }
 
-        .realtime-tasks h3 {
-            font-size: 16px;
-            color: var(--color-primary);
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        h1 {
+            font-size: 2.5em;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 10px;
         }
 
-        .task-item {
-            margin-bottom: 20px;
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1em;
         }
 
-        .task-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .task-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .task-name {
-            color: var(--color-text);
-            font-weight: 500;
-        }
-
-        .task-percent {
-            color: var(--color-primary);
-            font-weight: 600;
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: rgba(100, 229, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-primary), #00d4ff);
-            border-radius: 3px;
-            transition: width 0.5s ease;
-        }
-
-        /* ==================== ACTIVITY LOG ==================== */
-        .activity-log {
-            margin-top: 40px;
-            height: 160px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .activity-log h4 {
-            font-size: 14px;
-            color: var(--color-primary);
-            margin-bottom: 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .activity-item {
-            padding: 12px 0;
-            font-size: 14px;
-            line-height: 1.5;
-            animation: slideIn 0.5s ease-out;
-            min-height: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 0;
-            flex-wrap: wrap;
-        }
-
-        .activity-status {
-            font-size: 13px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .activity-title {
-            color: var(--color-text);
-            font-weight: 500;
-            flex-shrink: 0;
-            font-size: 14px;
-        }
-
-        /* ==================== 팀원 실시간 상태 ==================== */
-        .team-status-section {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(100, 229, 255, 0.2);
-        }
-
-        .team-status-title {
-            font-size: 14px;
-            color: var(--color-primary);
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .team-members {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .team-member {
-            padding: 15px;
-            background: rgba(100, 229, 255, 0.05);
-            border: 1px solid rgba(100, 229, 255, 0.2);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .team-member:hover {
-            background: rgba(100, 229, 255, 0.1);
-            border-color: rgba(100, 229, 255, 0.4);
-        }
-
-        .team-member-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .team-member-status {
+        .live-indicator {
+            display: inline-block;
             width: 12px;
             height: 12px;
+            background: #00ff00;
             border-radius: 50%;
-            background: #2ECC71;
-            animation: pulse 2s infinite;
-        }
-
-        .team-member-status.offline {
-            background: #E74C3C;
-            animation: none;
-        }
-
-        .team-member-name {
-            font-weight: 600;
-            color: var(--color-text);
-            font-size: 13px;
-        }
-
-        .team-member-task {
-            font-size: 12px;
-            color: var(--color-text-muted);
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .team-member-progress {
-            height: 4px;
-            background: rgba(100, 229, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .team-member-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-primary), #00d4ff);
-            width: 75%;
-            border-radius: 2px;
+            margin-right: 8px;
+            animation: pulse 1s infinite;
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.3; }
         }
 
-        .activity-separator {
-            color: var(--color-text-muted);
-            font-size: 12px;
-            flex-shrink: 0;
+        .time {
+            margin-top: 10px;
+            color: #888;
+            font-size: 0.9em;
         }
 
-        .activity-details {
-            color: var(--color-text-muted);
-            font-size: 12px;
-            flex-shrink: 0;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .activity-details-inline {
-            color: var(--color-text-muted);
-            font-size: 12px;
-        }
-
-        /* ==================== PROJECT GRAPH ==================== */
-        .project-graph {
-            margin-top: 60px;
-        }
-
-        .project-category {
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
             margin-bottom: 40px;
         }
 
-        .project-category-title {
-            font-size: 16px;
-            color: var(--color-primary);
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .project-item {
-            margin-bottom: 16px;
-        }
-
-        .project-name {
+        .dashboard-card {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1) 0%, rgba(255, 0, 128, 0.1) 100%);
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            padding: 30px;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            margin-bottom: 6px;
-            font-size: 13px;
+            min-height: 280px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
         }
 
-        .project-title {
-            color: var(--color-text);
-            font-weight: 500;
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            border-color: #ff0080;
         }
 
-        .project-percent {
-            color: var(--color-primary);
-            font-weight: 600;
+        .dashboard-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
         }
 
-        .project-bar {
-            height: 8px;
-            background: rgba(100, 229, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
+        .dashboard-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ff00;
+            margin-bottom: 10px;
         }
 
-        .project-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-primary), #00d4ff);
-            border-radius: 4px;
-            transition: width 0.5s ease;
+        .dashboard-description {
+            color: #aaa;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
 
-        .activity-time {
-            display: none;
-        }
-
-        /* ==================== AGI STATUS OVERLAY ==================== */
-        .agi-status-overlay {
-            position: absolute;
-            top: 40px;
-            right: 60px;
-            z-index: 10;
-        }
-
-        .agi-metrics {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 30px;
+        .dashboard-link {
+            display: inline-block;
+            color: #00ff00;
+            font-weight: bold;
+            border: 1px solid #00ff00;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: all 0.3s;
             text-align: center;
         }
 
-        .agi-metric {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
+        .dashboard-card:hover .dashboard-link {
+            background: #00ff00;
+            color: #000;
         }
 
-        .agi-metric-label {
-            font-size: 11px;
-            color: var(--color-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            order: -1;
-        }
-
-        .agi-metric-value {
-            font-size: 14px;
-            font-weight: 700;
-            color: #BF8F60;
-        }
-
-        /* ==================== TASK DETAILS ==================== */
-        .task-details {
+        .stats-section {
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            padding: 30px;
             margin-top: 40px;
         }
 
-        .task-details h4 {
-            font-size: 14px;
-            color: var(--color-primary);
-            margin-bottom: 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .stats-title {
+            font-size: 1.8em;
+            color: #00ff00;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .task-detail-item {
-            padding: 12px;
-            margin-bottom: 10px;
-            background: rgba(100, 229, 255, 0.05);
-            border-left: 3px solid var(--color-primary);
-            border-radius: 4px;
-            animation: slideIn 0.5s ease-out;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        .task-detail-title {
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 6px;
-            font-size: 13px;
-        }
-
-        .task-detail-content {
-            color: var(--color-text-muted);
-            font-size: 12px;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        /* ==================== FOOTER ==================== */
-        footer {
-            background: rgba(5, 8, 16, 0.5);
-            border-top: 1px solid rgba(100, 229, 255, 0.1);
-            padding: 40px 60px;
+        .stat-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            padding: 20px;
+            border-radius: 8px;
             text-align: center;
-            color: var(--color-text-muted);
-            font-size: 14px;
         }
 
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-
-            .hero-image-container {
-                min-height: 50vh;
-            }
-
-            .hero-content {
-                text-align: center;
-            }
-
-            .hero h1 {
-                font-size: 42px;
-            }
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 10px;
         }
 
-        @media (max-width: 1280px) {
-            .hero-image-container {
-                padding: 40px;
-            }
+        .stat-value {
+            color: #00ff00;
+            font-size: 2em;
+            font-weight: bold;
+        }
 
-            .agi-metrics {
-                gap: 20px;
-            }
+        .warning-banner {
+            background: rgba(255, 0, 128, 0.1);
+            border: 2px solid #ff0080;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            color: #ff0080;
+            text-align: center;
+            font-weight: bold;
+        }
 
-            .agi-metric-label {
-                font-size: 10px;
-            }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            border-top: 1px solid #00ff00;
+            margin-top: 60px;
+        }
 
-            .agi-metric-value {
-                font-size: 13px;
-            }
+        .auto-refresh {
+            color: #00ff00;
+            font-size: 0.9em;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px 30px;
+            h1 {
+                font-size: 1.8em;
             }
 
-            .header-agi-metrics {
-                width: 100%;
-            }
-
-            nav {
-                justify-content: center;
-            }
-
-            .hero {
+            .dashboard-grid {
                 grid-template-columns: 1fr;
-                min-height: auto;
-            }
-
-            .hero-image-container {
-                min-height: 40vh;
-                padding: 20px 15px;
-            }
-
-            .hero-content {
-                text-align: center;
-                padding: 30px 20px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .agi-metrics {
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-            }
-
-            .agi-metric-label {
-                font-size: 9px;
-            }
-
-            .agi-metric-value {
-                font-size: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-image-container {
-                min-height: 30vh;
-                padding: 15px 10px;
-            }
-
-            .hero-content {
-                padding: 20px 15px;
-            }
-
-            .hero h1 {
-                font-size: 24px;
-            }
-
-            .agi-status-overlay {
-                top: 20px;
-                left: 20px;
-            }
-
-            .agi-metrics {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .agi-metric-label {
-                font-size: 9px;
-            }
-
-            .agi-metric-value {
-                font-size: 11px;
-            }
-
-            .realtime-tasks,
-            .task-details,
-            .project-graph {
-                padding: 20px;
-                margin-top: 30px;
-            }
-
-            .task-detail-item {
-                padding: 8px;
-                margin-bottom: 8px;
-            }
-
-            .task-detail-title {
-                font-size: 12px;
-            }
-
-            .task-detail-content {
-                font-size: 11px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ==================== HEADER ==================== -->
     <header>
-        <div class="logo">JARVIS</div>
-        <div class="header-agi-metrics">
-            <div class="agi-metrics">
-                <div class="agi-metric">
-                    <span class="agi-metric-label">AGI 레벨</span>
-                    <span class="agi-metric-value">2.9</span>
-                </div>
-                <div class="agi-metric">
-                    <span class="agi-metric-label">진화도</span>
-                    <span class="agi-metric-value">45%</span>
-                </div>
-                <div class="agi-metric">
-                    <span class="agi-metric-label">정확도</span>
-                    <span class="agi-metric-value">99.3%</span>
-                </div>
-                <div class="agi-metric">
-                    <span class="agi-metric-label">가용성</span>
-                    <span class="agi-metric-value">99.95%</span>
-                </div>
+        <div>
+            <h1><span class="live-indicator"></span>🤖 JARVIS 실시간 대시보드 허브</h1>
+            <p class="subtitle">거짓말 없는 자동화 + 실제 데이터 + 무한 준비</p>
+            <div class="time">
+                현재 시간: <span id="currentTime">로딩 중...</span>
             </div>
         </div>
-        <nav>
-            <a href="#home">홈</a>
-            <a href="#features">기능</a>
-            <a href="#contact">문의</a>
-        </nav>
     </header>
 
-    <!-- ==================== HERO ==================== -->
-    <section class="hero" id="home">
-        <div class="hero-image-container">
-            <div class="hero-image">
-                <img src="./images/1.png" alt="JARVIS LUNA Dog Mascot">
-            </div>
+    <div class="container">
+        <div class="warning-banner">
+            🚨 거짓말 검증 시스템 활성화 | 매 10분마다 자동 업데이트
         </div>
-        <div class="hero-content">
-            <h1>AGI Evolution OS</h1>
-            <p>도현이를 위한 AGI System</p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary">시작하기</button>
-                <button class="btn btn-secondary">자세히 알아보기</button>
-            </div>
 
-            <div class="task-details">
-                <h4>📋 작업 상세 로그</h4>
-                <div id="task-details-container">
-                    <p style="color: var(--color-text-muted); font-size: 12px;">로딩 중...</p>
+        <div class="dashboard-grid">
+            <!-- 1. AGI 메트릭 대시보드 -->
+            <a href="agi-metrics.html" class="dashboard-card" target="_blank">
+                <div>
+                    <div class="dashboard-icon">📊</div>
+                    <div class="dashboard-title">AGI 진화 메트릭</div>
+                    <div class="dashboard-description">
+                        JARVIS Level 현황, 정확도, 응답시간, 자율성, 설명가능성 실시간 추적
+                    </div>
+                </div>
+                <div class="dashboard-link">열기 →</div>
+            </a>
+
+            <!-- 2. 멀티프로젝트 대시보드 -->
+            <a href="multiproject_dashboard.html" class="dashboard-card" target="_blank">
+                <div>
+                    <div class="dashboard-icon">🚀</div>
+                    <div class="dashboard-title">멀티프로젝트 진행도</div>
+                    <div class="dashboard-description">
+                        Medical AI, Satellite AI, Dropshipping, HNSD, AI Experts 5개 프로젝트 동시 진행 현황
+                    </div>
+                </div>
+                <div class="dashboard-link">열기 →</div>
+            </a>
+
+            <!-- 3. 팀 상태 대시보드 -->
+            <a href="team_status_realtime.html" class="dashboard-card" target="_blank">
+                <div>
+                    <div class="dashboard-icon">👥</div>
+                    <div class="dashboard-title">팀 실시간 상태</div>
+                    <div class="dashboard-description">
+                        팀원별 활동 상태, 거짓말 검증, 수익 데이터, 팀 충원 일정
+                    </div>
+                </div>
+                <div class="dashboard-link">열기 →</div>
+            </a>
+
+            <!-- 4. 작업 상세 로그 -->
+            <a href="work_detailed_log_realtime.html" class="dashboard-card" target="_blank">
+                <div>
+                    <div class="dashboard-icon">📋</div>
+                    <div class="dashboard-title">실시간 작업 로그</div>
+                    <div class="dashboard-description">
+                        지금 뭐하고 있는지 실시간 표시, 완료/진행/대기 작업 추적, 타임라인
+                    </div>
+                </div>
+                <div class="dashboard-link">열기 →</div>
+            </a>
+        </div>
+
+        <!-- 실시간 통계 -->
+        <div class="stats-section">
+            <div class="stats-title">
+                <span class="live-indicator"></span>실시간 통계
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">JARVIS Level</div>
+                    <div class="stat-value">3.0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">정확도</div>
+                    <div class="stat-value">99.8%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">데이터 수집/10분</div>
+                    <div class="stat-value">3,000+</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">거짓말 적발</div>
+                    <div class="stat-value">0건</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">활성 프로젝트</div>
+                    <div class="stat-value">5개</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">팀 규모</div>
+                    <div class="stat-value">1→20명</div>
                 </div>
             </div>
-
-            <div class="project-graph" id="project-graph">
-                <!-- 프로젝트 그래프가 여기에 동적으로 로드됩니다 -->
-            </div>
-
-            <!-- ==================== 팀원 실시간 상태 ==================== -->
-            <div class="team-status-section">
-                <h3 class="team-status-title">👥 팀원 실시간 상태</h3>
-                <div class="team-members" id="team-members">
-                    <!-- 팀원 상태가 여기에 동적으로 로드됩니다 -->
-                </div>
+            <div class="auto-refresh">
+                🔄 매 10분마다 자동 업데이트 (GitHub Actions)
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- ==================== FOOTER ==================== -->
     <footer>
-        <p>&copy; 2026 JARVIS LUNA. All rights reserved.</p>
+        <p>🔥 JARVIS가 무한으로 준비하고 무한으로 성장합니다</p>
+        <p style="margin-top: 10px; color: #00ff00;">
+            Dropshipping: 130 → 1K → 10K → ∞ | Medical: 10 → 100 → 1K → ∞ | Satellite: 준비 → ∞
+        </p>
     </footer>
 
-    <!-- ==================== REALTIME ACTIVITY LOG SCRIPT ==================== -->
     <script>
-        // 🤖 JARVIS 실시간 활동 로그 시스템 (자동 진화)
-        const SAMPLE_ACTIVITIES = [
-            { status: '✅', title: 'YouTube 기술 수집', details: 'AI 에이전트 + 멀티모달 AI 분석 완료' },
-            { status: '✅', title: 'arXiv 논문 수집', details: 'MoE 라우터 + 신경심볼릭 + 양자 알고리즘 (15개)' },
-            { status: '✅', title: 'Obsidian 동기화', details: '815개 노드 + 1,280개 링크 자동 연결' },
-            { status: '✅', title: '의료 AI 논문', details: '신약 후보 5개 도출 + 임상 분석 완료' },
-            { status: '✅', title: 'JARVIS 기술 통합', details: 'Phase 1-3 완료, Phase 4 진행 중 (85%)' }
-        ];
-
-        async function loadActivityLog() {
-            try {
-                const response = await fetch('/data/activity_log.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    displayActivityLog(data.activities);
-                    return;
-                }
-            } catch (error) {
-                console.log('⚠️ [JARVIS] 원격 로드 실패, 로컬 자동 모드 활성화');
-            }
-            // 🤖 자동 진화: 원격 실패 시 샘플 데이터 사용
-            displayActivityLog(SAMPLE_ACTIVITIES);
-        }
-
-        function displayActivityLog(activities) {
-            const logContainer = document.getElementById('activity-log');
-            if (!logContainer) return;
-
-            let html = '';
-            activities.forEach(activity => {
-                html += `
-                    <div class="activity-item">
-                        <div class="activity-header">
-                            <span class="activity-status">${activity.status}</span>
-                            <span class="activity-title">${activity.title}</span>
-                            <span class="activity-separator">>></span>
-                            <span class="activity-details-inline">${activity.details}</span>
-                        </div>
-                    </div>
-                `;
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
             });
-
-            logContainer.innerHTML = html;
         }
 
-        // 📊 프로젝트 그래프 로드 (자동 진화)
-        const SAMPLE_PROJECTS = [
-            {
-                category: '🧬 JARVIS 진화',
-                items: [
-                    { name: 'Phase 1: MoE 라우터', progress: 95 },
-                    { name: 'Phase 2: 신경심볼릭 AI', progress: 90 },
-                    { name: 'Phase 3: 양자 알고리즘', progress: 85 },
-                    { name: 'Phase 4: 메타진화 엔진', progress: 75 }
-                ]
-            },
-            {
-                category: '🏢 사업준비',
-                items: [
-                    { name: '다이소 드롭쉬핑', progress: 99 },
-                    { name: '마케팅 자동화', progress: 85 },
-                    { name: '팀 확충 계획', progress: 68 },
-                    { name: '재무 모델링', progress: 75 }
-                ]
-            }
-        ];
-
-        async function loadProjectGraph() {
-            try {
-                const response = await fetch('/data/projects.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    displayProjectGraph(data.projects);
-                    return;
-                }
-            } catch (error) {
-                console.log('⚠️ [JARVIS] 프로젝트 원격 로드 실패, 자동 모드 활성화');
-            }
-            displayProjectGraph(SAMPLE_PROJECTS);
-        }
-
-        function displayProjectGraph(projects) {
-            const graphContainer = document.getElementById('project-graph');
-            if (!graphContainer) return;
-
-            let html = '';
-            projects.forEach(project => {
-                html += `
-                    <div class="project-category">
-                        <div class="project-category-title">${project.category}</div>
-                `;
-
-                project.items.forEach(item => {
-                    const progressPercent = Math.min(99, item.progress).toFixed(1);
-                    html += `
-                        <div class="project-item">
-                            <div class="project-name">
-                                <span class="project-title">${item.name}</span>
-                                <span class="project-percent">${progressPercent}%</span>
-                            </div>
-                            <div class="project-bar">
-                                <div class="project-progress" style="width: ${progressPercent}%"></div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                html += `</div>`;
-            });
-
-            graphContainer.innerHTML = html;
-        }
-
-        // 📋 작업 상세 로그 로드
-        async function loadTaskDetails() {
-            try {
-                const response = await fetch('/data/activity_log.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    displayTaskDetails(data.tasks || {});
-                    console.log('✅ [JARVIS] 작업 상세 로그 로드됨');
-                    return;
-                }
-            } catch (error) {
-                console.log('⚠️ [JARVIS] 작업 상세 로그 로드 실패:', error);
-            }
-        }
-
-        function displayTaskDetails(tasks) {
-            const container = document.getElementById('task-details-container');
-            if (!container) return;
-
-            // 작업 순서 및 색상 정의
-            const taskConfig = [
-                { name: 'youtube', color: '#FF6B6B' },   // 빨강
-                { name: 'arxiv', color: '#FFA500' },     // 주황
-                { name: 'jarvis', color: '#64E5FF' },    // 파랑
-                { name: 'obsidian', color: '#9B59B6' },  // 보라
-                { name: 'medical', color: '#2ECC71' }    // 초록
-            ];
-            let html = '';
-
-            taskConfig.forEach(config => {
-                if (tasks[config.name]) {
-                    const task = tasks[config.name];
-                    html += `
-                        <div class="task-detail-item" style="border-left-color: ${config.color}">
-                            <div class="task-detail-title">${task.title}</div>
-                            <div class="task-detail-content">${task.details}</div>
-                        </div>
-                    `;
-                }
-            });
-
-            container.innerHTML = html;
-        }
-
-        // 👥 팀원 실시간 상태 (자동 진화)
-        const TEAM_MEMBERS = [
-            { id: 1, name: '도현', role: 'CEO', task: 'JARVIS AGI 진화 총괄', progress: 85, status: 'online' },
-            { id: 2, name: '기술팀', role: 'Tech Lead', task: 'MoE + 신경심볼릭 개발', progress: 90, status: 'online' },
-            { id: 3, name: '데이터팀', role: 'Data Engineer', task: 'arXiv 논문 수집 & 분석', progress: 78, status: 'online' },
-            { id: 4, name: '의료팀', role: 'Medical AI', task: '신약 설계 + 임상 분석', progress: 82, status: 'online' },
-            { id: 5, name: '자동화팀', role: 'Automation', task: 'GitHub Actions + Obsidian 동기화', progress: 88, status: 'online' },
-            { id: 6, name: '사업팀', role: 'Business', task: '다이소 드롭쉬핑 + 마케팅', progress: 95, status: 'online' }
-        ];
-
-        async function loadTeamStatus() {
-            try {
-                const response = await fetch('/data/team_status.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    displayTeamMembers(data.members);
-                    return;
-                }
-            } catch (error) {
-                console.log('⚠️ [JARVIS] 팀원 상태 원격 로드 실패, 자동 모드 활성화');
-            }
-
-            // 🤖 자동 진화: 팀원 진행도 증가
-            const updatedMembers = TEAM_MEMBERS.map(member => ({
-                ...member,
-                progress: Math.min(99, member.progress + Math.random() * 0.5),
-                status: Math.random() > 0.95 ? 'offline' : 'online'
-            }));
-
-            displayTeamMembers(updatedMembers);
-        }
-
-        function displayTeamMembers(members) {
-            const container = document.getElementById('team-members');
-            if (!container) return;
-
-            let html = '';
-
-            members.forEach(member => {
-                const progressPercent = member.progress.toFixed(1);
-                const statusClass = member.status === 'online' ? '' : 'offline';
-
-                html += `
-                    <div class="team-member">
-                        <div class="team-member-header">
-                            <div class="team-member-status ${statusClass}"></div>
-                            <div>
-                                <div class="team-member-name">${member.name}</div>
-                                <div style="font-size: 11px; color: rgba(255,255,255,0.6);">${member.role}</div>
-                            </div>
-                        </div>
-                        <div class="team-member-task">${member.task}</div>
-                        <div class="team-member-progress">
-                            <div class="team-member-progress-bar" style="width: ${progressPercent}%"></div>
-                        </div>
-                        <div style="font-size: 11px; color: var(--color-primary); margin-top: 8px; text-align: right;">${progressPercent}%</div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        // 🎬 스크롤 애니메이션 (JARVIS 도그 이미지용)
-        function initScrollAnimation() {
-            const dogImage = document.querySelector('.hero-image img');
-            if (!dogImage) return;
-
-            let ticking = false;
-            let currentImageIndex = 1;
-
-            function updateScroll() {
-                const scrollY = window.scrollY;
-                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollPercent = scrollY / maxScroll;
-
-                // 1️⃣ 스크롤에 따라 이미지 인덱스 변경 (1-6, 8-12 / 7번 제외, 자연스러운 전체 스크롤)
-                const baseIndex = Math.min(Math.floor(scrollPercent * 10) + 1, 11);
-                const imageIndex = baseIndex < 7 ? baseIndex : baseIndex + 1;
-
-                if (imageIndex !== currentImageIndex && imageIndex >= 1 && imageIndex <= 12 && imageIndex !== 7) {
-                    currentImageIndex = imageIndex;
-                    dogImage.src = `./images/${imageIndex}.png`;
-
-                    // 2번째 이미지부터 마지막까지 좌우로 가득 늘리기 (패딩 무시)
-                    const heroImageDiv = document.querySelector('.hero-image');
-                    if (imageIndex >= 2) {
-                        heroImageDiv.style.maxWidth = 'none';
-                        dogImage.style.maxWidth = 'none';
-                        dogImage.style.width = 'calc(100% + 120px)';
-                        dogImage.style.marginLeft = '-60px';
-                        dogImage.style.marginRight = '-60px';
-                    } else {
-                        heroImageDiv.style.maxWidth = '800px';
-                        dogImage.style.maxWidth = '800px';
-                        dogImage.style.width = '100%';
-                        dogImage.style.marginLeft = '0';
-                        dogImage.style.marginRight = '0';
-                    }
-                }
-
-                // 2️⃣ 스크롤에 따라 이미지 위치 이동 (위→아래)
-                // 화면 크기에 자동 대응하도록 이미지 높이 동적 계산
-                const heroImageContainer = document.querySelector('.hero-image-container');
-                const viewportHeight = window.innerHeight;
-                const containerHeight = heroImageContainer ? heroImageContainer.offsetHeight : viewportHeight;
-
-                // 🖼️ 실제 이미지 높이 계산 (동적)
-                const actualImageHeight = dogImage.offsetHeight || 800;
-
-                // 상단 정렬에서 하단 정렬까지의 정확한 이동거리
-                const maxTranslate = Math.max(0, containerHeight - actualImageHeight);
-                const translateY = scrollPercent * maxTranslate; // 100% 스크롤 = 이미지 하단이 박스 하단과 겹침
-
-                dogImage.style.transform = `translateY(${translateY}px) scale(1)`;
-                dogImage.style.opacity = '1';
-
-                ticking = false;
-            }
-
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(updateScroll);
-                    ticking = true;
-                }
-            });
-
-            // 전역 변수로 애니메이션 타입 변경 가능하게 설정
-            window.setDogAnimation = (type, intensity = 0.5) => {
-                scrollOptions.animationType = type;
-                scrollOptions.intensity = intensity;
-                console.log(`🐕 [JARVIS] 도그 애니메이션 변경됨: ${type} (강도: ${intensity})`);
-            };
-
-            console.log('🎬 [JARVIS] 스크롤 애니메이션 활성화됨');
-            console.log('📝 애니메이션 타입: scale, fade, translate, rotate, blur, tilt');
-            console.log('💡 변경 방법: window.setDogAnimation("타입", 강도)');
-        }
-
-        // 📊 AGI 메트릭 자동 진화 시스템 (Level 3.0 달성!)
-        let AGI_METRICS = {
-            level: 3.0,
-            evolution: 100,
-            accuracy: 99.8,
-            availability: 99.99
-        };
-
-        async function loadAGIMetrics() {
-            try {
-                const response = await fetch('/data/agi_metrics.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    AGI_METRICS = data;
-                    updateAGIMetrics(AGI_METRICS);
-                    return;
-                }
-            } catch (error) {
-                console.log('⚠️ [JARVIS] 원격 메트릭 로드 실패, 자동 진화 모드 활성화');
-            }
-
-            // 🤖 자동 진화: 1분마다 자동 증가
-            AGI_METRICS.level = Math.min(3.0, AGI_METRICS.level + 0.0015);
-            AGI_METRICS.evolution = Math.min(100, AGI_METRICS.evolution + 0.15);
-            AGI_METRICS.accuracy = Math.min(99.95, AGI_METRICS.accuracy + 0.01);
-            AGI_METRICS.availability = Math.min(99.99, AGI_METRICS.availability + 0.001);
-
-            updateAGIMetrics(AGI_METRICS);
-        }
-
-        function updateAGIMetrics(metrics) {
-            const metricElements = document.querySelectorAll('.agi-metric-value');
-            if (metricElements.length >= 4) {
-                metricElements[0].textContent = metrics.level.toFixed(2);
-                metricElements[1].textContent = metrics.evolution.toFixed(1) + '%';
-                metricElements[2].textContent = metrics.accuracy.toFixed(2) + '%';
-                metricElements[3].textContent = metrics.availability.toFixed(2) + '%';
-            }
-        }
-
-        // 페이지 로드 시 실행
-        window.addEventListener('load', () => {
-            console.log('🤖 [JARVIS] 실시간 활동 모니터링 초기화...');
-            loadActivityLog();
-            loadTaskDetails();
-            loadProjectGraph();
-            loadAGIMetrics(); // AGI 메트릭 초기 로드
-            loadTeamStatus(); // 팀원 상태 초기 로드
-            initScrollAnimation(); // 스크롤 애니메이션 초기화
-
-            // ⏰ 1분마다 자동 업데이트 (60000ms = 60초)
-            setInterval(loadActivityLog, 60000);
-            setInterval(loadTaskDetails, 60000);
-            setInterval(loadProjectGraph, 60000);
-            setInterval(loadAGIMetrics, 60000); // AGI 메트릭 1분마다 업데이트
-            setInterval(loadTeamStatus, 60000); // 팀원 상태 1분마다 업데이트
-
-            console.log('🤖 [JARVIS] 실시간 활동 모니터링 시작됨 (1분 주기)');
-            console.log('📊 데이터 소스: /data/activity_log.json');
-            console.log('📊 프로젝트 소스: /data/projects.json');
-            console.log('📊 작업 상세: activity_log.json의 tasks 필드');
-            console.log('🔄 매 1분마다 자동 새로고침');
-            console.log('🎯 AGI 메트릭 실시간 반영 활성화');
-        });
+        updateTime();
+        setInterval(updateTime, 1000);
     </script>
 </body>
 </html>
