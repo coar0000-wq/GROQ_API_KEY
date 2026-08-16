@@ -10,15 +10,15 @@
         },
         {
           "name": "Phase 2: 신경심볼릭 AI",
-          "progress": 95.0
+          "progress": 95.5
         },
         {
           "name": "Phase 3: 양자 알고리즘",
-          "progress": 90.0
+          "progress": 90.5
         },
         {
           "name": "Phase 4: 메타진화",
-          "progress": 80.0
+          "progress": 80.5
         }
       ]
     },
@@ -32,26 +32,26 @@
         },
         {
           "name": "다이소 마케팅 고도화",
-          "progress": 50.0
+          "progress": 50.5
         },
         {
           "name": "다이소 YouTube 정보 수집",
-          "progress": 40.0
+          "progress": 40.5
         },
         {
           "name": "의료 AI SaaS",
-          "progress": 80.0
+          "progress": 80.5
         },
         {
           "name": "Satellite AI",
-          "progress": 65.0
+          "progress": 65.5
         },
         {
           "name": "자율에이전트 SaaS",
-          "progress": 60.0
+          "progress": 60.5
         }
       ]
     }
   ],
-  "lastUpdate": "2026-08-16T13:39:59.007871Z"
+  "lastUpdate": "2026-08-16T13:57:20.522120Z"
 }
