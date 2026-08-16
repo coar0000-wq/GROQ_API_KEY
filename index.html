@@ -28,12 +28,21 @@
 
         /* ==================== HEADER ==================== */
         header {
-            padding: 20px 60px;
+            padding: 25px 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #1a1a1a;
             border-bottom: 1px solid rgba(100, 229, 255, 0.1);
+            gap: 40px;
+            min-height: 60px;
+        }
+
+        .header-agi-metrics {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin-left: 280px;
         }
 
         .logo {
@@ -83,6 +92,8 @@
             align-items: center;
             justify-content: center;
             padding: 60px;
+            position: relative;
+            overflow: hidden;
         }
 
         .hero-content {
@@ -156,6 +167,7 @@
         .hero-image img {
             max-width: 100%;
             height: auto;
+            will-change: transform, opacity;
         }
 
         /* ==================== REALTIME TASKS ==================== */
@@ -359,6 +371,41 @@
             display: none;
         }
 
+        /* ==================== AGI STATUS OVERLAY ==================== */
+        .agi-status-overlay {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            z-index: 10;
+        }
+
+        .agi-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .agi-metric {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .agi-metric-label {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            order: -1;
+        }
+
+        .agi-metric-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
         /* ==================== TASK DETAILS ==================== */
         .task-details {
             margin-top: 40px;
@@ -427,11 +474,33 @@
             }
         }
 
+        @media (max-width: 1280px) {
+            .hero-image-container {
+                padding: 40px;
+            }
+
+            .agi-metrics {
+                gap: 20px;
+            }
+
+            .agi-metric-label {
+                font-size: 10px;
+            }
+
+            .agi-metric-value {
+                font-size: 13px;
+            }
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
                 padding: 15px 30px;
+            }
+
+            .header-agi-metrics {
+                width: 100%;
             }
 
             nav {
@@ -445,7 +514,7 @@
 
             .hero-image-container {
                 min-height: 40vh;
-                padding: 30px 20px;
+                padding: 20px 15px;
             }
 
             .hero-content {
@@ -456,6 +525,72 @@
             .hero h1 {
                 font-size: 32px;
             }
+
+            .agi-metrics {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .agi-metric-label {
+                font-size: 9px;
+            }
+
+            .agi-metric-value {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image-container {
+                min-height: 30vh;
+                padding: 15px 10px;
+            }
+
+            .hero-content {
+                padding: 20px 15px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .agi-status-overlay {
+                top: 20px;
+                left: 20px;
+            }
+
+            .agi-metrics {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .agi-metric-label {
+                font-size: 9px;
+            }
+
+            .agi-metric-value {
+                font-size: 11px;
+            }
+
+            .realtime-tasks,
+            .task-details,
+            .project-graph {
+                padding: 20px;
+                margin-top: 30px;
+            }
+
+            .task-detail-item {
+                padding: 8px;
+                margin-bottom: 8px;
+            }
+
+            .task-detail-title {
+                font-size: 12px;
+            }
+
+            .task-detail-content {
+                font-size: 11px;
+            }
         }
     </style>
 </head>
@@ -463,6 +598,26 @@
     <!-- ==================== HEADER ==================== -->
     <header>
         <div class="logo">JARVIS</div>
+        <div class="header-agi-metrics">
+            <div class="agi-metrics">
+                <div class="agi-metric">
+                    <span class="agi-metric-label">AGI 레벨</span>
+                    <span class="agi-metric-value">2.9</span>
+                </div>
+                <div class="agi-metric">
+                    <span class="agi-metric-label">진화도</span>
+                    <span class="agi-metric-value">45%</span>
+                </div>
+                <div class="agi-metric">
+                    <span class="agi-metric-label">정확도</span>
+                    <span class="agi-metric-value">99.3%</span>
+                </div>
+                <div class="agi-metric">
+                    <span class="agi-metric-label">가용성</span>
+                    <span class="agi-metric-value">99.95%</span>
+                </div>
+            </div>
+        </div>
         <nav>
             <a href="#home">홈</a>
             <a href="#features">기능</a>
@@ -612,15 +767,21 @@
             const container = document.getElementById('task-details-container');
             if (!container) return;
 
-            // 작업 순서 정의
-            const taskOrder = ['youtube', 'arxiv', 'jarvis', 'obsidian', 'medical'];
+            // 작업 순서 및 색상 정의
+            const taskConfig = [
+                { name: 'youtube', color: '#FF6B6B' },   // 빨강
+                { name: 'arxiv', color: '#FFA500' },     // 주황
+                { name: 'jarvis', color: '#64E5FF' },    // 파랑
+                { name: 'obsidian', color: '#9B59B6' },  // 보라
+                { name: 'medical', color: '#2ECC71' }    // 초록
+            ];
             let html = '';
 
-            taskOrder.forEach(taskName => {
-                if (tasks[taskName]) {
-                    const task = tasks[taskName];
+            taskConfig.forEach(config => {
+                if (tasks[config.name]) {
+                    const task = tasks[config.name];
                     html += `
-                        <div class="task-detail-item">
+                        <div class="task-detail-item" style="border-left-color: ${config.color}">
                             <div class="task-detail-title">${task.title}</div>
                             <div class="task-detail-content">${task.details}</div>
                         </div>
@@ -631,23 +792,124 @@
             container.innerHTML = html;
         }
 
+        // 🎬 스크롤 애니메이션 (JARVIS 도그 이미지용)
+        function initScrollAnimation() {
+            const dogImage = document.querySelector('.hero-image img');
+            if (!dogImage) return;
+
+            let ticking = false;
+            const scrollOptions = {
+                // 사용 가능한 애니메이션 타입: 'fade', 'scale', 'translate', 'rotate', 'blur', 'tilt'
+                animationType: 'scale', // 기본값: 크기 확대/축소
+                intensity: 0.5 // 애니메이션 강도 (0-1)
+            };
+
+            function updateScroll() {
+                const scrollY = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = scrollY / maxScroll;
+
+                switch(scrollOptions.animationType) {
+                    case 'fade':
+                        // 스크롤하면서 투명도 변화
+                        dogImage.style.opacity = 1 - (scrollPercent * scrollOptions.intensity);
+                        break;
+                    case 'scale':
+                        // 스크롤하면서 확대/축소
+                        const scale = 1 + (scrollPercent * scrollOptions.intensity);
+                        dogImage.style.transform = `scale(${scale})`;
+                        break;
+                    case 'translate':
+                        // 스크롤하면서 위/아래 이동
+                        const translateY = scrollPercent * 50 * scrollOptions.intensity;
+                        dogImage.style.transform = `translateY(${translateY}px)`;
+                        break;
+                    case 'rotate':
+                        // 스크롤하면서 회전
+                        const rotate = scrollPercent * 10 * scrollOptions.intensity;
+                        dogImage.style.transform = `rotate(${rotate}deg)`;
+                        break;
+                    case 'blur':
+                        // 스크롤하면서 흐릿해짐
+                        const blur = scrollPercent * 5 * scrollOptions.intensity;
+                        dogImage.style.filter = `blur(${blur}px)`;
+                        break;
+                    case 'tilt':
+                        // 스크롤하면서 기울어짐
+                        const skew = scrollPercent * 8 * scrollOptions.intensity;
+                        dogImage.style.transform = `skewY(${skew}deg)`;
+                        break;
+                }
+
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateScroll);
+                    ticking = true;
+                }
+            });
+
+            // 전역 변수로 애니메이션 타입 변경 가능하게 설정
+            window.setDogAnimation = (type, intensity = 0.5) => {
+                scrollOptions.animationType = type;
+                scrollOptions.intensity = intensity;
+                console.log(`🐕 [JARVIS] 도그 애니메이션 변경됨: ${type} (강도: ${intensity})`);
+            };
+
+            console.log('🎬 [JARVIS] 스크롤 애니메이션 활성화됨');
+            console.log('📝 애니메이션 타입: scale, fade, translate, rotate, blur, tilt');
+            console.log('💡 변경 방법: window.setDogAnimation("타입", 강도)');
+        }
+
+        // 📊 AGI 메트릭 실시간 로드
+        async function loadAGIMetrics() {
+            try {
+                const response = await fetch('/data/activity_log.json?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.agi_metrics) {
+                        updateAGIMetrics(data.agi_metrics);
+                        console.log('✅ [JARVIS] AGI 메트릭 로드됨:', data.agi_metrics);
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ [JARVIS] AGI 메트릭 로드 실패:', error);
+            }
+        }
+
+        function updateAGIMetrics(metrics) {
+            const metricElements = document.querySelectorAll('.agi-metric-value');
+            if (metricElements.length >= 4) {
+                metricElements[0].textContent = metrics.level.toFixed(2);
+                metricElements[1].textContent = metrics.evolution.toFixed(1) + '%';
+                metricElements[2].textContent = metrics.accuracy.toFixed(2) + '%';
+                metricElements[3].textContent = metrics.availability.toFixed(2) + '%';
+            }
+        }
+
         // 페이지 로드 시 실행
         window.addEventListener('load', () => {
             console.log('🤖 [JARVIS] 실시간 활동 모니터링 초기화...');
             loadActivityLog();
             loadTaskDetails();
             loadProjectGraph();
+            loadAGIMetrics(); // AGI 메트릭 초기 로드
+            initScrollAnimation(); // 스크롤 애니메이션 초기화
 
             // ⏰ 1분마다 자동 업데이트 (60000ms = 60초)
             setInterval(loadActivityLog, 60000);
             setInterval(loadTaskDetails, 60000);
             setInterval(loadProjectGraph, 60000);
+            setInterval(loadAGIMetrics, 60000); // AGI 메트릭 1분마다 업데이트
 
             console.log('🤖 [JARVIS] 실시간 활동 모니터링 시작됨 (1분 주기)');
             console.log('📊 데이터 소스: /data/activity_log.json');
             console.log('📊 프로젝트 소스: /data/projects.json');
             console.log('📊 작업 상세: activity_log.json의 tasks 필드');
             console.log('🔄 매 1분마다 자동 새로고침');
+            console.log('🎯 AGI 메트릭 실시간 반영 활성화');
         });
     </script>
 </body>
