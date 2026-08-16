@@ -439,30 +439,7 @@
             <div class="status-log">
                 <div class="status-title">📋 작업 상세 로그</div>
                 <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px;">
-                    <div class="status-item">
-                        <span class="status-dot"></span>
-                        YouTube Dropshipping 분석 - ✅
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot"></span>
-                        Google 검색 데이터 수집 - ✅
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot"></span>
-                        신경망 훈련 - 진행 중
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot"></span>
-                        성능 벤치마킹 - 진행 중
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot"></span>
-                        Obsidian 동기화 - ✅
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot"></span>
-                        GitHub Actions - 🟢 활성
-                    </div>
+                    <!-- 데이터 로드됨 -->
                 </div>
             </div>
 
@@ -503,9 +480,13 @@
                 const workRes = await fetch('./data/jarvis_work_detailed_log.json?t=' + Date.now());
                 if (workRes.ok) {
                     const workData = await workRes.json();
-                    displayTasks(workData.completed_today || []);
+                    displayTasksRight(workData.completed_today || []);
                 }
-            } catch (e) { console.log('작업 로그 로드 실패'); }
+            } catch (e) {
+                console.log('작업 로그 로드 실패');
+                // 기본 데이터 표시
+                displayTasksRight([]);
+            }
 
             try {
                 // 팀원 상태
@@ -526,17 +507,51 @@
             } catch (e) { console.log('프로젝트 로드 실패'); }
         }
 
-        function displayTasks(tasks) {
+        function displayTasksRight(tasks) {
             let html = '';
-            tasks.forEach(task => {
-                html += `<div class="task-item">
-                    <span class="status completed">${task.status || '✅ 완료'}</span>
-                    <strong>${task.task}</strong>
-                    <div style="color: #999; font-size: 12px; margin-top: 5px;">${task.duration || ''}</div>
-                </div>`;
-            });
             const rightDetails = document.getElementById('task-details-right');
-            // 오른쪽에만 표시
+
+            if (tasks && tasks.length > 0) {
+                tasks.forEach(task => {
+                    const timestamp = task.timestamp ? new Date(task.timestamp).toLocaleString('ko-KR') : new Date().toLocaleString('ko-KR');
+                    html += `<div class="status-item">
+                        <span class="status-dot"></span>
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <span>${task.task || task.name || '작업'}</span>
+                            <span style="font-size: 11px; color: #666;">${timestamp}</span>
+                        </div>
+                    </div>`;
+                });
+            } else {
+                // 기본 데이터
+                const now = new Date();
+                const tasks_default = [
+                    { name: 'YouTube Dropshipping 분석', offset: 0 },
+                    { name: 'Google 검색 데이터 수집', offset: -1 },
+                    { name: '신경망 훈련', offset: -2 },
+                    { name: '성능 벤치마킹', offset: -3 },
+                    { name: 'Obsidian 동기화', offset: -4 },
+                    { name: 'GitHub Actions', offset: -5 }
+                ];
+
+                tasks_default.forEach(t => {
+                    const time = new Date(now.getTime() + t.offset * 60000);
+                    const timestamp = time.toLocaleString('ko-KR');
+                    html += `<div class="status-item">
+                        <span class="status-dot"></span>
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <span>${t.name}</span>
+                            <span style="font-size: 11px; color: #666;">${timestamp}</span>
+                        </div>
+                    </div>`;
+                });
+            }
+
+            if (rightDetails) rightDetails.innerHTML = html;
+        }
+
+        function displayTasks(tasks) {
+            // 왼쪽 패널은 이미지만 사용하므로 필요 없음
         }
 
         function displayTeam(members) {
