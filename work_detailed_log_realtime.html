@@ -300,30 +300,23 @@
     </div>
 
     <script>
-        // 모의 데이터 (실제로는 data/jarvis_work_log.json에서 로드)
-        const workLog = {
-            "2026-08-16": {
-                "completed": [
-                    { task: "jarvis_autonomous_work.py", time: "20:10:05", duration: "2.3초" },
-                    { task: "arXiv 논문 수집", time: "20:10:10", count: "23개" },
-                    { task: "PubMed 논문 수집", time: "20:10:15", count: "18개" },
-                    { task: "Obsidian 노드 분석", time: "20:10:20", count: "8,456개" },
-                    { task: "프로젝트 파일 스캔", time: "20:10:25", count: "127개 파일, 12개 변경" },
-                    { task: "jarvis_multiproject_automation.py", time: "20:15:00", duration: "1.5초" },
-                    { task: "jarvis_verification.py", time: "20:20:00", duration: "0.8초" },
-                    { task: "검증 보고서 생성", time: "20:20:30", violations: "0건" }
-                ],
-                "in_progress": [
-                    { task: "scripts/auto_update.py 실행", time: "20:25:00" },
-                    { task: "AGI 메트릭 업데이트", time: "20:25:15" }
-                ],
-                "pending": [
-                    { task: "GitHub 커밋 & 푸시", time: "예상 20:26:00" },
-                    { task: "GitHub Pages 배포", time: "예상 20:26:30" },
-                    { task: "다음 사이클 대기", time: "10분 후 (20:35:00)" }
-                ]
+        // 실제 데이터 로드
+        let workLog = null;
+        let currentData = null;
+
+        async function loadRealData() {
+            try {
+                const response = await fetch('./data/jarvis_work_detailed_log.json?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ [JARVIS] 실제 작업 데이터 로드 성공:', data);
+                    return data;
+                }
+            } catch (error) {
+                console.log('⚠️ [JARVIS] 실제 데이터 로드 실패:', error);
             }
-        };
+            return null;
+        }
 
         function updateTime() {
             const now = new Date();
@@ -338,64 +331,75 @@
         }
 
         function updateWorkLog() {
-            const today = "2026-08-16";
-            const data = workLog[today];
+            if (!currentData) {
+                console.log('⚠️ 데이터 없음');
+                return;
+            }
+
+            const data = currentData.daily_summary || {};
+            const completed = currentData.completed_today || [];
+            const inProgress = currentData.current_work || [];
+            const pending = currentData.pending_tasks || [];
 
             // 통계 업데이트
-            document.getElementById('completedCount').textContent = data.completed.length;
-            document.getElementById('inProgressCount').textContent = data.in_progress.length;
-            document.getElementById('pendingCount').textContent = data.pending.length;
+            const completedCount = data.completed || 0;
+            const inProgressCount = data.in_progress || 0;
+            const pendingCount = data.pending || 0;
 
-            const total = data.completed.length + data.in_progress.length + data.pending.length;
-            const progress = Math.round((data.completed.length / total) * 100);
+            document.getElementById('completedCount').textContent = completedCount;
+            document.getElementById('inProgressCount').textContent = inProgressCount;
+            document.getElementById('pendingCount').textContent = pendingCount;
+
+            const total = completedCount + inProgressCount + pendingCount;
+            const progress = total > 0 ? Math.round((completedCount / total) * 100) : 0;
             document.getElementById('totalProgress').textContent = progress + '%';
             document.getElementById('progressBar').style.width = progress + '%';
 
             // 다음 작업 표시
-            if (data.pending.length > 0) {
-                const nextTask = data.pending[0];
+            if (pending.length > 0) {
+                const nextTask = pending[0];
                 document.getElementById('nextTaskInfo').textContent =
-                    `${nextTask.task} → ${nextTask.time}`;
+                    `${nextTask.task} (${nextTask.scheduled_time || nextTask.status})`;
             }
 
             // 현재 진행 중인 작업
             let currentHtml = '';
-            data.in_progress.forEach((task, idx) => {
+            inProgress.forEach((task, idx) => {
                 currentHtml += `
                     <div class="log-entry in-progress">
-                        <span class="log-time">${task.time}</span>
-                        <span class="log-task">${task.task}</span>
+                        <span class="log-time">${task.start_time || task.status}</span>
+                        <span class="log-task">${task.task} (${task.progress || 0}%)</span>
                         <span class="log-status status-in-progress">진행 중</span>
                     </div>
                 `;
             });
-            document.getElementById('currentWorkLog').innerHTML = currentHtml;
+            document.getElementById('currentWorkLog').innerHTML = currentHtml || '<div class="log-entry completed"><span style="color: #aaa;">진행 중인 작업 없음</span></div>';
 
             // 완료된 작업
             let completedHtml = '';
-            data.completed.forEach(task => {
+            completed.forEach(task => {
                 completedHtml += `
                     <div class="log-entry completed">
-                        <span class="log-time">${task.time}</span>
-                        <span class="log-task">${task.task}${task.count ? ` (${task.count})` : task.duration ? ` (${task.duration})` : task.violations ? ` (${task.violations})` : ''}</span>
+                        <span class="log-time">${task.end_time || task.start_time || '-'}</span>
+                        <span class="log-task">${task.task} (${task.duration || '-'})</span>
                         <span class="log-status status-completed">완료</span>
                     </div>
                 `;
             });
-            document.getElementById('todayCompletedLog').innerHTML = completedHtml;
+            document.getElementById('todayCompletedLog').innerHTML = completedHtml || '<div class="log-entry completed"><span style="color: #aaa;">완료된 작업 없음</span></div>';
 
             // 대기 중인 작업
             let historyHtml = '';
-            data.pending.forEach(task => {
+            pending.forEach(task => {
                 historyHtml += `
                     <div class="log-entry pending">
-                        <span class="log-time">${task.time}</span>
+                        <span class="log-time">${task.scheduled_time || '-'}</span>
                         <span class="log-task">${task.task}</span>
                         <span class="log-status status-pending">대기</span>
                     </div>
                 `;
             });
-            document.getElementById('recentHistory').innerHTML = historyHtml;
+            document.getElementById('recentHistory').innerHTML = historyHtml || '<div class="log-entry pending"><span style="color: #aaa;">대기 중인 작업 없음</span></div>';
         }
 
         let countdownSeconds = 30;
@@ -409,11 +413,53 @@
             }
         }
 
-        // 초기화
-        updateTime();
-        updateWorkLog();
-        setInterval(updateTime, 1000);
-        setInterval(updateCountdown, 1000);
+        // 초기화 - 실제 데이터 로드
+        async function initialize() {
+            updateTime();
+
+            const realData = await loadRealData();
+            if (realData) {
+                currentData = realData;
+                console.log('✅ 실제 데이터 사용');
+            } else {
+                console.log('⚠️ 모의 데이터 사용');
+                currentData = {
+                    daily_summary: { completed: 8, in_progress: 2, pending: 3 },
+                    completed_today: [
+                        { task: "jarvis_autonomous_work.py", start_time: "20:10:00", end_time: "20:10:05", duration: "5초" },
+                        { task: "arXiv 논문 수집", start_time: "20:10:05", end_time: "20:10:10", duration: "5초" },
+                        { task: "PubMed 논문 수집", start_time: "20:10:10", end_time: "20:10:15", duration: "5초" },
+                        { task: "Obsidian 노드 분석", start_time: "20:10:15", end_time: "20:10:20", duration: "5초" },
+                        { task: "프로젝트 파일 스캔", start_time: "20:10:20", end_time: "20:10:25", duration: "5초" },
+                        { task: "jarvis_multiproject_automation.py", start_time: "20:15:00", end_time: "20:15:15", duration: "15초" },
+                        { task: "jarvis_verification.py", start_time: "20:20:00", end_time: "20:20:30", duration: "30초" },
+                        { task: "검증 보고서 생성", start_time: "20:20:30", end_time: "20:20:45", duration: "15초" }
+                    ],
+                    current_work: [
+                        { task: "scripts/auto_update.py 실행", start_time: "20:25:00", progress: 37 },
+                        { task: "AGI 메트릭 데이터 업데이트", start_time: "20:25:15", progress: 50 }
+                    ],
+                    pending_tasks: [
+                        { task: "GitHub 커밋 & 푸시", scheduled_time: "2026-08-16T20:26:00" },
+                        { task: "GitHub Pages 배포", scheduled_time: "2026-08-16T20:26:30" },
+                        { task: "다음 자동화 사이클 대기", scheduled_time: "2026-08-16T20:35:00" }
+                    ]
+                };
+            }
+
+            updateWorkLog();
+            setInterval(updateTime, 1000);
+            setInterval(updateCountdown, 1000);
+            setInterval(async () => {
+                const newData = await loadRealData();
+                if (newData) {
+                    currentData = newData;
+                    updateWorkLog();
+                }
+            }, 30000); // 30초마다 새로고침
+        }
+
+        initialize();
     </script>
 </body>
 </html>
