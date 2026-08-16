@@ -1,0 +1,66 @@
+{
+  "timestamp": "2026-08-17T00:00:00.000000",
+  "team_members": [
+    {
+      "id": "member_001",
+      "name": "도현 (CEO)",
+      "role": "전체 운영",
+      "status": "🟢 활동 중",
+      "current_task": "JARVIS Level 3.0 진화 감시",
+      "progress": 100,
+      "last_update": "2026-08-17T00:00:00"
+    },
+    {
+      "id": "member_002",
+      "name": "의료 AI 팀장",
+      "role": "신약 개발",
+      "status": "🟢 활동 중",
+      "current_task": "Phase 3 약물 설계",
+      "progress": 72,
+      "last_update": "2026-08-17T00:00:00"
+    },
+    {
+      "id": "member_003",
+      "name": "기술 팀장",
+      "role": "JARVIS 진화",
+      "status": "🟢 활동 중",
+      "current_task": "신경심볼릭 AI 구현",
+      "progress": 96,
+      "last_update": "2026-08-17T00:00:00"
+    },
+    {
+      "id": "member_004",
+      "name": "사업팀 리드",
+      "role": "사업 전개",
+      "status": "🟢 활동 중",
+      "current_task": "다이소 마케팅",
+      "progress": 51,
+      "last_update": "2026-08-17T00:00:00"
+    },
+    {
+      "id": "member_005",
+      "name": "데이터 팀장",
+      "role": "데이터 수집",
+      "status": "🟢 활동 중",
+      "current_task": "YouTube/arXiv 자동수집",
+      "progress": 85,
+      "last_update": "2026-08-17T00:00:00"
+    },
+    {
+      "id": "member_006",
+      "name": "연구 팀장",
+      "role": "논문 분석",
+      "status": "🟢 활동 중",
+      "current_task": "양자/신약 논문 분석",
+      "progress": 88,
+      "last_update": "2026-08-17T00:00:00"
+    }
+  ],
+  "team_stats": {
+    "total_members": 6,
+    "active": 6,
+    "idle": 0,
+    "offline": 0,
+    "average_progress": 82
+  }
+}
