@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-08-16T18:56:34.033704",
+  "level": 2.9099999999999997,
+  "evolution": 45.5,
+  "accuracy": 99.36,
+  "availability": 99.96000000000001,
+  "business": {
+    "daiso": 99.0,
+    "marketing": 85.5,
+    "team_expansion": 70.0,
+    "finance": 74.0
+  }
+}
