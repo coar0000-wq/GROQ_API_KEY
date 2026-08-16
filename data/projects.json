@@ -6,19 +6,19 @@
       "items": [
         {
           "name": "Phase 1: MoE 라우터",
-          "progress": 97.5
+          "progress": 98.0
         },
         {
           "name": "Phase 2: 신경심볼릭 AI",
-          "progress": 92.5
+          "progress": 93.0
         },
         {
           "name": "Phase 3: 양자 알고리즘",
-          "progress": 87.5
+          "progress": 88.0
         },
         {
           "name": "Phase 4: 메타진화",
-          "progress": 77.5
+          "progress": 78.0
         }
       ]
     },
@@ -32,26 +32,26 @@
         },
         {
           "name": "다이소 마케팅 고도화",
-          "progress": 47.5
+          "progress": 48.0
         },
         {
           "name": "다이소 YouTube 정보 수집",
-          "progress": 37.5
+          "progress": 38.0
         },
         {
           "name": "의료 AI SaaS",
-          "progress": 77.5
+          "progress": 78.0
         },
         {
           "name": "Satellite AI",
-          "progress": 62.5
+          "progress": 63.0
         },
         {
           "name": "자율에이전트 SaaS",
-          "progress": 57.5
+          "progress": 58.0
         }
       ]
     }
   ],
-  "lastUpdate": "2026-08-16T11:29:59.283656Z"
+  "lastUpdate": "2026-08-16T11:45:34.070973Z"
 }
