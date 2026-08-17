@@ -648,8 +648,8 @@
                         <div class="left-metric-value" style="font-size: 18px;">자동화</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">GitHub Actions <span class="status-dot green-pulse"></span></div>
-                        <div class="left-metric-value" style="font-size: 18px;">실행 중</div>
+                        <div class="left-metric-label">다이소 사업 <span class="status-dot green-pulse"></span></div>
+                        <div class="left-metric-value" id="daiso-status" style="font-size: 18px; color: #00ff00;">준비완료</div>
                     </div>
                     <div class="left-metric-card">
                         <div class="left-metric-label">Obsidian <span class="status-dot" id="obsidian-status-dot"></span></div>
@@ -686,7 +686,35 @@
                 <div class="right-subtitle">도현이를 위한 AGI System</div>
             </div>
 
-            <!-- 2️⃣ 작업 상세 로그 -->
+            <!-- 2️⃣ 다이소 사업 현황 -->
+            <div style="background: rgba(0, 212, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 8px; padding: 15px; margin-top: 20px;">
+                <div class="status-title" id="daiso-title">💰 다이소 Dropshipping - 준비 완료</div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px;">
+                    <div style="background: rgba(0, 255, 0, 0.1); padding: 10px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 11px; color: #888; margin-bottom: 4px;">상품 수</div>
+                        <div id="daiso-products" style="font-size: 18px; color: #00ff00; font-weight: bold;">--</div>
+                    </div>
+                    <div style="background: rgba(0, 212, 255, 0.1); padding: 10px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 11px; color: #888; margin-bottom: 4px;">월 수익</div>
+                        <div id="daiso-revenue" style="font-size: 16px; color: #00d4ff; font-weight: bold;">--</div>
+                    </div>
+                    <div style="background: rgba(100, 200, 0, 0.1); padding: 10px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 11px; color: #888; margin-bottom: 4px;">평균 마진</div>
+                        <div id="daiso-margin" style="font-size: 18px; color: #66ff66; font-weight: bold;">--</div>
+                    </div>
+                    <div style="background: rgba(255, 170, 0, 0.1); padding: 10px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 11px; color: #888; margin-bottom: 4px;">자동화율</div>
+                        <div id="daiso-automation" style="font-size: 18px; color: #ffaa00; font-weight: bold;">--</div>
+                    </div>
+                </div>
+                <div style="margin-top: 12px; font-size: 12px; color: #aaa; padding-top: 12px; border-top: 1px solid rgba(0, 212, 255, 0.1);">
+                    <div style="margin-bottom: 4px;">✅ Shopify 스토어 완성</div>
+                    <div style="margin-bottom: 4px;">✅ 자동화 파이프라인 구축</div>
+                    <div>✅ 마케팅 전략 수립</div>
+                </div>
+            </div>
+
+            <!-- 3️⃣ 작업 상세 로그 -->
             <div class="status-log" style="margin-top: 20px;">
                 <div class="status-title">📋 작업 상세 로그 (최신 6개)</div>
                 <div id="task-details-right" style="display: flex; flex-direction: column; gap: 5px; max-height: 420px; overflow: hidden; margin-top: 10px;">
@@ -809,6 +837,15 @@
             } catch (e) { console.log('Phase 진행도 로드 실패'); }
 
             try {
+                // 다이소 사업
+                const daisoRes = await fetch(basePath + '/data/daiso_business_plan.json?t=' + Date.now());
+                if (daisoRes.ok) {
+                    const daisoData = await daisoRes.json();
+                    updateDaisoDisplay(daisoData);
+                }
+            } catch (e) { console.log('다이소 사업 로드 실패'); }
+
+            try {
                 // 팀원 상태
                 const teamRes = await fetch(basePath + '/data/team_status.json?t=' + Date.now());
                 if (teamRes.ok) {
@@ -865,6 +902,54 @@
                 const nextTime = new Date(date.getTime() + 10 * 60000); // 10분 더함
                 const formatted = nextTime.toLocaleString('ko-KR');
                 nextAuto.textContent = `다음 자동화: ${formatted}`;
+            }
+        }
+
+        // 다이소 사업 동적 업데이트
+        function updateDaisoDisplay(daisoData) {
+            if (!daisoData) return;
+
+            // 상품 수
+            const productsEl = document.getElementById('daiso-products');
+            if (productsEl) {
+                productsEl.textContent = `${daisoData.products_count || daisoData.overview.products_count}개`;
+            }
+
+            // 월 수익 범위
+            const revenueEl = document.getElementById('daiso-revenue');
+            if (revenueEl && daisoData.financial_targets) {
+                const min = daisoData.financial_targets.monthly_revenue.min;
+                const max = daisoData.financial_targets.monthly_revenue.max;
+                revenueEl.textContent = `${min} ~ ${max}`;
+                revenueEl.style.fontSize = '14px';
+            }
+
+            // 평균 마진
+            const marginEl = document.getElementById('daiso-margin');
+            if (marginEl) {
+                marginEl.textContent = daisoData.financial_targets.average_margin;
+            }
+
+            // 자동화율
+            const automationEl = document.getElementById('daiso-automation');
+            if (automationEl) {
+                automationEl.textContent = daisoData.overview.automation_rate;
+            }
+
+            // 다이소 상태 업데이트
+            const statusEl = document.getElementById('daiso-status');
+            if (statusEl) {
+                const progress = daisoData.progress_percentage;
+                if (progress >= 95) {
+                    statusEl.textContent = '🚀 론칭대기';
+                    statusEl.style.color = '#00ff00';
+                } else if (progress >= 80) {
+                    statusEl.textContent = '진행 중';
+                    statusEl.style.color = '#ffaa00';
+                } else {
+                    statusEl.textContent = '준비 중';
+                    statusEl.style.color = '#00d4ff';
+                }
             }
         }
 
