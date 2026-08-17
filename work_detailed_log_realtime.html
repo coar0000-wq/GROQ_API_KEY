@@ -318,18 +318,32 @@
     </div>
 
     <script>
-        // 실제 데이터 로드
-        let workLog = null;
-        let currentData = null;
+        // ===== 설정 & 상수 =====
+        const DEBUG_MODE = false; // ✅ 프로덕션 로그 제어
+        const FETCH_TIMEOUT = 5000; // 5초 타임아웃
+        const RECENT_EVENTS_LIMIT = 6;
+        const REFRESH_INTERVAL = 30000;
+        const COUNTDOWN_DISPLAY = 30;
+        const BASELINE_PRODUCTS = 117; // 기본 기준값
+        const DATA_VERSION = '1.0'; // ✅ 데이터 버전 추적 (중복 방지)
+
+        // ===== 로거 (console.log 통합 관리) =====
+        const Logger = {
+            debug: (tag, msg, data) => { if (DEBUG_MODE) console.log(`✅ [${tag}] ${msg}`, data || ''); },
+            info: (tag, msg, data) => console.log(`✅ [${tag}] ${msg}`, data || ''),
+            warn: (tag, msg, data) => console.warn(`⚠️ [${tag}] ${msg}`, data || ''),
+            error: (tag, msg, data) => console.error(`❌ [${tag}] ${msg}`, data || ''),
+        };
+
+        // ===== 전역 변수 네임스페이싱 =====
+        const APP_STATE = {
+            workLog: null,
+            currentData: null,
+            countdownSeconds: COUNTDOWN_DISPLAY,
+            lastDataVersion: null, // ✅ 데이터 버전 추적
+        };
 
         // ⚠️ 함수 중복 주의: 총 7개의 날짜 관련 함수가 있음
-        // - formatSafeDate (라인 326): 가장 기본적인 포맷팅
-        // - parseDateOrNow (라인 402): 유효하지 않으면 현재 시간 반환
-        // - setSafeText (라인 442): DOM에 날짜 설정
-        // - updateDateDisplay (라인 665): innerText 직접 설정
-        // - renderDateSafe (라인 681): 유효성 검증 후 렌더링 (현재 추천)
-        // - setSafeDateText (라인 759): 라벨과 함께 설정
-        // - renderTimestamp (라인 465): 간단한 timestamp 렌더링
         // TODO: 향후 이들을 하나의 유틸리티 함수로 통합 권장
 
         // ✅ 날짜 검증 & 안전 포맷팅 함수
@@ -491,16 +505,46 @@
             }
         }
 
+        // ✅ Fetch with Timeout (Critical Fix #20)
+        async function fetchWithTimeout(url, timeout = FETCH_TIMEOUT) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                // ✅ Critical Fix #18: HTTP 에러 코드 처리
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText} - ${url}`);
+                }
+                return response;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    throw new Error(`Timeout after ${timeout}ms - ${url}`);
+                }
+                throw error;
+            }
+        }
+
         async function loadRealData() {
             try {
-                const response = await fetch('./data/scheduler_log.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('✅ [JARVIS] 실제 작업 데이터 로드 성공:', data);
-                    return data;
-                }
+                const response = await fetchWithTimeout('./data/scheduler_log.json?t=' + Date.now());
+                const data = await response.json();
+                Logger.info('JARVIS', '실제 작업 데이터 로드 성공');
+                return data;
             } catch (error) {
-                console.log('⚠️ [JARVIS] 실제 데이터 로드 실패:', error);
+                Logger.warn('JARVIS', '실제 데이터 로드 실패', error.message);
+                // ✅ LocalStorage 폴백 (Critical Fix #20)
+                try {
+                    const cached = localStorage.getItem('jarvis_scheduler_log');
+                    if (cached) {
+                        Logger.warn('JARVIS', 'LocalStorage 캐시 사용');
+                        return JSON.parse(cached);
+                    }
+                } catch (e) {
+                    Logger.error('JARVIS', 'LocalStorage 접근 실패', e.message);
+                }
             }
             return null;
         }
