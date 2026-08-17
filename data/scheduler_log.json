@@ -77,6 +77,12 @@
       "event_type": "daiso_discovery",
       "status": "success",
       "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T08:09:18.371469Z",
+      "event_type": "obsidian_check",
+      "status": "online",
+      "details": ""
     }
   ]
 }
