@@ -355,6 +355,46 @@
             }
         }
 
+        // ✅ DOM 요소 안전 접근 함수 (옵셔널 체이닝)
+        function safeGetElement(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) {
+                console.warn(`⚠️ [DOM] 요소 없음: #${elementId}`);
+                return null;
+            }
+            return el;
+        }
+
+        // ✅ 안전한 텍스트 설정
+        function safeSetText(elementId, text) {
+            const el = safeGetElement(elementId);
+            if (el) {
+                el.textContent = text;
+                return true;
+            }
+            return false;
+        }
+
+        // ✅ 안전한 HTML 설정
+        function safeSetHTML(elementId, html) {
+            const el = safeGetElement(elementId);
+            if (el) {
+                el.innerHTML = html;
+                return true;
+            }
+            return false;
+        }
+
+        // ✅ 안전한 스타일 설정
+        function safeSetStyle(elementId, property, value) {
+            const el = safeGetElement(elementId);
+            if (el) {
+                el.style[property] = value;
+                return true;
+            }
+            return false;
+        }
+
         // ✅ 날짜 파싱 안전 함수 - 실패 시 현재 시간 반환
         function parseDateOrNow(dateString, fallbackText = null) {
             if (!dateString) {
@@ -483,10 +523,10 @@
             const now = new Date();
             if (isNaN(now.getTime())) {
                 console.error('❌ 현재 시간 오류');
-                document.getElementById('currentTime').textContent = '시간 오류';
+                safeSetText('currentTime', '시간 오류');
                 return;
             }
-            document.getElementById('currentTime').textContent = formatSafeDate(now.toISOString(), 'full');
+            safeSetText('currentTime', formatSafeDate(now.toISOString(), 'full'));
         }
 
         function updateWorkLog(daisoData = null) {
@@ -498,24 +538,24 @@
             const events = currentData.events || [];
             const completedEvents = events.filter(e => e.status === 'success');
 
-            // 통계 업데이트
+            // 통계 업데이트 - 안전한 DOM 접근
             // 📊 누적 상품 개수 (다이소)
             const totalProducts = daisoData?.total_products || completedEvents.length;
-            document.getElementById('completedCount').textContent = totalProducts;
+            safeSetText('completedCount', totalProducts.toString());
             console.log(`📊 [누적 상품수] ${totalProducts}개 (다이소 발굴 누적)`);
 
-            document.getElementById('inProgressCount').textContent = '1';
-            document.getElementById('pendingCount').textContent = '0';
+            safeSetText('inProgressCount', '1');
+            safeSetText('pendingCount', '0');
 
             const progress = Math.round((completedEvents.length / events.length) * 100) || 0;
-            document.getElementById('totalProgress').textContent = progress + '%';
-            document.getElementById('progressBar').style.width = progress + '%';
+            safeSetText('totalProgress', progress + '%');
+            safeSetStyle('progressBar', 'width', progress + '%');
 
-            // 다음 작업 표시
+            // 다음 작업 표시 - 안전한 DOM 접근
             if (events.length > 0) {
                 const lastEvent = events[events.length - 1];
-                document.getElementById('nextTaskInfo').textContent =
-                    `${lastEvent.task_name} >> ${lastEvent.details}`;
+                const nextTaskText = `${lastEvent.task_name} >> ${lastEvent.details}`;
+                safeSetText('nextTaskInfo', nextTaskText);
             }
 
             // 최근 진행 중인 작업 (가장 최신)
@@ -538,9 +578,11 @@
                     currentHtml = '<div class="log-entry completed"><span style="color: #ff6b6b;">⚠️ 날짜 데이터 오류</span></div>';
                 }
             }
-            document.getElementById('currentWorkLog').innerHTML = currentHtml || '<div class="log-entry completed"><span style="color: #aaa;">진행 중인 작업 없음</span></div>';
+            // 안전한 DOM 접근으로 현재 작업 표시
+            const currentWorkDefault = '<div class="log-entry completed"><span style="color: #aaa;">진행 중인 작업 없음</span></div>';
+            safeSetHTML('currentWorkLog', currentHtml || currentWorkDefault);
 
-            // 오늘 완료된 작업 (최신 6개)
+            // 오늘 완료된 작업 (최신 6개) - 안전한 DOM 접근
             let completedHtml = '';
             const recentEvents = events.slice(0, 6);
             recentEvents.forEach(task => {
@@ -559,9 +601,10 @@
                     `;
                 }
             });
-            document.getElementById('todayCompletedLog').innerHTML = completedHtml || '<div class="log-entry completed"><span style="color: #aaa;">완료된 작업 없음</span></div>';
+            const completedDefault = '<div class="log-entry completed"><span style="color: #aaa;">완료된 작업 없음</span></div>';
+            safeSetHTML('todayCompletedLog', completedHtml || completedDefault);
 
-            // 최근 작업 히스토리 (전체)
+            // 최근 작업 히스토리 (전체) - 안전한 DOM 접근
             let historyHtml = '';
             events.forEach(task => {
                 const dateStr = formatSafeDate(task.timestamp, 'date');
@@ -579,13 +622,14 @@
                     `;
                 }
             });
-            document.getElementById('recentHistory').innerHTML = historyHtml || '<div class="log-entry pending"><span style="color: #aaa;">작업 없음</span></div>';
+            const historyDefault = '<div class="log-entry pending"><span style="color: #aaa;">작업 없음</span></div>';
+            safeSetHTML('recentHistory', historyHtml || historyDefault);
         }
 
         let countdownSeconds = 30;
         function updateCountdown() {
             countdownSeconds--;
-            document.getElementById('refreshCountdown').textContent = countdownSeconds;
+            safeSetText('refreshCountdown', countdownSeconds.toString());
 
             if (countdownSeconds <= 0) {
                 countdownSeconds = 30;
@@ -616,18 +660,17 @@
                 }
             } else {
                 console.error('❌ [거짓말 검증] 작업 데이터 없음 - 모의 데이터 표시 금지');
-                document.getElementById('completedCount').textContent = '?';
-                document.getElementById('inProgressCount').textContent = '?';
-                document.getElementById('pendingCount').textContent = '?';
-                document.getElementById('totalProgress').textContent = '?';
+                // 안전한 DOM 접근으로 에러 메시지 표시
+                safeSetText('completedCount', '?');
+                safeSetText('inProgressCount', '?');
+                safeSetText('pendingCount', '?');
+                safeSetText('totalProgress', '?');
 
-                document.getElementById('currentWorkLog').innerHTML =
-                    '<div style="color: #ff6b6b; padding: 20px; text-align: center;">⚠️ 실제 데이터 없음</div>';
-                document.getElementById('todayCompletedLog').innerHTML =
-                    '<div style="color: #ff6b6b; padding: 20px; text-align: center;">⚠️ 실제 데이터 없음</div>';
-                document.getElementById('recentHistory').innerHTML =
-                    '<div style="color: #ff6b6b; padding: 20px; text-align: center;">⚠️ 실제 데이터 없음</div>';
-                document.getElementById('nextTaskInfo').textContent = '⚠️ 실제 데이터 없음';
+                const errorHtml = '<div style="color: #ff6b6b; padding: 20px; text-align: center;">⚠️ 실제 데이터 없음</div>';
+                safeSetHTML('currentWorkLog', errorHtml);
+                safeSetHTML('todayCompletedLog', errorHtml);
+                safeSetHTML('recentHistory', errorHtml);
+                safeSetText('nextTaskInfo', '⚠️ 실제 데이터 없음');
             }
 
             // ✅ phase_26_progress.json 로드
