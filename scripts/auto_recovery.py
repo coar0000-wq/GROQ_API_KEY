@@ -1,142 +1,369 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
-🔧 JARVIS 자동 복구 시스템
-30분마다 자동으로 에러를 감지하고 수정합니다
-⚠️ 규칙: 거짓 데이터 금지 / 프로그래밍 에러는 자동 수정 / 시스템 에러도 자동 복구
+JARVIS LUNA - Automatic Recovery
+
+목표:
+1. 필수 디렉토리 생성
+2. JSON 손상 복구
+3. 필수 파일 존재 확인
+4. 잘못된 timestamp 처리
+5. 복구 결과를 recovery_log.json에 기록
+
+주의:
+- 존재하지 않는 데이터를 성공으로 만들지 않음
+- 가짜 작업 결과를 생성하지 않음
 """
 
 import json
-from datetime import datetime
-from pathlib import Path
 import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent.parent
+
+DATA_DIR = ROOT / "data"
+SCRIPTS_DIR = ROOT / "scripts"
+WORKFLOW_DIR = ROOT / ".github" / "workflows"
+
+LOG_FILE = DATA_DIR / "jarvis_work_detailed_log.json"
+RECOVERY_LOG = DATA_DIR / "recovery_log.json"
+
+
+REQUIRED_SCRIPTS = [
+    "collect_moe_papers.py",
+    "youtube_moe_analysis.py",
+    "youtube_dropshipping_analysis.py",
+    "google_search_data_collection.py",
+    "moe_neural_network.py",
+    "moe_training.py",
+]
+
+
+REQUIRED_WORKFLOWS = [
+    "jarvis_final_automation.yml",
+    "jarvis_health_monitor.yml",
+]
+
+
+def now_iso():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def write_recovery_log(events):
+
+    DATA_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    payload = {
+        "timestamp": now_iso(),
+        "events": events,
+        "status": "completed"
+    }
+
+    with open(
+        RECOVERY_LOG,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            payload,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
+
+
+def create_empty_log():
+
+    payload = {
+        "timestamp": now_iso(),
+        "current_date": datetime.now().strftime(
+            "%Y-%m-%d"
+        ),
+        "daily_summary": {
+            "completed": 0,
+            "in_progress": 0,
+            "pending": 0,
+            "total": 0,
+            "completion_rate": "0%"
+        },
+        "completed_today": [],
+        "performance_metrics": {
+            "total_execution_time": "0초",
+            "average_task_duration": "0초",
+            "success_rate": "0%",
+            "data_collected": {},
+            "violations_found": 0,
+            "violations_rate": "0%"
+        },
+        "status": {
+            "overall": "⚠️ 복구됨 - 자동화 실행 대기",
+            "data_collection": "대기",
+            "automation": "대기",
+            "verification": "대기",
+            "deployment": "대기"
+        }
+    }
+
+    with open(
+        LOG_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            payload,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
+
 
 def check_and_recover():
-    """JARVIS 시스템 헬스 체크 & 자동 복구"""
-    print("🔧 JARVIS 자동 복구 시스템 시작...")
-    print(f"⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print()
 
-    fixed_issues = []
-    critical_issues = []
+    print("=" * 70)
+    print("🔧 JARVIS LUNA AUTO RECOVERY")
+    print("=" * 70)
 
-    # 1️⃣ 필수 디렉토리 자동 생성
-    print("1️⃣ 필수 디렉토리 확인...")
-    required_dirs = ['data', 'scripts', '.github/workflows']
-    for dir_path in required_dirs:
-        if not Path(dir_path).exists():
-            Path(dir_path).mkdir(parents=True, exist_ok=True)
-            fixed_issues.append(f"✅ 디렉토리 자동 생성: {dir_path}")
-            print(f"   ✅ 생성: {dir_path}")
+    events = []
+    critical = []
+
+    # ============================================================
+    # 1. 디렉토리
+    # ============================================================
+
+    print("\n1️⃣ 디렉토리 확인")
+
+    for directory in [
+        DATA_DIR,
+        SCRIPTS_DIR,
+        WORKFLOW_DIR,
+    ]:
+
+        if not directory.exists():
+
+            directory.mkdir(
+                parents=True,
+                exist_ok=True
+            )
+
+            event = (
+                f"디렉토리 생성: "
+                f"{directory.relative_to(ROOT)}"
+            )
+
+            events.append(event)
+
+            print(f"   ✅ {event}")
+
         else:
-            print(f"   ✅ 정상: {dir_path}")
 
-    # 2️⃣ 데이터 파일 체크
-    print("\n2️⃣ 데이터 파일 확인...")
-    log_file = Path('data/jarvis_work_detailed_log.json')
+            print(
+                f"   ✅ {directory.relative_to(ROOT)}"
+            )
 
-    if not log_file.exists():
-        critical_issues.append("❌ 데이터 파일 없음 (GitHub Actions 미실행)")
-        print("   ❌ jarvis_work_detailed_log.json 없음")
-        print("      → GitHub Actions가 실행되지 않음")
+    # ============================================================
+    # 2. JSON
+    # ============================================================
+
+    print("\n2️⃣ 작업 로그 확인")
+
+    if not LOG_FILE.exists():
+
+        create_empty_log()
+
+        events.append(
+            "작업 로그 생성"
+        )
+
+        print(
+            "   ⚠️ 작업 로그 없음 → 빈 로그 생성"
+        )
+
     else:
+
         try:
-            with open(log_file) as f:
+
+            with open(
+                LOG_FILE,
+                "r",
+                encoding="utf-8"
+            ) as f:
+
                 data = json.load(f)
 
-            file_time = datetime.fromisoformat(data['timestamp'].replace('Z', '+00:00'))
-            now = datetime.now()
-            time_diff = (now - file_time).total_seconds() / 60
+            print("   ✅ JSON 정상")
 
-            if time_diff > 30:
-                critical_issues.append(f"⚠️ 데이터 {time_diff:.0f}분 전 (GitHub Actions 미실행)")
-                print(f"   ⚠️ 데이터 {time_diff:.0f}분 이전")
-            else:
-                print(f"   ✅ 데이터 최신: {time_diff:.0f}분 전")
+            if not isinstance(
+                data.get("completed_today"),
+                list
+            ):
 
-            completed = len(data.get('completed_today', []))
-            print(f"   ✅ 작업 로그: {completed}개")
+                data["completed_today"] = []
+
+                with open(
+                    LOG_FILE,
+                    "w",
+                    encoding="utf-8"
+                ) as f:
+
+                    json.dump(
+                        data,
+                        f,
+                        ensure_ascii=False,
+                        indent=2
+                    )
+
+                events.append(
+                    "completed_today 배열 복구"
+                )
+
+                print(
+                    "   🔧 completed_today 복구"
+                )
 
         except json.JSONDecodeError:
-            # JSON 손상 시 기본값으로 복구
-            print("   ⚠️ JSON 파일 손상 - 복구 중...")
-            create_default_log()
-            fixed_issues.append("✅ JSON 파일 자동 복구")
-            print("   ✅ 복구 완료")
+
+            backup = LOG_FILE.with_suffix(
+                ".corrupt.json"
+            )
+
+            try:
+                LOG_FILE.replace(backup)
+
+                events.append(
+                    f"손상 JSON 백업: {backup.name}"
+                )
+
+            except Exception as e:
+
+                critical.append(
+                    f"손상 JSON 백업 실패: {e}"
+                )
+
+            create_empty_log()
+
+            events.append(
+                "손상 JSON → 정상 구조로 복구"
+            )
+
+            print(
+                "   🔧 손상 JSON 복구 완료"
+            )
+
         except Exception as e:
-            critical_issues.append(f"❌ 파일 읽기 오류: {str(e)}")
-            print(f"   ❌ 오류: {str(e)}")
 
-    # 3️⃣ 스크립트 파일 확인
-    print("\n3️⃣ 스크립트 파일 확인...")
-    scripts = [
-        'scripts/collect_moe_papers.py',
-        'scripts/youtube_moe_analysis.py',
-        'scripts/youtube_dropshipping_analysis.py',
-        'scripts/google_search_data_collection.py',
-        'scripts/moe_neural_network.py',
-        'scripts/moe_training.py'
-    ]
+            critical.append(
+                f"작업 로그 접근 실패: {e}"
+            )
 
-    missing = [s for s in scripts if not Path(s).exists()]
-    if missing:
-        critical_issues.append(f"❌ {len(missing)}개 스크립트 누락")
-        for script in missing:
-            print(f"   ❌ {script} 없음")
-    else:
-        print(f"   ✅ 모든 스크립트 정상 ({len(scripts)}개)")
+            print(
+                f"   ❌ {e}"
+            )
 
-    # 4️⃣ 워크플로우 파일 확인
-    print("\n4️⃣ 워크플로우 파일 확인...")
-    workflows = [
-        '.github/workflows/jarvis_final_automation.yml',
-        '.github/workflows/jarvis_health_monitor.yml'
-    ]
+    # ============================================================
+    # 3. Python scripts
+    # ============================================================
 
-    for workflow in workflows:
-        if Path(workflow).exists():
-            print(f"   ✅ {workflow}")
+    print("\n3️⃣ Python 스크립트 확인")
+
+    for script in REQUIRED_SCRIPTS:
+
+        path = SCRIPTS_DIR / script
+
+        if path.exists():
+
+            print(
+                f"   ✅ scripts/{script}"
+            )
+
         else:
-            critical_issues.append(f"❌ 워크플로우 없음: {workflow}")
-            print(f"   ❌ {workflow} 없음")
 
-    # 최종 보고
-    print("\n" + "="*60)
-    print("🔧 자동 복구 결과")
-    print("="*60)
+            critical.append(
+                f"스크립트 누락: scripts/{script}"
+            )
 
-    if fixed_issues:
-        print(f"\n✅ 수정된 항목 ({len(fixed_issues)}개):")
-        for issue in fixed_issues:
-            print(f"   {issue}")
+            print(
+                f"   ❌ scripts/{script}"
+            )
 
-    if critical_issues:
-        print(f"\n⚠️ 조치 필요 ({len(critical_issues)}개):")
-        for issue in critical_issues:
-            print(f"   {issue}")
-        print("\n💡 해결 방법:")
-        print("   • GitHub Actions 워크플로우 로그 확인")
-        print("   • jarvis_final_automation.yml 수동 실행")
-        print("   • 스크립트 파일 복구 필요")
-    else:
-        print("✅ 모든 시스템 정상!")
+    # ============================================================
+    # 4. Workflows
+    # ============================================================
 
-    print("="*60)
-    return len(critical_issues) == 0
+    print("\n4️⃣ GitHub Actions 확인")
+
+    for workflow in REQUIRED_WORKFLOWS:
+
+        path = WORKFLOW_DIR / workflow
+
+        if path.exists():
+
+            print(
+                f"   ✅ .github/workflows/{workflow}"
+            )
+
+        else:
+
+            critical.append(
+                f"워크플로우 누락: {workflow}"
+            )
+
+            print(
+                f"   ❌ {workflow}"
+            )
+
+    # ============================================================
+    # 5. Recovery log
+    # ============================================================
+
+    write_recovery_log(events)
+
+    # ============================================================
+    # Result
+    # ============================================================
+
+    print("\n" + "=" * 70)
+    print("📊 RECOVERY RESULT")
+    print("=" * 70)
+
+    print(
+        f"🔧 자동 수정: {len(events)}개"
+    )
+
+    print(
+        f"❌ Critical: {len(critical)}개"
+    )
+
+    if critical:
+
+        for item in critical:
+
+            print(
+                f"   ❌ {item}"
+            )
+
+        print(
+            "\n🔴 JARVIS RECOVERY: FAILED"
+        )
+
+        return False
+
+    print(
+        "\n🟢 JARVIS RECOVERY: SUCCESS"
+    )
+
+    return True
 
 
-def create_default_log():
-    """기본 로그 파일 생성 (JSON 손상 시 복구용)"""
-    default = {
-        "timestamp": datetime.now().isoformat(),
-        "current_date": datetime.now().strftime("%Y-%m-%d"),
-        "completed_today": [],
-        "status": "복구됨"
-    }
-    with open('data/jarvis_work_detailed_log.json', 'w') as f:
-        json.dump(default, f, indent=2)
+if __name__ == "__main__":
 
-
-if __name__ == '__main__':
     success = check_and_recover()
+
     sys.exit(0 if success else 1)

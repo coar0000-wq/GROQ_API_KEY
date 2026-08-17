@@ -25,7 +25,7 @@ class WalmartDiscovery:
     def __init__(self):
         self.now = datetime.utcnow()
         self.data = {
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
             "platform": "월마트 (Walmart.com)",
             "data_sources": [],
             "categories": {},
@@ -120,7 +120,7 @@ class WalmartDiscovery:
                                         "review_count": review_elem.get_text(strip=True) if review_elem else "0",
                                         "source": "Walmart.com Official",
                                         "url": url,
-                                        "scraped_at": self.now.isoformat() + "Z",
+                                        "scraped_at": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                                         "verified": True,
                                         "currency": "USD"
                                     }
@@ -132,7 +132,7 @@ class WalmartDiscovery:
                             self.data["categories"][category_name] = {
                                 "products": products,
                                 "count": len(products),
-                                "timestamp": self.now.isoformat() + "Z"
+                                "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z"
                             }
 
                             self.data["data_sources"].append({

@@ -25,7 +25,7 @@ class OliveYoungDiscovery:
     def __init__(self):
         self.now = datetime.utcnow()
         self.data = {
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
             "brand": "올리브영",
             "data_sources": [],
             "categories": {},
@@ -121,7 +121,7 @@ class OliveYoungDiscovery:
                                         "review_count": review_count_elem.get_text(strip=True) if review_count_elem else "0",
                                         "source": "올리브영 공식 웹사이트",
                                         "url": url,
-                                        "scraped_at": self.now.isoformat() + "Z",
+                                        "scraped_at": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                                         "verified": True
                                     }
                                     products.append(product)
@@ -132,7 +132,7 @@ class OliveYoungDiscovery:
                             self.data["categories"][category_name] = {
                                 "products": products,
                                 "count": len(products),
-                                "timestamp": self.now.isoformat() + "Z"
+                                "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z"
                             }
 
                             self.data["data_sources"].append({

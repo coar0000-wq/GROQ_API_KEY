@@ -4,7 +4,7 @@ import json, os
 from datetime import datetime
 from pathlib import Path
 
-now = datetime.utcnow().isoformat() + "Z"
+now = datetime.utcnow().replace(tzinfo=None).isoformat() + "Z"
 os.makedirs('data', exist_ok=True)
 
 # 올리브영 (24개 상품)

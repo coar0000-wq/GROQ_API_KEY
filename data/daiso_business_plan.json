@@ -3,12 +3,12 @@
   "phase": "Phase 3 - 론칭 준비 완료",
   "status": "🟢 준비 완료",
   "launch_date": "2026-08-16",
-  "timestamp": "2026-08-17T06:11:06.724755Z",
+  "timestamp": "2026-08-17T08:09:13.796148Z",
   "progress_percentage": 95,
   "overview": {
     "business_model": "다이소 직접 구매 → Shopify 판매 (Dropshipping)",
     "target_market": "해외 (미국/유럽)",
-    "products_count": 6,
+    "products_count": 21,
     "categories": 5,
     "automation_rate": "98%",
     "status_emoji": "🟢 완벽 준비"
@@ -178,52 +178,52 @@
   "top_recommendations": [
     {
       "rank": 1,
+      "product": "형광펜",
+      "category": "문구용품",
+      "reason": "우수한 판매량(100개/월) + 높은 수익성",
+      "monthly_sales": 100,
+      "monthly_profit": "$275,000",
+      "margin": "50%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 2,
+      "product": "종이클립",
+      "category": "문구용품",
+      "reason": "우수한 판매량(90개/월) + 높은 수익성",
+      "monthly_sales": 90,
+      "monthly_profit": "$202,500",
+      "margin": "45%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 3,
+      "product": "침대 시트",
+      "category": "홈 데코",
+      "reason": "우수한 판매량(90개/월) + 높은 수익성",
+      "monthly_sales": 90,
+      "monthly_profit": "$202,500",
+      "margin": "45%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 4,
       "product": "측정 스푼",
       "category": "주방용품",
       "reason": "높은 마진(695%) + 우수한 판매량(81개/월) + 높은 수익성 + 판매량과 마진 균형",
       "monthly_sales": 81,
       "monthly_profit": "$4,144,932",
       "margin": "695%",
-      "status": "🟢 추천"
-    },
-    {
-      "rank": 2,
-      "product": "냉장고 칸막이",
-      "category": "주방용품",
-      "reason": "높은 마진(656%) + 우수한 판매량(62개/월) + 높은 수익성 + 판매량과 마진 균형",
-      "monthly_sales": 62,
-      "monthly_profit": "$2,754,660",
-      "margin": "656%",
-      "status": "🟢 추천"
-    },
-    {
-      "rank": 3,
-      "product": "마커펜",
-      "category": "문구용품",
-      "reason": "우수한 판매량(57개/월) + 높은 수익성 + 판매량과 마진 균형",
-      "monthly_sales": 57,
-      "monthly_profit": "$399,627",
-      "margin": "621%",
-      "status": "🟢 추천"
-    },
-    {
-      "rank": 4,
-      "product": "커튼 봉",
-      "category": "홈 데코",
-      "reason": "높은 수익성",
-      "monthly_sales": 25,
-      "monthly_profit": "$1,556,100",
-      "margin": "578%",
       "status": "🟡 고려"
     },
     {
       "rank": 5,
-      "product": "러그",
-      "category": "홈 데코",
-      "reason": "높은 수익성",
-      "monthly_sales": 18,
-      "monthly_profit": "$939,618",
-      "margin": "593%",
+      "product": "풀",
+      "category": "문구용품",
+      "reason": "우수한 판매량(80개/월) + 높은 수익성",
+      "monthly_sales": 80,
+      "monthly_profit": "$198,000",
+      "margin": "55%",
       "status": "🟡 고려"
     }
   ]

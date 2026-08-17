@@ -33,7 +33,7 @@ class OliveYoungDiscovery:
                     "monthly_sales": 20 + (product_id * 2),
                     "rating": "4.6⭐",
                     "stock": "충분",
-                    "discovered_date": self.now.isoformat() + "Z",
+                    "discovered_date": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                     "verified": True
                 })
                 product_id += 1
@@ -42,7 +42,7 @@ class OliveYoungDiscovery:
     def save_data(self):
         products = self.generate_products()
         data = {
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
             "total_count": len(products),
             "categories": {cat: {"count": len(data["products"][:data["count"]])} for cat, data in self.categories.items()},
             "products": products,

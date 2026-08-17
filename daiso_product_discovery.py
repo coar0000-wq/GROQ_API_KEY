@@ -7,14 +7,20 @@
 
 import json
 import random
-from datetime import datetime, timedelta
+import sys
+import io
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# UTF-8 콘솔 출력 설정 (Windows에서 이모지 지원)
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 class DaisoProductDiscovery:
     """다이소 상품 자동 발굴 시스템"""
 
     def __init__(self):
-        self.now = datetime.utcnow()
+        self.now = datetime.now(timezone.utc).replace(tzinfo=None)
 
         # 다이소 상품 카테고리 + 세부 상품들
         self.product_database = {
@@ -119,7 +125,7 @@ class DaisoProductDiscovery:
                 "cost_price": f"${cost_price:,}",
                 "selling_price": f"${selling_price:,}",
                 "margin_percent": f"{margin_percent}%",
-                "discovered_date": self.now.isoformat() + "Z",
+                "discovered_date": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                 "monthly_sales": monthly_sales,
                 "monthly_revenue": f"${monthly_revenue:,}",
                 "monthly_profit": f"${monthly_profit:,}",
@@ -215,7 +221,7 @@ class DaisoProductDiscovery:
         plan["top_recommendations"] = recommendations
 
         # 타임스탐프 업데이트
-        plan["timestamp"] = self.now.isoformat() + "Z"
+        plan["timestamp"] = self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z"
 
         # 저장
         filepath = Path('data/daiso_business_plan.json')
@@ -238,7 +244,7 @@ class DaisoProductDiscovery:
         all_products = current_data.get("products", []) + new_products
         current_data["products"] = all_products
         current_data["total_products"] = len(all_products)
-        current_data["last_updated"] = self.now.isoformat() + "Z"
+        current_data["last_updated"] = self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z"
 
         # 베스트셀러 분석
         bestsellers = self.analyze_bestsellers(all_products)

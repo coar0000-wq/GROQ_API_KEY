@@ -38,8 +38,8 @@ class JARVISRealTimeAutomation:
             task = {
                 "id": f"task_{1000 + i}",
                 "task": task_name,
-                "start_time": start_time.isoformat() + "Z",
-                "end_time": end_time.isoformat() + "Z",
+                "start_time": start_time.replace(tzinfo=None).isoformat() + "Z",
+                "end_time": end_time.replace(tzinfo=None).isoformat() + "Z",
                 "duration": f"{duration}초",
                 "status": "✅ 완료",  # 100% 성공 (실제 수행)
                 "data_collected": f"{data_count}개",  # 실제 수집 데이터
@@ -61,7 +61,7 @@ class JARVISRealTimeAutomation:
             "current_date": self.now.strftime("%Y-%m-%d"),
             "status": "진행 중",
             "progress_percentage": 62,  # 실제 진행도
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z",
             "completed_tasks": [
                 {
                     "task": "Top-4 라우팅 시스템 구현",
@@ -97,7 +97,7 @@ class JARVISRealTimeAutomation:
         filepath.parent.mkdir(parents=True, exist_ok=True)
 
         data = {
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z",
             "current_date": self.now.strftime("%Y-%m-%d"),
             "daily_summary": {
                 "completed": len(work_log),

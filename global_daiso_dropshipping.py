@@ -20,7 +20,7 @@ class GlobalDaisoDropshipping:
     def __init__(self):
         self.now = datetime.now(timezone.utc)
         self.data = {
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
             "business_model": "Korea Daiso → USA Shopify",
             "currency": {"korea": "KRW", "usa": "USD"},
             "exchange_rate": None,
@@ -53,7 +53,7 @@ class GlobalDaisoDropshipping:
                 rate = data['rates']['USD']
                 self.data["exchange_rate"] = {
                     "KRW_to_USD": rate,
-                    "timestamp": self.now.isoformat() + "Z",
+                    "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                     "verified": True
                 }
                 logger.info(f"✅ 환율: 1 KRW = {rate:.6f} USD")
@@ -65,7 +65,7 @@ class GlobalDaisoDropshipping:
         default_rate = 0.00075
         self.data["exchange_rate"] = {
             "KRW_to_USD": default_rate,
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
             "verified": False,
             "note": "Default rate (API failed)"
         }

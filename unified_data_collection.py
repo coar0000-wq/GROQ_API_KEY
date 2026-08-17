@@ -25,7 +25,7 @@ class UnifiedDataCollection:
     def __init__(self):
         self.now = datetime.utcnow()
         self.unified_data = {
-            "timestamp": self.now.isoformat() + "Z",
+            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
             "channels": {
                 "daiso": {"products": [], "amazon_data": [], "trends": [], "reviews": []},
                 "oliveyoung": {"products": [], "trends": [], "reviews": []},
@@ -64,12 +64,12 @@ class UnifiedDataCollection:
                     "category": category,
                     "top_products": [],
                     "sales_rank": "집계 중",
-                    "timestamp": self.now.isoformat() + "Z",
+                    "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                     "verified": True
                 })
 
             self.unified_data["integrations"]["amazon"]["status"] = "✅ 연동 완료"
-            self.unified_data["integrations"]["amazon"]["last_update"] = self.now.isoformat() + "Z"
+            self.unified_data["integrations"]["amazon"]["last_update"] = self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z"
             logger.info("✅ Amazon 데이터 연동 완료")
 
         except Exception as e:
@@ -103,7 +103,7 @@ class UnifiedDataCollection:
                             "keyword": keyword,
                             "trend_interest": "분석 중",
                             "forecasted": "상승 중",
-                            "timestamp": self.now.isoformat() + "Z",
+                            "timestamp": self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z",
                             "verified": True
                         })
                     except Exception as e:
@@ -153,7 +153,7 @@ class UnifiedDataCollection:
             }
 
             for channel, reviews in review_data.items():
-                reviews["collected_at"] = self.now.isoformat() + "Z"
+                reviews["collected_at"] = self.now.replace(tzinfo=None).isoformat() + "Z" if hasattr(self.now, 'tzinfo') and self.now.tzinfo else self.now.isoformat() + "Z"
                 reviews["verified"] = True
                 self.unified_data["channels"][channel]["reviews"].append(reviews)
 
