@@ -207,7 +207,7 @@
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             color: rgba(255, 255, 255, 0.5);
             position: relative;
@@ -751,7 +751,7 @@
             const imageArea = document.querySelector('.left-image-area');
             const imageNum = dogImageNumbers[currentDogImageIndex];
             imageArea.style.backgroundImage = `url('${basePath}/images/${imageNum}.png')`;
-            imageArea.style.backgroundSize = 'contain';
+            imageArea.style.backgroundSize = 'cover';
             imageArea.style.backgroundPosition = 'center';
             imageArea.style.backgroundRepeat = 'no-repeat';
 
