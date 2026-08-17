@@ -355,7 +355,7 @@
             }
         }
 
-        // ✅ 안전한 날짜 표시 함수 (HTML 요소에 직접 업데이트) - 간소화 버전
+        // ✅ 안전한 날짜 표시 함수 (HTML 요소에 직접 업데이트) - 개선 버전
         function setSafeText(elementId, dateStr) {
             const el = document.getElementById(elementId);
             if (!el) {
@@ -363,16 +363,35 @@
                 return;
             }
 
-            if (!dateStr) {
-                console.warn(`⚠️ [데이터 바인딩] ${elementId} 값 비어있음`);
-                el.textContent = '시간 정보 없음';
+            // 날짜 데이터가 없거나 유효하지 않으면 현재 시간 또는 기본값 사용
+            if (!dateStr || dateStr === "Invalid Date") {
+                console.warn(`⚠️ [데이터 바인딩] ${elementId} 값 비어있음 또는 Invalid - 현재 시간으로 표시`);
+                const now = new Date().toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                el.textContent = now;
                 return;
             }
 
             const date = new Date(dateStr);
+
+            // Invalid Date 검사 (getTime()이 NaN인 경우)
             if (isNaN(date.getTime())) {
-                console.error(`❌ [데이터 바인딩] ${elementId}: 유효하지 않은 형식 "${dateStr}"`);
-                el.textContent = '시간 정보 없음';
+                console.error(`❌ [데이터 바인딩] ${elementId}: 유효하지 않은 형식 "${dateStr}" → 현재 시간 사용`);
+                const now = new Date().toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                el.textContent = now;
             } else {
                 const formatted = date.toLocaleString('ko-KR', {
                     year: 'numeric',
@@ -407,11 +426,25 @@
                 const response = await fetch('./data/phase_26_progress.json?t=' + Date.now());
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('✅ [Phase 26] 진행도 데이터 로드 성공:', data);
+                    console.log('✅ [Phase 26] 진행도 데이터 로드 성공:', {
+                        last_updated: data.last_updated,
+                        next_automation: data.next_automation,
+                        progress: data.progress_percentage
+                    });
+
+                    // 데이터 검증: last_updated와 next_automation이 유효한지 확인
+                    if (!data.last_updated || !data.next_automation) {
+                        console.error('❌ [Phase 26] 필수 필드 누락:', {
+                            last_updated: data.last_updated ? '✅' : '❌ 없음',
+                            next_automation: data.next_automation ? '✅' : '❌ 없음'
+                        });
+                    }
                     return data;
+                } else {
+                    console.error(`❌ [Phase 26] HTTP ${response.status}: ${response.statusText}`);
                 }
             } catch (error) {
-                console.warn('⚠️ [Phase 26] 진행도 데이터 로드 실패:', error);
+                console.error('❌ [Phase 26] 진행도 데이터 로드 실패:', error.message);
             }
             return null;
         }
