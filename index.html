@@ -176,6 +176,22 @@
             color: #00d4ff;
         }
 
+        /* 상태 표시등 */
+        .status-dot {
+            margin-left: 8px;
+            display: inline-block;
+        }
+
+        /* 녹색 깜빡이는 애니메이션 */
+        @keyframes green-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .status-dot.green-pulse {
+            animation: green-pulse 1.5s ease-in-out infinite;
+        }
+
         .left-image-area {
             flex: 1;
             background: rgba(0, 0, 0, 0.2);
@@ -593,19 +609,19 @@
             <div class="left-panel-content">
                 <div class="left-metrics">
                     <div class="left-metric-card">
-                        <div class="left-metric-label">도현 (CEO)🟢</div>
+                        <div class="left-metric-label">도현 (CEO) <span class="status-dot green-pulse">🟢</span></div>
                         <div class="left-metric-value" style="font-size: 18px;">감시중</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">JARVIS (AI)🟢</div>
+                        <div class="left-metric-label">JARVIS (AI) <span class="status-dot green-pulse">🟢</span></div>
                         <div class="left-metric-value" style="font-size: 18px;">자동화</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">GitHub Actions🟢</div>
+                        <div class="left-metric-label">GitHub Actions <span class="status-dot green-pulse">🟢</span></div>
                         <div class="left-metric-value" style="font-size: 18px;">실행 중</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">Obsidian⚫</div>
+                        <div class="left-metric-label">Obsidian <span class="status-dot">⚫</span></div>
                         <div class="left-metric-value" style="font-size: 18px; color: #999;">오프라인</div>
                     </div>
                 </div>
