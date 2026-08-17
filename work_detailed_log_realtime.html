@@ -541,21 +541,90 @@
         }
 
         // ✅ 다이소 상품 누적 데이터 로드
-        async function loadDaisoProducts() {
+        // ✅ 누적 카운트 로드 (기존: 117개 + 새로 발굴한 개수)
+        async function loadCumulativeCount() {
             try {
-                const response = await fetch('./data/daiso_products.json?t=' + Date.now());
+                const response = await fetch('./data/cumulative_products.json?t=' + Date.now());
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('✅ [다이소] 상품 데이터 로드 성공:', {
-                        total_products: data.total_products,
-                        last_updated: data.last_updated
-                    });
+                    console.log('✅ [누적 카운트] 로드:', data);
                     return data;
                 }
+            } catch (e) {
+                console.warn('⚠️ [누적 카운트] 로드 실패:', e.message);
+            }
+            // 기본값: 117개 (초기 누적)
+            return { cumulative_total: 117, baseline_products: 117, last_updated: new Date().toISOString() };
+        }
+
+        // ✅ 모든 상품 파일 로드 (현재 발굴된 제품 수)
+        async function loadAllProductFiles() {
+            try {
+                let currentTotal = 0;
+                const fileResults = {};
+
+                // 모든 상품 파일 로드
+                const productFiles = [
+                    { name: 'amazon_products.json', field: 'total_count' },
+                    { name: 'walmart_products.json', field: 'total_count' },
+                    { name: 'naver_shopping_products.json', field: 'total_count' },
+                    { name: 'oliveyoung_products.json', field: 'total_count' },
+                    { name: 'daiso_products.json', field: 'total_products' },
+                    { name: 'real_products.json', field: 'daiso_items' }
+                ];
+
+                for (const file of productFiles) {
+                    try {
+                        const response = await fetch(`./data/${file.name}?t=` + Date.now());
+                        if (response.ok) {
+                            const data = await response.json();
+                            let count = 0;
+
+                            if (file.field === 'daiso_items' && Array.isArray(data.daiso_items)) {
+                                count = data.daiso_items.length;
+                            } else if (data[file.field]) {
+                                count = data[file.field];
+                            }
+
+                            currentTotal += count;
+                            fileResults[file.name] = count;
+                            console.log(`✅ [${file.name}] ${count}개`);
+                        }
+                    } catch (e) {
+                        console.warn(`⚠️ [${file.name}] 로드 실패:`, e.message);
+                    }
+                }
+
+                // 누적 카운트 로드
+                const cumulative = await loadCumulativeCount();
+                const newlyDiscovered = currentTotal - cumulative.baseline_products;
+                const totalCumulativeProducts = cumulative.cumulative_total + Math.max(0, newlyDiscovered);
+
+                console.log('📊 [누적 상품 계산]:', {
+                    baseline: cumulative.baseline_products,
+                    current: currentTotal,
+                    newlyDiscovered: Math.max(0, newlyDiscovered),
+                    cumulativeTotal: cumulative.cumulative_total,
+                    totalCumulativeProducts,
+                    breakdown: fileResults,
+                    formula: `${cumulative.cumulative_total} + ${Math.max(0, newlyDiscovered)} = ${totalCumulativeProducts}`,
+                    timestamp: new Date().toISOString()
+                });
+
+                return {
+                    total_products: totalCumulativeProducts,
+                    cumulative_total: totalCumulativeProducts,
+                    current_discovered: currentTotal,
+                    newly_discovered: Math.max(0, newlyDiscovered)
+                };
             } catch (error) {
-                console.warn('⚠️ [다이소] 상품 데이터 로드 실패:', error);
+                console.warn('⚠️ [전체 상품] 로드 실패:', error.message);
             }
             return null;
+        }
+
+        async function loadDaisoProducts() {
+            return await loadAllProductFiles();
         }
 
         function updateTime() {
