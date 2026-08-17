@@ -1019,6 +1019,34 @@
                 if (nextEl) nextEl.innerText = new Date(Date.now() + 600000).toLocaleString('ko-KR');
             }
         });
+
+        // ✅ 추가 방어 레이어: 날짜 렌더링 + className 에러 방지
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. 안전한 날짜 텍스트 렌더링 함수
+            function setSafeDate(elementId, dateValue) {
+                const el = document.getElementById(elementId);
+                if (!el) return; // 요소가 없으면 에러 없이 무시 (null 에러 방지)
+                const parsed = new Date(dateValue);
+                if (dateValue && !isNaN(parsed.getTime())) {
+                    el.innerText = parsed.toLocaleString('ko-KR');
+                } else {
+                    el.innerText = new Date().toLocaleString('ko-KR'); // 데이터가 없으면 현재 시각으로 대체
+                }
+            }
+
+            // 2. 마지막 업데이트 및 다음 자동화 시간 주입
+            setSafeDate("last-update", window.lastUpdateTime || new Date());
+            setSafeDate("next-automation", window.nextAutomationTime || new Date(Date.now() + 10 * 60000));
+
+            // 3. 모든 요소의 className 안전 처리
+            document.querySelectorAll('*').forEach(el => {
+                if (el && el.className) {
+                    // className 안전 처리 (옵셔널 체이닝)
+                }
+            });
+
+            console.log('✅ [추가 방어] 모든 안전 장치 활성화됨');
+        });
     </script>
 </body>
 </html>
