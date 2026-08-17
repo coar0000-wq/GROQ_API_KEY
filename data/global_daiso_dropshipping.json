@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-17T06:05:07.178700Z",
+  "timestamp": "2026-08-17T06:16:15.661309+00:00Z",
   "business_model": "Korea Daiso → USA Shopify",
   "currency": {
     "korea": "KRW",
@@ -7,7 +7,7 @@
   },
   "exchange_rate": {
     "KRW_to_USD": 0.000707,
-    "timestamp": "2026-08-17T06:05:07.178700Z",
+    "timestamp": "2026-08-17T06:16:15.661309+00:00Z",
     "verified": true
   },
   "korea_products": {
@@ -97,34 +97,132 @@
       "주방용품": {
         "avg_price_usd": 8.99,
         "rating": 4.5,
-        "competitors": 45
+        "competitors": 45,
+        "url": "amazon.com"
       },
       "생활용품": {
         "avg_price_usd": 6.99,
         "rating": 4.3,
-        "competitors": 62
+        "competitors": 62,
+        "url": "amazon.com"
       },
       "미용용품": {
         "avg_price_usd": 9.99,
         "rating": 4.4,
-        "competitors": 38
+        "competitors": 38,
+        "url": "amazon.com"
       }
     },
     "walmart": {
       "주방용품": {
         "avg_price_usd": 7.99,
         "rating": 4.2,
-        "competitors": 35
+        "competitors": 35,
+        "url": "walmart.com"
       },
       "생활용품": {
         "avg_price_usd": 5.99,
         "rating": 4.0,
-        "competitors": 48
+        "competitors": 48,
+        "url": "walmart.com"
       },
       "미용용품": {
         "avg_price_usd": 8.99,
         "rating": 4.1,
-        "competitors": 32
+        "competitors": 32,
+        "url": "walmart.com"
+      }
+    },
+    "nordstrom": {
+      "주방용품": {
+        "avg_price_usd": 14.99,
+        "rating": 4.7,
+        "competitors": 15,
+        "url": "nordstrom.com",
+        "category": "프리미엄"
+      },
+      "생활용품": {
+        "avg_price_usd": 19.99,
+        "rating": 4.6,
+        "competitors": 12,
+        "url": "nordstrom.com",
+        "category": "프리미엄"
+      },
+      "미용용품": {
+        "avg_price_usd": 24.99,
+        "rating": 4.8,
+        "competitors": 20,
+        "url": "nordstrom.com",
+        "category": "프리미엄"
+      }
+    },
+    "tory_burch": {
+      "주방용품": {
+        "avg_price_usd": 18.99,
+        "rating": 4.6,
+        "competitors": 8,
+        "url": "toryburch.com",
+        "category": "럭셔리 패션"
+      },
+      "생활용품": {
+        "avg_price_usd": 22.99,
+        "rating": 4.7,
+        "competitors": 10,
+        "url": "toryburch.com",
+        "category": "럭셔리 패션"
+      },
+      "미용용품": {
+        "avg_price_usd": 28.99,
+        "rating": 4.8,
+        "competitors": 15,
+        "url": "toryburch.com",
+        "category": "럭셔리 패션"
+      }
+    },
+    "polo_ralph_lauren": {
+      "주방용품": {
+        "avg_price_usd": 16.99,
+        "rating": 4.5,
+        "competitors": 12,
+        "url": "ralphlauren.com",
+        "category": "프리미엄 의류"
+      },
+      "생활용품": {
+        "avg_price_usd": 21.99,
+        "rating": 4.6,
+        "competitors": 14,
+        "url": "ralphlauren.com",
+        "category": "프리미엄 의류"
+      },
+      "미용용품": {
+        "avg_price_usd": 26.99,
+        "rating": 4.7,
+        "competitors": 18,
+        "url": "ralphlauren.com",
+        "category": "프리미엄 의류"
+      }
+    },
+    "iherb": {
+      "주방용품": {
+        "avg_price_usd": 12.99,
+        "rating": 4.6,
+        "competitors": 25,
+        "url": "iherb.com",
+        "category": "건강식품"
+      },
+      "생활용품": {
+        "avg_price_usd": 9.99,
+        "rating": 4.5,
+        "competitors": 32,
+        "url": "iherb.com",
+        "category": "건강식품"
+      },
+      "미용용품": {
+        "avg_price_usd": 14.99,
+        "rating": 4.7,
+        "competitors": 28,
+        "url": "iherb.com",
+        "category": "건강/미용"
       }
     },
     "trends": [

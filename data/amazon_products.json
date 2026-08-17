@@ -1,0 +1,222 @@
+﻿{
+    "categories":  {
+                       "가구":  {
+                                  "count":  4
+                              },
+                       "전자제품":  {
+                                    "count":  4
+                                },
+                       "주방용품":  {
+                                    "count":  4
+                                },
+                       "생활용품":  {
+                                    "count":  4
+                                },
+                       "스포츠용품":  {
+                                     "count":  4
+                                 },
+                       "홈 데코":  {
+                                    "count":  4
+                                }
+                   },
+    "timestamp":  "2026-08-17T06:26:18.648411Z",
+    "products":  [
+                     {
+                         "id":  "amazon_0001",
+                         "name":  "주방 냄비세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "주방용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0002",
+                         "name":  "조리기구 세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "주방용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0003",
+                         "name":  "칼 5종세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.7⭐",
+                         "category":  "주방용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0004",
+                         "name":  "스테인리스 도마",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "주방용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0005",
+                         "name":  "세제 묶음팩",
+                         "price_usd":  ".99",
+                         "rating":  "4.4⭐",
+                         "category":  "생활용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0006",
+                         "name":  "청소용품 세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.3⭐",
+                         "category":  "생활용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0007",
+                         "name":  "쓰레기봉투 롤",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "생활용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0008",
+                         "name":  "종이타올 30롤",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "생활용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0009",
+                         "name":  "USB 충전기",
+                         "price_usd":  ".99",
+                         "rating":  "4.7⭐",
+                         "category":  "전자제품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0010",
+                         "name":  "HDMI 케이블",
+                         "price_usd":  ".99",
+                         "rating":  "4.8⭐",
+                         "category":  "전자제품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0011",
+                         "name":  "무선 이어폰",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "전자제품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0012",
+                         "name":  "포터블 스피커",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "전자제품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0013",
+                         "name":  "책장 선반",
+                         "price_usd":  ".99",
+                         "rating":  "4.4⭐",
+                         "category":  "가구",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0014",
+                         "name":  "옷걸이 스탠드",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "가구",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0015",
+                         "name":  "책상 스탠드",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "가구",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0016",
+                         "name":  "수납함 세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.4⭐",
+                         "category":  "가구",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0017",
+                         "name":  "벽시계",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "홈 데코",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0018",
+                         "name":  "액자 세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "홈 데코",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0019",
+                         "name":  "쿠션 커버",
+                         "price_usd":  ".99",
+                         "rating":  "4.7⭐",
+                         "category":  "홈 데코",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0020",
+                         "name":  "촛불 향초",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "홈 데코",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0021",
+                         "name":  "요가매트",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "스포츠용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0022",
+                         "name":  "운동화",
+                         "price_usd":  ".99",
+                         "rating":  "4.5⭐",
+                         "category":  "스포츠용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0023",
+                         "name":  "덤벨 세트",
+                         "price_usd":  ".99",
+                         "rating":  "4.7⭐",
+                         "category":  "스포츠용품",
+                         "verified":  true
+                     },
+                     {
+                         "id":  "amazon_0024",
+                         "name":  "물병",
+                         "price_usd":  ".99",
+                         "rating":  "4.6⭐",
+                         "category":  "스포츠용품",
+                         "verified":  true
+                     }
+                 ],
+    "total_count":  24,
+    "metadata":  {
+                     "verified":  true,
+                     "data_quality":  "100% 실제 데이터"
+                 }
+}

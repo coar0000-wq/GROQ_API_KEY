@@ -873,6 +873,15 @@
             } catch (e) { console.log('월마트 데이터 로드 실패'); }
 
             try {
+                // 아마존 분석
+                const amazonRes = await fetch(basePath + '/data/amazon_products.json?t=' + Date.now());
+                if (amazonRes.ok) {
+                    const amazonData = await amazonRes.json();
+                    updateAmazonCount(amazonData);
+                }
+            } catch (e) { console.log('아마존 데이터 로드 실패'); }
+
+            try {
                 // 베스트셀러 상품
                 const productsRes = await fetch(basePath + '/data/daiso_products.json?t=' + Date.now());
                 if (productsRes.ok) {
@@ -989,7 +998,7 @@
         }
 
         // 전체 상품 수 업데이트 (모든 채널 합산)
-        let totalProductsCount = { daiso: 0, olive: 0, naver: 0, walmart: 0 };
+        let totalProductsCount = { daiso: 0, olive: 0, naver: 0, walmart: 0, amazon: 0 };
 
         function updateTotalProducts() {
             const total = Object.values(totalProductsCount).reduce((sum, count) => sum + count, 0);
@@ -1020,6 +1029,14 @@
             if (!walmartData) return;
             const count = Object.values(walmartData.categories || {}).reduce((sum, cat) => sum + cat.count, 0);
             totalProductsCount.walmart = count;
+            updateTotalProducts();
+        }
+
+        // 아마존 상품 수
+        function updateAmazonCount(amazonData) {
+            if (!amazonData) return;
+            const count = Object.values(amazonData.categories || {}).reduce((sum, cat) => sum + cat.count, 0);
+            totalProductsCount.amazon = count;
             updateTotalProducts();
         }
 

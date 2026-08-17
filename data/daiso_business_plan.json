@@ -3,18 +3,16 @@
   "phase": "Phase 3 - 론칭 준비 완료",
   "status": "🟢 준비 완료",
   "launch_date": "2026-08-16",
-  "timestamp": "2026-08-17T14:50:00Z",
+  "timestamp": "2026-08-17T06:11:06.724755Z",
   "progress_percentage": 95,
-
   "overview": {
     "business_model": "다이소 직접 구매 → Shopify 판매 (Dropshipping)",
     "target_market": "해외 (미국/유럽)",
-    "products_count": 130,
+    "products_count": 6,
     "categories": 5,
     "automation_rate": "98%",
     "status_emoji": "🟢 완벽 준비"
   },
-
   "financial_targets": {
     "average_margin": "650%",
     "monthly_revenue": {
@@ -25,7 +23,6 @@
     "net_profit": "$1,000,000+",
     "roi": "12개월 회수"
   },
-
   "completed_phases": [
     {
       "phase": "Phase 1: 시장 분석",
@@ -46,7 +43,6 @@
       "details": "개인정보정책, 반품정책, Shopify 스토어 세팅"
     }
   ],
-
   "current_phase": {
     "name": "Phase 4: 론칭 및 운영",
     "status": "🟡 준비 중",
@@ -79,7 +75,6 @@
       }
     ]
   },
-
   "deliverables": [
     "✅ 130개 제품 이미지 & 목업 (AI 생성)",
     "✅ 마케팅 카피 & SEO 최적화",
@@ -91,7 +86,6 @@
     "✅ 실시간 성과 대시보드",
     "✅ 재무 모델 & 손익분석"
   ],
-
   "categories": [
     {
       "name": "주방용품",
@@ -124,7 +118,6 @@
       "status": "✅ 완료"
     }
   ],
-
   "automation_workflow": {
     "order_management": "DSers 연동 (자동 주문)",
     "inventory": "실시간 재고 동기화",
@@ -133,7 +126,6 @@
     "reporting": "매일 자동 매출 리포트",
     "automation_rate": "98%"
   },
-
   "team": {
     "shopify_manager": 1,
     "product_curator": 1,
@@ -141,7 +133,6 @@
     "customer_service": 1,
     "total_headcount": 4
   },
-
   "next_actions": [
     "🟢 Shopify 스토어 라이브",
     "🟢 TikTok/Instagram 광고 시작",
@@ -150,7 +141,6 @@
     "🟡 고객 피드백 수집",
     "⏳ 월별 손익분석 수행"
   ],
-
   "kpis": {
     "conversion_rate_target": "2-3%",
     "avg_order_value": "$45-60",
@@ -158,7 +148,6 @@
     "monthly_orders_target": 100,
     "first_month_revenue_target": "$5,000"
   },
-
   "risks_and_mitigations": [
     {
       "risk": "배송 지연",
@@ -176,7 +165,6 @@
       "status": "🟢 관리 중"
     }
   ],
-
   "launch_checklist": {
     "shopify_store": true,
     "payment_gateway": true,
@@ -186,5 +174,57 @@
     "customer_service": true,
     "marketing_assets": true,
     "legal_documents": true
-  }
+  },
+  "top_recommendations": [
+    {
+      "rank": 1,
+      "product": "측정 스푼",
+      "category": "주방용품",
+      "reason": "높은 마진(695%) + 우수한 판매량(81개/월) + 높은 수익성 + 판매량과 마진 균형",
+      "monthly_sales": 81,
+      "monthly_profit": "$4,144,932",
+      "margin": "695%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 2,
+      "product": "냉장고 칸막이",
+      "category": "주방용품",
+      "reason": "높은 마진(656%) + 우수한 판매량(62개/월) + 높은 수익성 + 판매량과 마진 균형",
+      "monthly_sales": 62,
+      "monthly_profit": "$2,754,660",
+      "margin": "656%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 3,
+      "product": "마커펜",
+      "category": "문구용품",
+      "reason": "우수한 판매량(57개/월) + 높은 수익성 + 판매량과 마진 균형",
+      "monthly_sales": 57,
+      "monthly_profit": "$399,627",
+      "margin": "621%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 4,
+      "product": "커튼 봉",
+      "category": "홈 데코",
+      "reason": "높은 수익성",
+      "monthly_sales": 25,
+      "monthly_profit": "$1,556,100",
+      "margin": "578%",
+      "status": "🟡 고려"
+    },
+    {
+      "rank": 5,
+      "product": "러그",
+      "category": "홈 데코",
+      "reason": "높은 수익성",
+      "monthly_sales": 18,
+      "monthly_profit": "$939,618",
+      "margin": "593%",
+      "status": "🟡 고려"
+    }
+  ]
 }
