@@ -1,18 +1,20 @@
-name: JARVIS Auto Update
+name: JARVIS Real-Time Automation
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # 매 10분마다 실행 (6배 빠름!)
+    - cron: '*/10 * * * *'  # 매 10분마다 실행 🔄
   workflow_dispatch:
 
 jobs:
-  update:
+  automation:
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -23,18 +25,20 @@ jobs:
         run: |
           python -m pip install requests
 
-      - name: Run JARVIS autonomous work
+      - name: 🚀 Run JARVIS Real-Time Automation
         run: |
-          python jarvis_autonomous_work.py
+          python jarvis_real_time_automation.py
 
-      - name: Run auto update scripts
+      - name: ✅ Commit and push changes
         run: |
-          python scripts/auto_update.py
-          python update_activity_log.py
+          git config --local user.email "jarvis@github.com"
+          git config --local user.name "JARVIS Automation"
+          git add data/jarvis_work_detailed_log.json data/phase26_progress.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "⚡ JARVIS 실시간 자동화: $(date -u +'%Y-%m-%d %H:%M UTC')" && git push origin main)
 
-      - name: Commit and push changes
+      - name: 📊 Verify update
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "JARVIS Auto Update"
-          git add data/ scripts/ phase*.py jarvis_autonomous_work.py
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 JARVIS 자동 작업 완료: $(date +%Y-%m-%d\ %H:%M:%S)" && git push)
+          echo "✨ JARVIS 자동화 완료!"
+          echo "다음 자동화: 10분 후"
+          ls -la data/jarvis_work_detailed_log.json
+          head -20 data/jarvis_work_detailed_log.json
