@@ -743,17 +743,19 @@
         const isGitHubPages = window.location.pathname.includes('/jarvis-luna/');
         const basePath = isGitHubPages ? '/jarvis-luna' : '.';
 
-        // 도그 이미지 슬라이드쇼
-        let currentDogImage = 1;
-        const totalDogImages = 12;
+        // 도그 이미지 슬라이드쇼 (1-6, 8-12번만 존재)
+        const dogImageNumbers = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12];
+        let currentDogImageIndex = 0;
 
         function rotateDogImage() {
             const imageArea = document.querySelector('.left-image-area');
-            currentDogImage = (currentDogImage % totalDogImages) + 1;
-            imageArea.style.backgroundImage = `url('${basePath}/images/${currentDogImage}.png')`;
+            const imageNum = dogImageNumbers[currentDogImageIndex];
+            imageArea.style.backgroundImage = `url('${basePath}/images/${imageNum}.png')`;
             imageArea.style.backgroundSize = 'contain';
             imageArea.style.backgroundPosition = 'center';
             imageArea.style.backgroundRepeat = 'no-repeat';
+
+            currentDogImageIndex = (currentDogImageIndex + 1) % dogImageNumbers.length;
         }
 
         // 2초마다 이미지 전환
