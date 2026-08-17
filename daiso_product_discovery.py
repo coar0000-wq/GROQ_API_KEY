@@ -1,9 +1,9 @@
-ï»¿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import json, random, os
 from datetime import datetime
 
 def main():
-    print("ğŸ¤– ë‹¤ì´ì†Œ ìƒí’ˆ ìë™ ë°œêµ´ ì‹œì‘...")
+    print("?? ´ÙÀÌ¼Ò »óÇ° ÀÚµ¿ ¹ß±¼ ½ÃÀÛ...")
     new_count = random.randint(3, 5)
     
     try:
@@ -13,7 +13,7 @@ def main():
         daiso_data = {"total_count": 0, "products": []}
 
     for i in range(new_count):
-        daiso_data["products"].append({"id": f"daiso_{datetime.now().strftime('%Y%m%d%H%M%S')}_{i}", "name": f"ë‹¤ì´ì†Œ ìƒí’ˆ ({random.randint(100, 999)})", "discovered_at": datetime.utcnow().isoformat() + "Z"})
+        daiso_data["products"].append({"id": f"daiso_{datetime.now().strftime('%Y%m%d%H%M%S')}_{i}", "name": f"´ÙÀÌ¼Ò »óÇ° ({random.randint(100, 999)})", "discovered_at": datetime.utcnow().isoformat() + "Z"})
 
     daiso_data["total_count"] = len(daiso_data["products"])
     daiso_data["last_updated"] = datetime.utcnow().isoformat() + "Z"
@@ -34,7 +34,7 @@ def update_cumulative(count, source, new_count):
     if "sources" not in cumulative:
         cumulative["sources"] = {}
 
-    # âœ… ìˆ˜ì •: ìƒˆë¡œìš´ ê°œìˆ˜ë§Œ ë”í•˜ê¸° (ëˆ„ì )
+    # ? ¼öÁ¤: »õ·Î¿î °³¼ö¸¸ ´õÇÏ±â (´©Àû)
     cumulative["sources"][source] = cumulative["sources"].get(source, 0) + new_count
     baseline = cumulative.get("baseline", 117)
     total = baseline + sum(cumulative["sources"].values())
@@ -46,9 +46,9 @@ def update_cumulative(count, source, new_count):
     with open("data/cumulative_products.json", "w", encoding="utf-8") as f:
         json.dump(cumulative, f, ensure_ascii=False, indent=2)
 
-    # âœ… ì‘ì—… ë¡œê·¸ì— ìƒì„¸ ì •ë³´ ê¸°ë¡
-    log_entry(f"ë‹¤ì´ì†Œ ìƒí’ˆ {new_count}ê°œ ë°œêµ´ (ëˆ„ì : {total}ê°œ)")
-    print(f"âœ… ë‹¤ì´ì†Œ: {new_count}ê°œ ë°œêµ´, ëˆ„ì : {total}ê°œ")
+    # ? ÀÛ¾÷ ·Î±×¿¡ »ó¼¼ Á¤º¸ ±â·Ï
+    log_entry(f"´ÙÀÌ¼Ò »óÇ° {new_count}°³ ¹ß±¼ (´©Àû: {total}°³)")
+    print(f"? ´ÙÀÌ¼Ò: {new_count}°³ ¹ß±¼, ´©Àû: {total}°³")
 
 def log_entry(details):
     try:
@@ -59,7 +59,7 @@ def log_entry(details):
 
     log["events"].insert(0, {
         "timestamp": datetime.utcnow().isoformat() + "Z",
-        "task_name": "âœ… ë‹¤ì´ì†Œ ìƒí’ˆ ë°œêµ´",
+        "task_name": "? ´ÙÀÌ¼Ò »óÇ° ¹ß±¼",
         "details": details,
         "status": "success"
     })
