@@ -475,13 +475,13 @@
 
         <!-- 오른쪽 패널: 새 AGI Evolution OS 패널 -->
         <div class="right-panel">
-            <!-- 제목 -->
+            <!-- 1️⃣ 제목 -->
             <div>
                 <div class="right-title">AGI Evolution OS</div>
                 <div class="right-subtitle">도현이를 위한 AGI System</div>
             </div>
 
-            <!-- 작업 상세 로그 (박스 없음) -->
+            <!-- 2️⃣ 작업 상세 로그 -->
             <div class="status-log" style="margin-top: 20px;">
                 <div class="status-title">📋 작업 상세 로그 (최신 6개)</div>
                 <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow: hidden; margin-top: 10px;">
@@ -489,30 +489,32 @@
                 </div>
             </div>
 
-            <!-- 팀원 상태 -->
-            <div class="team-status-right">
-                <div class="status-title">👥 팀원 실시간 상태</div>
-                <div class="team-member-item">
-                    <span class="member-name">도현 (CEO)</span>
-                    <span class="member-status">🟢 활성</span>
-                </div>
-                <div class="team-member-item">
-                    <span class="member-name">JARVIS (AI)</span>
-                    <span class="member-status">🟢 자동화</span>
-                </div>
-                <div class="team-member-item">
-                    <span class="member-name">GitHub Actions</span>
-                    <span class="member-status">🟢 실행 중</span>
+            <!-- 3️⃣ 진행도 -->
+            <div class="progress-section-right" style="margin-top: 20px;">
+                <div class="status-title">📈 Phase 26 진행도: 75%</div>
+                <div class="bottom-info" style="padding-top: 10px; border-top: 1px solid rgba(0, 212, 255, 0.1);">
+                    <div style="font-size: 11px; color: #666;">마지막 업데이트: 2026-08-17 15:30</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #666;">다음 자동화: 10분 후</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #00d4ff;">상태: 🟢 매 10분 자동 실행</div>
                 </div>
             </div>
 
-            <!-- 진행도 및 하단 정보 -->
-            <div class="progress-section-right">
-                <div class="status-title">📈 Phase 26 진행도: 75%</div>
-                <div class="bottom-info">
-                    <div>마지막 업데이트: 2026-08-17 15:30</div>
-                    <div style="margin-top: 10px;">다음 자동화: 10분 후</div>
-                    <div style="margin-top: 10px;">상태: 🟢 매 10분 자동 실행</div>
+            <!-- 4️⃣ 팀원 상태 -->
+            <div class="team-status-right" style="margin-top: 15px;">
+                <div class="status-title">👥 팀원 실시간 상태</div>
+                <div style="margin-top: 10px;">
+                    <div class="team-member-item" style="padding: 6px 0; margin-bottom: 6px; background: transparent; border-bottom: 1px solid rgba(0, 212, 255, 0.1);">
+                        <span class="member-name" style="font-size: 11px;">도현 (CEO)</span>
+                        <span class="member-status">🟢 활성</span>
+                    </div>
+                    <div class="team-member-item" style="padding: 6px 0; margin-bottom: 6px; background: transparent; border-bottom: 1px solid rgba(0, 212, 255, 0.1);">
+                        <span class="member-name" style="font-size: 11px;">JARVIS (AI)</span>
+                        <span class="member-status">🟢 자동화</span>
+                    </div>
+                    <div class="team-member-item" style="padding: 6px 0; background: transparent;">
+                        <span class="member-name" style="font-size: 11px;">GitHub Actions</span>
+                        <span class="member-status">🟢 실행 중</span>
+                    </div>
                 </div>
             </div>
         </div>
