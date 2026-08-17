@@ -482,9 +482,9 @@
             </div>
 
             <!-- 작업 상세 로그 (박스 없음) -->
-            <div class="status-log">
+            <div class="status-log" style="margin-top: 20px;">
                 <div class="status-title">📋 작업 상세 로그 (최신 6개)</div>
-                <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow: hidden;">
+                <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow: hidden; margin-top: 10px;">
                     <!-- 데이터 로드됨 -->
                 </div>
             </div>
@@ -564,7 +564,8 @@
             // 실제 데이터만 표시 (거짓 데이터 제거)
             if (tasks && tasks.length > 0) {
                 // 최신 항목이 위로 오도록 역순 정렬 + 최대 6개만
-                const recentTasks = tasks.reverse().slice(0, 6);
+                // slice로 먼저 복사한 후 reverse (원본 배열 변경 방지)
+                const recentTasks = tasks.slice().reverse().slice(0, 6);
 
                 recentTasks.forEach(task => {
                     let timestamp = '';
@@ -584,19 +585,21 @@
                     // 상태 표시
                     const statusEmoji = task.status && task.status.includes('완료') ? '✅' : '❌';
 
-                    html += `<div class="status-item" style="opacity: 0.9; font-size: 13px;">
-                        <span class="status-dot"></span>
-                        <div style="display: flex; justify-content: space-between; width: 100%; flex-direction: column; gap: 3px;">
-                            <span>${statusEmoji} ${task.task || task.name || '작업'}</span>
-                            <span style="font-size: 10px; color: #999;">${timestamp}</span>
+                    html += `<div class="status-item" style="padding: 8px 0; border-bottom: 1px solid rgba(0, 212, 255, 0.1); font-size: 12px; color: #aaa; opacity: 0.95;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <span style="flex: 1;">${statusEmoji} ${task.task || task.name || '작업'}</span>
                         </div>
+                        <div style="font-size: 10px; color: #666; margin-top: 3px;">${timestamp}</div>
                     </div>`;
                 });
             } else {
                 html = '<div style="color: #888; font-size: 12px; padding: 10px; text-align: center;">작업 로그가 없습니다.</div>';
             }
 
-            if (rightDetails) rightDetails.innerHTML = html;
+            if (rightDetails) {
+                rightDetails.innerHTML = html;
+                console.log('✅ 작업 로그 업데이트:', tasks.length, '개');
+            }
         }
 
         function displayTasks(tasks) {
