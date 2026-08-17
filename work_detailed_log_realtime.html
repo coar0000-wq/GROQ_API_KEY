@@ -577,7 +577,7 @@
                 console.warn('⚠️ [누적 카운트] 로드 실패:', e.message);
             }
             // 기본값: 117개 (초기 누적)
-            return { cumulative_total: 117, baseline_products: 117, last_updated: new Date().toISOString() };
+            return { cumulative_total: 117, baseline: 117, last_updated: new Date().toISOString() };
         }
 
         // ✅ 모든 상품 파일 로드 (현재 발굴된 제품 수)
@@ -592,7 +592,7 @@
                     { name: 'walmart_products.json', field: 'total_count' },
                     { name: 'naver_shopping_products.json', field: 'total_count' },
                     { name: 'oliveyoung_products.json', field: 'total_count' },
-                    { name: 'daiso_products.json', field: 'total_products' },
+                    { name: 'daiso_products.json', field: 'total_count' },
                     { name: 'real_products.json', field: 'daiso_items' }
                 ];
 
@@ -620,7 +620,7 @@
 
                 // 누적 카운트 로드
                 const cumulative = await loadCumulativeCount();
-                const newlyDiscovered = currentTotal - cumulative.baseline_products;
+                const newlyDiscovered = currentTotal - (cumulative.baseline || cumulative.baseline_products || 117);
                 const totalCumulativeProducts = cumulative.cumulative_total + Math.max(0, newlyDiscovered);
 
                 console.log('📊 [누적 상품 계산]:', {
@@ -730,7 +730,7 @@
                 try {
                     const fallbackResponse = await fetch('./data/scheduler_log.json?t=' + Date.now());
                     if (fallbackResponse.ok) {
-                        const fallbackData = fallbackResponse.json();
+                        const fallbackData = await fallbackResponse.json();
                         if (fallbackData.events && fallbackData.events.length > 0) {
                             const lastEvent = fallbackData.events[0];
                             const lastTime = lastEvent.timestamp || lastEvent.time || new Date();
@@ -993,64 +993,7 @@
             initialize();
         }
 
-        // ✅ 최후의 보루: DOMContentLoaded에서 직접 현재 시간 + 10분 렌더링
-        // (JSON 파일 로드 실패 시에도 반드시 날짜가 표시되도록)
-        window.addEventListener('DOMContentLoaded', function() {
-            try {
-                const now = new Date();
-                const nextTime = new Date(now.getTime() + 10 * 60000); // 10분 뒤
-
-                const lastEl = document.getElementById('last-update');
-                if (lastEl) {
-                    lastEl.innerText = now.toLocaleString('ko-KR');
-                    console.log('✅ [최후의 보루] last-update 렌더링:', lastEl.innerText);
-                }
-
-                const nextEl = document.getElementById('next-automation');
-                if (nextEl) {
-                    nextEl.innerText = nextTime.toLocaleString('ko-KR');
-                    console.log('✅ [최후의 보루] next-automation 렌더링:', nextEl.innerText);
-                }
-            } catch (error) {
-                console.error('❌ [최후의 보루] 에러:', error.message);
-            }
-        });
-
-        // ✅ 최종 해결: 안전한 선택자 + 유연한 시간 계산
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                // 1. 마지막 업데이트 시간 안전 매핑 (id가 없으면 클래스나 다른 선택자로 유연하게 탐색)
-                const lastUpdateEl = document.getElementById("last-update") || document.querySelector(".last-update");
-                if (lastUpdateEl) {
-                    lastUpdateEl.innerText = "2026-08-17 19:16:20";
-                    console.log('✅ [최종 해결] last-update: 2026-08-17 19:16:20');
-                } else {
-                    console.warn('❌ [최종 해결] last-update 요소 없음');
-                }
-
-                // 2. 다음 자동화 시간 안전 매핑 (현재 시각 기준 10분 후 자동 계산)
-                const nextAutoEl = document.getElementById("next-automation") || document.querySelector(".next-automation");
-                if (nextAutoEl) {
-                    const nextTime = new Date(Date.now() + 10 * 60000);
-                    nextAutoEl.innerText = nextTime.toLocaleString();
-                    console.log('✅ [최종 해결] next-automation:', nextAutoEl.innerText);
-                } else {
-                    console.warn('❌ [최종 해결] next-automation 요소 없음');
-                }
-
-                // 3. className 에러 방지 (불필요한 요소 제거)
-                // 사용하지 않는 요소이므로 완전히 제거
-
-                console.log('✅ [최종 해결] 모든 방어 완료 (유연한 선택자 + 동적 시간 계산)');
-            } catch (error) {
-                console.error('❌ [최종 해결] 에러:', error.message);
-                // 극단의 폴백
-                const lastEl = document.getElementById('last-update');
-                const nextEl = document.getElementById('next-automation');
-                if (lastEl) lastEl.innerText = "2026-08-17 19:16:20";
-                if (nextEl) nextEl.innerText = new Date(Date.now() + 10 * 60000).toLocaleString();
-            }
-        });
+        // ✅ DOMContentLoaded 통합 완료 - initialize() 함수에서 모든 처리
     </script>
 </body>
 </html>
