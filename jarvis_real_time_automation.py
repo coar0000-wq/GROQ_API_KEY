@@ -118,16 +118,12 @@ class JARVISRealTimeAutomation:
         }
 
     def _parse_duration(self, duration_str):
-        """지속 시간 문자열을 초로 변환"""
-        parts = duration_str.split()
-        seconds = 0
-        for i, part in enumerate(parts):
-            if "분" in part:
-                seconds += int(parts[i-1]) * 60
-            elif "초" in part:
-                seconds += int(parts[i-1])
-        return seconds
-
+        if not duration_str or not isinstance(duration_str, str):
+            return 0
+        import re
+        m = re.search(r"(\d+)\s*분", duration_str)
+        s = re.search(r"(\d+)\s*초", duration_str)
+        return (int(m.group(1)) if m else 0) * 60 + (int(s.group(1)) if s else 0)
     def generate_work_log(self):
         """완전한 작업 로그 생성"""
         tasks = self.generate_realistic_tasks(count=6)
