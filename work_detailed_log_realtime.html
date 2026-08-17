@@ -453,7 +453,12 @@
             }, 30000); // 30초마다 실제 데이터 새로고침
         }
 
-        initialize();
+        // DOM 완전 로드 후 초기화
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+            initialize();
+        }
     </script>
 </body>
 </html>
