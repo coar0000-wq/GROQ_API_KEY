@@ -1,4 +1,4 @@
-name: 🧪 JARVIS 간단 테스트 (수동 실행만)
+name: ?�� JARVIS 간단 ?�스??(?�동 ?�행�?
 
 on:
   workflow_dispatch:
@@ -13,44 +13,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
 
-      - name: Python 설정
+      - name: Python ?�정
         uses: actions/setup-python@v5.2
         with:
           python-version: '3.10'
 
-      - name: 필수 라이브러리 설치
+      - name: ?�수 ?�이브러�??�치
         run: |
           pip install requests feedparser --break-system-packages
-          echo "✅ 라이브러리 설치 완료"
+          echo "???�이브러�??�치 ?�료"
 
-      - name: 📁 데이터 디렉토리 확인
+      - name: ?�� ?�이???�렉?�리 ?�인
         run: |
-          ls -la data/ 2>&1 || echo "❌ data 폴더 없음"
+          ls -la data/ 2>&1 || echo "??data ?�더 ?�음"
           if [ -f "data/jarvis_work_detailed_log.json" ]; then
-            echo "✅ 로그 파일 존재"
+            echo "??로그 ?�일 존재"
             head -30 data/jarvis_work_detailed_log.json
           else
-            echo "❌ 로그 파일 없음"
+            echo "??로그 ?�일 ?�음"
           fi
 
-      - name: 📝 테스트: 작업 기록하기
+      - name: ?�� ?�스?? ?�업 기록?�기
         run: |
-          python scripts/record_task_result.py "GitHub Actions 테스트" "completed" 5 10
+          python scripts/record_task_result.py "GitHub Actions ?�스?? "completed" 5 10
 
-      - name: 📊 기록 확인
+      - name: ?�� 기록 ?�인
         run: |
-          echo "=== 기록된 데이터 ==="
+          echo "=== 기록???�이??==="
           cat data/jarvis_work_detailed_log.json | python -m json.tool | head -50
 
-      - name: 📤 결과 커밋
+      - name: ?�� 결과 커밋
         run: |
           git config --local user.email "jarvis@test.local"
           git config --local user.name "JARVIS Test"
           git add data/jarvis_work_detailed_log.json
-          git commit -m "🧪 테스트: 작업 기록 검증" || echo "변경사항 없음"
-          git push origin main || echo "푸시 실패"
+          git commit -m "?�� ?�스?? ?�업 기록 검�? || echo "변경사???�음"
+          git push origin main || echo "?�시 ?�패"
 
-      - name: ✅ 완료
+      - name: ???�료
         run: |
-          echo "테스트 완료!"
-          echo "대시보드에서 실시간으로 업데이트 확인: https://coar0000.github.io/jarvis-luna/"
+          echo "?�스???�료!"
+          echo "?�?�보?�에???�시간으�??�데?�트 ?�인: https://coar0000.github.io/jarvis-luna/"

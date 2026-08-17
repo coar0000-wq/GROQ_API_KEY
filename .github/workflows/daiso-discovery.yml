@@ -1,8 +1,8 @@
-ï»¿name: ëª¨ë“  í”Œë«í¼ ìƒí’ˆ ìë™ ë°œêµ´
+name: ¸ğµç ÇÃ·§Æû »óÇ° ÀÚµ¿ ¹ß±¼
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # ë§¤ 10ë¶„ë§ˆë‹¤ ì‹¤í–‰
+    - cron: '*/10 * * * *'  # ¸Å 10ºĞ¸¶´Ù ½ÇÇà
   workflow_dispatch:
 
 jobs:
@@ -12,36 +12,36 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Python ì„¤ì •
+      - name: Python ¼³Á¤
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: ë‹¤ì´ì†Œ ìƒí’ˆ ë°œêµ´
+      - name: ´ÙÀÌ¼Ò »óÇ° ¹ß±¼
         run: python daiso_product_discovery.py
 
-      - name: ì˜¬ë¦¬ë¸Œì˜ ìƒí’ˆ ë°œêµ´
+      - name: ¿Ã¸®ºê¿µ »óÇ° ¹ß±¼
         run: python oliveyoung_product_discovery.py
 
-      - name: ë„¤ì´ë²„ ìƒí’ˆ ë°œêµ´
+      - name: ³×ÀÌ¹ö »óÇ° ¹ß±¼
         run: python naver_product_discovery.py
 
-      - name: ì›”ë§ˆíŠ¸ ìƒí’ˆ ë°œêµ´
+      - name: ¿ù¸¶Æ® »óÇ° ¹ß±¼
         run: python walmart_product_discovery.py
 
-      - name: ì•„ë§ˆì¡´ ìƒí’ˆ ë°œêµ´
+      - name: ¾Æ¸¶Á¸ »óÇ° ¹ß±¼
         run: python amazon_product_discovery.py
 
-      - name: ë³€ê²½ì‚¬í•­ ì»¤ë°‹ ë° í‘¸ì‹œ
+      - name: º¯°æ»çÇ× Ä¿¹Ô ¹× Çª½Ã
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
           if [[ -z $(git status -s) ]]; then
-            echo "ë³€ê²½ì‚¬í•­ ì—†ìŒ"
+            echo "º¯°æ»çÇ× ¾øÀ½"
             exit 0
           fi
 
           git add -A
-          git commit -m "ğŸ¤– ìë™ ë°œêµ´: ëª¨ë“  í”Œë«í¼ ìƒí’ˆ ì—…ë°ì´íŠ¸ (ë‹¤ì´ì†Œ+ì˜¬ë¦¬ë¸Œì˜+ë„¤ì´ë²„+ì›”ë§ˆíŠ¸+ì•„ë§ˆì¡´)"
+          git commit -m "?? ÀÚµ¿ ¹ß±¼: ¸ğµç ÇÃ·§Æû »óÇ° ¾÷µ¥ÀÌÆ® (´ÙÀÌ¼Ò+¿Ã¸®ºê¿µ+³×ÀÌ¹ö+¿ù¸¶Æ®+¾Æ¸¶Á¸)"
           git push origin main
