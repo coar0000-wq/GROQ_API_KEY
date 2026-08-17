@@ -5,16 +5,26 @@ import asyncio
 import aiohttp
 import feedparser
 from datetime import datetime
-from groq import Groq
+import google.generativeai as genai
 import pathlib
 
-# Obsidian vault 경로
-OBSIDIAN_VAULT = r"C:\Users\Desktop\Obsidian"
+# Obsidian vault 경로 (동적 설정)
+OBSIDIAN_VAULT = os.getenv('OBSIDIAN_VAULT', os.path.expanduser('~/Obsidian'))
 OBSIDIAN_FOLDER = os.path.join(OBSIDIAN_VAULT, "JARVIS_LUNA_Data")
 OUTPUT_FILE = "jarvis_luna_realtime.json"
 
-# Groq 클라이언트
-client = Groq(api_key=os.getenv('GROQ_API_KEY'))
+# Gemini API 키 (필수)
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+if not GEMINI_API_KEY:
+    print("⚠️ Warning: GEMINI_API_KEY environment variable not set. Using mock mode.")
+    GEMINI_API_KEY = "mock-key-for-testing"
+
+# Gemini 클라이언트 초기화
+try:
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel('gemini-pro')
+except Exception as e:
+    print(f"⚠️ Warning: Could not initialize Gemini client: {e}")
 
 async def fetch_youtube_realtime():
     """YouTube 데이터 수집"""
@@ -55,21 +65,18 @@ async def fetch_google_news_realtime():
         print(f"News 오류: {e}")
         return []
 
-def analyze_with_groq(data, topic):
-    """Groq API로 분석"""
+def analyze_with_gemini(data, topic):
+    """Gemini API로 분석"""
     try:
         prompt = f"""다음 {topic} 데이터를 간단히 분석해주세요 (2-3줄):
         {json.dumps(data, ensure_ascii=False, indent=2)}"""
 
-        message = client.messages.create(
-            model="mixtral-8x7b-32768",
-            max_tokens=200,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return message.content[0].text
+        # Gemini API 호출
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
-        print(f"Groq 분석 오류: {e}")
-        return "분석 불가"
+        print(f"⚠️ Gemini 분석 오류: {e}")
+        return f"분석 불가 ({topic})"
 
 def save_to_obsidian(youtube_data, arxiv_data, news_data):
     """Obsidian 폴더에 markdown 파일 저장"""
@@ -103,7 +110,7 @@ tags: [jarvis-luna, realtime, youtube, arxiv, news]
 [[JARVIS LUNA News {date_str}]]
 
 ---
-자동 생성됨: JARVIS LUNA Groq Edition
+자동 생성됨: JARVIS LUNA Gemini Edition
 """
 
         # YouTube 페이지
@@ -122,7 +129,7 @@ tags: [youtube, video, realtime]
 {json.dumps(youtube_data, ensure_ascii=False, indent=2)}
 
 ## 분석
-{analyze_with_groq(youtube_data, 'YouTube 영상')}
+{analyze_with_gemini(youtube_data, 'YouTube 영상')}
 
 ---
 [[JARVIS LUNA 실시간 수집]]
@@ -144,7 +151,7 @@ tags: [arxiv, papers, research]
 {json.dumps(arxiv_data, ensure_ascii=False, indent=2)}
 
 ## 분석
-{analyze_with_groq(arxiv_data, 'arXiv 논문')}
+{analyze_with_gemini(arxiv_data, 'arXiv 논문')}
 
 ---
 [[JARVIS LUNA 실시간 수집]]
@@ -166,7 +173,7 @@ tags: [news, google-news, realtime]
 {json.dumps(news_data, ensure_ascii=False, indent=2)}
 
 ## 분석
-{analyze_with_groq(news_data, 'News')}
+{analyze_with_gemini(news_data, 'News')}
 
 ---
 [[JARVIS LUNA 실시간 수집]]

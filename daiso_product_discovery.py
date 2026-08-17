@@ -10,19 +10,19 @@ def main():
         with open("data/daiso_products.json", "r", encoding="utf-8") as f:
             daiso_data = json.load(f)
     except:
-        daiso_data = {"total_products": 0, "products": []}
-    
+        daiso_data = {"total_count": 0, "products": []}
+
     for i in range(new_count):
         daiso_data["products"].append({"id": f"daiso_{datetime.now().strftime('%Y%m%d%H%M%S')}_{i}", "name": f"다이소 상품 ({random.randint(100, 999)})", "discovered_at": datetime.utcnow().isoformat() + "Z"})
-    
-    daiso_data["total_products"] = len(daiso_data["products"])
+
+    daiso_data["total_count"] = len(daiso_data["products"])
     daiso_data["last_updated"] = datetime.utcnow().isoformat() + "Z"
     
     os.makedirs("data", exist_ok=True)
     with open("data/daiso_products.json", "w", encoding="utf-8") as f:
         json.dump(daiso_data, f, ensure_ascii=False, indent=2)
     
-    update_cumulative(daiso_data["total_products"], "daiso", new_count)
+    update_cumulative(daiso_data["total_count"], "daiso", new_count)
 
 def update_cumulative(count, source, new_count):
     try:
