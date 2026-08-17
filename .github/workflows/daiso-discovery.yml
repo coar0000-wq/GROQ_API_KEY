@@ -1,4 +1,4 @@
-name: 다이소 상품 자동 발굴
+﻿name: 모든 플랫폼 상품 자동 발굴
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  discover-products:
+  discover-all-platforms:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,13 +17,20 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: 의존성 설치
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
-
-      - name: 다이소 상품 발굴 실행
+      - name: 다이소 상품 발굴
         run: python daiso_product_discovery.py
+
+      - name: 올리브영 상품 발굴
+        run: python oliveyoung_product_discovery.py
+
+      - name: 네이버 상품 발굴
+        run: python naver_product_discovery.py
+
+      - name: 월마트 상품 발굴
+        run: python walmart_product_discovery.py
+
+      - name: 아마존 상품 발굴
+        run: python amazon_product_discovery.py
 
       - name: 변경사항 커밋 및 푸시
         run: |
@@ -36,5 +43,5 @@ jobs:
           fi
 
           git add -A
-          git commit -m "🤖 자동 발굴: 다이소 상품 업데이트"
+          git commit -m "🤖 자동 발굴: 모든 플랫폼 상품 업데이트 (다이소+올리브영+네이버+월마트+아마존)"
           git push origin main
