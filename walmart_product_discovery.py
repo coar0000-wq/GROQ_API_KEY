@@ -46,7 +46,26 @@ def update_cumulative(count, source, new_count):
     with open("data/cumulative_products.json", "w", encoding="utf-8") as f:
         json.dump(cumulative, f, ensure_ascii=False, indent=2)
 
+    log_entry(f"월마트 상품 {new_count}개 발굴 (누적: {total}개)")
     print(f"✅ 월마트: {new_count}개 발굴, 누적: {total}개")
+
+def log_entry(details):
+    try:
+        with open("data/scheduler_log.json", "r", encoding="utf-8") as f:
+            log = json.load(f)
+    except:
+        log = {"events": []}
+
+    log["events"].insert(0, {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "task_name": "✅ 월마트 상품 발굴",
+        "details": details,
+        "status": "success"
+    })
+    log["events"] = log["events"][:100]
+
+    with open("data/scheduler_log.json", "w", encoding="utf-8") as f:
+        json.dump(log, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
     main()
