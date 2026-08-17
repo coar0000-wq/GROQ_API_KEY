@@ -627,6 +627,37 @@
             return await loadAllProductFiles();
         }
 
+        // ✅ 안전한 날짜 설정 함수 (Invalid Date 방지)
+        function setSafeDateText(elementId, dateValue, defaultLabel = '') {
+            const el = document.getElementById(elementId);
+            if (!el) {
+                console.warn(`⚠️ [setSafeDateText] 요소 없음: ${elementId}`);
+                return;
+            }
+
+            try {
+                if (!dateValue) {
+                    const now = new Date().toLocaleString('ko-KR');
+                    el.innerText = defaultLabel ? `${defaultLabel}: ${now}` : now;
+                    return;
+                }
+
+                const parsed = new Date(dateValue);
+                if (isNaN(parsed.getTime())) {
+                    const now = new Date().toLocaleString('ko-KR');
+                    el.innerText = defaultLabel ? `${defaultLabel}: ${now}` : now;
+                    console.warn(`⚠️ [setSafeDateText] 유효하지 않은 날짜: ${dateValue}, 현재 시간으로 대체`);
+                } else {
+                    const formatted = parsed.toLocaleString('ko-KR');
+                    el.innerText = defaultLabel ? `${defaultLabel}: ${formatted}` : formatted;
+                }
+            } catch (error) {
+                console.error(`❌ [setSafeDateText] 에러:`, error.message);
+                const now = new Date().toLocaleString('ko-KR');
+                el.innerText = defaultLabel ? `${defaultLabel}: ${now}` : now;
+            }
+        }
+
         function updateTime() {
             const now = new Date();
             if (isNaN(now.getTime())) {
@@ -788,12 +819,12 @@
                     last_updated: phaseData.last_updated,
                     next_automation: phaseData.next_automation
                 });
-                setSafeText('last-update', phaseData.last_updated, '⏳ 대기 중');
-                setSafeText('next-automation', phaseData.next_automation, '⏳ 대기 중');
+                setSafeDateText('last-update', phaseData.last_updated, '📅 마지막 업데이트');
+                setSafeDateText('next-automation', phaseData.next_automation, '⏰ 다음 자동화');
             } else {
                 console.error('❌ Phase 26 진행도 데이터 로드 실패');
-                setSafeText('last-update', null, '⏳ 데이터 없음');
-                setSafeText('next-automation', null, '⏳ 데이터 없음');
+                setSafeDateText('last-update', null, '📅 마지막 업데이트');
+                setSafeDateText('next-automation', null, '⏰ 다음 자동화');
             }
 
             // ✅ 정기적 업데이트
@@ -819,12 +850,12 @@
                 // Phase 26 데이터 갱신
                 const newPhaseData = await loadPhaseData();
                 if (newPhaseData) {
-                    setSafeText('last-update', newPhaseData.last_updated, '⏳ 대기 중');
-                    setSafeText('next-automation', newPhaseData.next_automation, '⏳ 대기 중');
+                    setSafeDateText('last-update', newPhaseData.last_updated, '📅 마지막 업데이트');
+                    setSafeDateText('next-automation', newPhaseData.next_automation, '⏰ 다음 자동화');
                     console.log('🔄 [30초 갱신] Phase 26 데이터 업데이트 완료');
                 } else {
-                    setSafeText('last-update', null, '⏳ 재시도 중');
-                    setSafeText('next-automation', null, '⏳ 재시도 중');
+                    setSafeDateText('last-update', null, '📅 마지막 업데이트');
+                    setSafeDateText('next-automation', null, '⏰ 다음 자동화');
                 }
             }, 30000); // 30초마다 모든 데이터 새로고침
         }
