@@ -182,7 +182,7 @@ class RealProductDiscovery:
             trends_data = []
             for keyword in keywords:
                 try:
-                    pytrends.build_payload([keyword], cat=0, timeframe='now 1-m', geo="KR", geo="KR")
+                    pytrends.build_payload([keyword], cat=0, timeframe='now 1-m', geo="KR")
                     interest = pytrends.interest_over_time()
 
                     trends_data.append({
