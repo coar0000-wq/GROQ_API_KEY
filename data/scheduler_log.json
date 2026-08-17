@@ -35,6 +35,12 @@
       "task_name": "✅ MD Family 브랜딩 변경",
       "details": "도현이 → MD Family (index.html, jarvis-interactive-site.html)",
       "status": "success"
+    },
+    {
+      "timestamp": "2026-08-17T09:44:13.075824Z",
+      "task_name": "다이소 상품 자동 발굴",
+      "details": "3개 상품 발굴 (누적: 141개)",
+      "status": "success"
     }
   ]
 }

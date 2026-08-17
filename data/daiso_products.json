@@ -1,6 +1,6 @@
 {
-  "total_products": 21,
-  "last_updated": "2026-08-17T08:09:13.796148Z",
+  "total_products": 24,
+  "last_updated": "2026-08-17T09:44:13.073596Z",
   "products": [
     {
       "id": "product_0001",
@@ -310,6 +310,33 @@
       "rating": "4.5⭐",
       "stock_status": "재고충분",
       "verified": true
+    },
+    {
+      "id": "product_20260817184413_000",
+      "name": "거울 (8942)",
+      "category": "욕실용품",
+      "cost_price": "$2,633",
+      "selling_price": "$14,033",
+      "profit_margin": "433%",
+      "discovered_at": "2026-08-17T09:44:13.072971Z"
+    },
+    {
+      "id": "product_20260817184413_001",
+      "name": "세제 (8419)",
+      "category": "욕실용품",
+      "cost_price": "$2,988",
+      "selling_price": "$20,437",
+      "profit_margin": "584%",
+      "discovered_at": "2026-08-17T09:44:13.073009Z"
+    },
+    {
+      "id": "product_20260817184413_002",
+      "name": "마커펜 (6481)",
+      "category": "문구용품",
+      "cost_price": "$1,011",
+      "selling_price": "$7,178",
+      "profit_margin": "610%",
+      "discovered_at": "2026-08-17T09:44:13.073024Z"
     }
   ],
   "bestsellers": [
