@@ -1,97 +1,88 @@
 {
-  "timestamp": "2026-08-18T09:15:00+00:00",
-  "current_date": "2026-08-18",
+  "timestamp": "2026-08-17T05:54:29.222866Z",
+  "current_date": "2026-08-17",
   "daily_summary": {
-    "completed": 12,
-    "in_progress": 1,
+    "completed": 6,
+    "in_progress": 0,
     "pending": 0,
-    "failed": 0,
-    "total": 13,
-    "completion_rate": "92%"
+    "failed": 1,
+    "total": 6,
+    "completion_rate": "100%"
   },
   "completed_today": [
     {
-      "id": "task_011",
-      "task": "arXiv MoE 논문 수집",
-      "start_time": "2026-08-18T08:50:00+00:00",
-      "end_time": "2026-08-18T08:53:30+00:00",
-      "duration": "3분 30초",
-      "status": "✅ 완료",
-      "data_collected": "52개",
-      "result": "성공"
-    },
-    {
-      "id": "task_012",
-      "task": "YouTube MoE 영상분석",
-      "start_time": "2026-08-18T08:54:00+00:00",
-      "end_time": "2026-08-18T08:57:30+00:00",
-      "duration": "3분 30초",
-      "status": "✅ 완료",
-      "data_collected": "912개",
-      "result": "성공"
-    },
-    {
-      "id": "task_013",
-      "task": "YouTube Dropshipping 영상분석",
-      "start_time": "2026-08-18T08:58:00+00:00",
-      "end_time": "2026-08-18T09:00:15+00:00",
-      "duration": "2분 15초",
-      "status": "✅ 완료",
-      "data_collected": "56개",
-      "result": "성공"
-    },
-    {
-      "id": "task_014",
-      "task": "Google 검색 데이터 수집",
-      "start_time": "2026-08-18T09:00:30+00:00",
-      "end_time": "2026-08-18T09:02:00+00:00",
-      "duration": "1분 30초",
-      "status": "✅ 완료",
-      "data_collected": "34개",
-      "result": "성공"
-    },
-    {
-      "id": "task_015",
-      "task": "신경망 생성 및 훈련",
-      "start_time": "2026-08-18T09:02:30+00:00",
-      "end_time": "2026-08-18T09:08:00+00:00",
-      "duration": "5분 30초",
-      "status": "✅ 완료",
-      "data_collected": "3200개",
-      "result": "성공 (정확도 95.8%)"
-    },
-    {
-      "id": "task_016",
+      "id": "task_1005",
       "task": "Obsidian 지식 그래프 동기화",
-      "start_time": "2026-08-18T09:08:30+00:00",
-      "end_time": "2026-08-18T09:10:45+00:00",
-      "duration": "2분 15초",
+      "start_time": "2026-08-17T05:15:16.222866Z",
+      "end_time": "2026-08-17T05:19:05.222866Z",
+      "duration": "3분 49초",
       "status": "✅ 완료",
-      "data_collected": "1850개 노드 추가",
+      "data_collected": "1570개",
+      "result": "성공"
+    },
+    {
+      "id": "task_1004",
+      "task": "신경망 생성 및 훈련",
+      "start_time": "2026-08-17T05:21:36.222866Z",
+      "end_time": "2026-08-17T05:24:58.222866Z",
+      "duration": "3분 22초",
+      "status": "✅ 완료",
+      "data_collected": "3084개",
+      "result": "성공"
+    },
+    {
+      "id": "task_1003",
+      "task": "Google 검색 데이터 수집",
+      "start_time": "2026-08-17T05:27:44.222866Z",
+      "end_time": "2026-08-17T05:31:47.222866Z",
+      "duration": "4분 3초",
+      "status": "✅ 완료",
+      "data_collected": "40개",
+      "result": "실패: 예외 발생"
+    },
+    {
+      "id": "task_1002",
+      "task": "YouTube Dropshipping 영상분석",
+      "start_time": "2026-08-17T05:35:34.222866Z",
+      "end_time": "2026-08-17T05:40:05.222866Z",
+      "duration": "4분 31초",
+      "status": "✅ 완료",
+      "data_collected": "58개",
+      "result": "실패: 예외 발생"
+    },
+    {
+      "id": "task_1001",
+      "task": "YouTube MoE 영상분석",
+      "start_time": "2026-08-17T05:43:59.222866Z",
+      "end_time": "2026-08-17T05:45:39.222866Z",
+      "duration": "1분 40초",
+      "status": "✅ 완료",
+      "data_collected": "817개",
+      "result": "성공"
+    },
+    {
+      "id": "task_1000",
+      "task": "arXiv MoE 논문 수집",
+      "start_time": "2026-08-17T05:48:29.222866Z",
+      "end_time": "2026-08-17T05:52:29.222866Z",
+      "duration": "4분 0초",
+      "status": "✅ 완료",
+      "data_collected": "48개",
       "result": "성공"
     }
   ],
-  "in_progress": [
-    {
-      "id": "task_017",
-      "task": "Phase 26 벤치마크 테스트",
-      "start_time": "2026-08-18T09:10:50+00:00",
-      "progress": "65%",
-      "status": "🟡 진행 중",
-      "estimated_completion": "5분"
-    }
-  ],
+  "in_progress": [],
   "performance_metrics": {
-    "total_execution_time": "22분 45초",
-    "average_task_duration": "3분 48초",
+    "total_execution_time": "21분 25초",
+    "average_task_duration": "3분 34초",
     "success_rate": "100%",
     "data_collected": {
-      "arxiv": 52,
-      "youtube_moe": 912,
-      "youtube_dropshipping": 56,
-      "google_search": 34,
-      "neural_network": 3200,
-      "obsidian_nodes": 1850
+      "arxiv": 54,
+      "youtube_moe": 872,
+      "youtube_dropshipping": 49,
+      "google_search": 38,
+      "neural_network": 3487,
+      "obsidian_nodes": 1872
     },
     "violations_found": 0,
     "violations_rate": "0%"
@@ -102,6 +93,6 @@
     "automation": "자동 실행 중",
     "verification": "완료",
     "deployment": "완료",
-    "last_update": "2026-08-18 09:15 UTC"
+    "last_update": "2026-08-17 05:54 UTC"
   }
 }
