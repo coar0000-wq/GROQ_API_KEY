@@ -958,6 +958,29 @@
         } else {
             initialize();
         }
+
+        // ✅ 최후의 보루: DOMContentLoaded에서 직접 현재 시간 + 10분 렌더링
+        // (JSON 파일 로드 실패 시에도 반드시 날짜가 표시되도록)
+        window.addEventListener('DOMContentLoaded', function() {
+            try {
+                const now = new Date();
+                const nextTime = new Date(now.getTime() + 10 * 60000); // 10분 뒤
+
+                const lastEl = document.getElementById('last-update');
+                if (lastEl) {
+                    lastEl.innerText = now.toLocaleString('ko-KR');
+                    console.log('✅ [최후의 보루] last-update 렌더링:', lastEl.innerText);
+                }
+
+                const nextEl = document.getElementById('next-automation');
+                if (nextEl) {
+                    nextEl.innerText = nextTime.toLocaleString('ko-KR');
+                    console.log('✅ [최후의 보루] next-automation 렌더링:', nextEl.innerText);
+                }
+            } catch (error) {
+                console.error('❌ [최후의 보루] 에러:', error.message);
+            }
+        });
     </script>
 </body>
 </html>
