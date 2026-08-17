@@ -355,54 +355,66 @@
             }
         }
 
-        // ✅ 안전한 날짜 표시 함수 (HTML 요소에 직접 업데이트) - 개선 버전
-        function setSafeText(elementId, dateStr) {
+        // ✅ 날짜 파싱 안전 함수 - 실패 시 현재 시간 반환
+        function parseDateOrNow(dateString, fallbackText = null) {
+            if (!dateString) {
+                if (fallbackText) return fallbackText;
+                return new Date().toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+
+            const d = new Date(dateString);
+
+            // Invalid Date 검사
+            if (isNaN(d.getTime())) {
+                console.error(`⚠️ [날짜 파싱] 유효하지 않은 형식: "${dateString}"`);
+                if (fallbackText) return fallbackText;
+                return new Date().toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+
+            return d.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        // ✅ 안전한 날짜 표시 함수 (HTML 요소에 직접 업데이트) - 최종 버전
+        function setSafeText(elementId, dateStr, fallbackText = null) {
             const el = document.getElementById(elementId);
             if (!el) {
                 console.warn(`❌ [데이터 바인딩] 요소 없음: #${elementId}`);
                 return;
             }
 
-            // 날짜 데이터가 없거나 유효하지 않으면 현재 시간 또는 기본값 사용
-            if (!dateStr || dateStr === "Invalid Date") {
-                console.warn(`⚠️ [데이터 바인딩] ${elementId} 값 비어있음 또는 Invalid - 현재 시간으로 표시`);
-                const now = new Date().toLocaleString('ko-KR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-                el.textContent = now;
-                return;
-            }
+            try {
+                const formattedDate = parseDateOrNow(dateStr, fallbackText);
+                el.textContent = formattedDate;
 
-            const date = new Date(dateStr);
-
-            // Invalid Date 검사 (getTime()이 NaN인 경우)
-            if (isNaN(date.getTime())) {
-                console.error(`❌ [데이터 바인딩] ${elementId}: 유효하지 않은 형식 "${dateStr}" → 현재 시간 사용`);
-                const now = new Date().toLocaleString('ko-KR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-                el.textContent = now;
-            } else {
-                const formatted = date.toLocaleString('ko-KR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-                el.textContent = formatted;
-                console.log(`✅ [데이터 바인딩] ${elementId} 업데이트: ${formatted}`);
+                if (!dateStr) {
+                    console.warn(`⚠️ [데이터 바인딩] ${elementId} 값 없음 → 현재 시간 표시`);
+                } else {
+                    console.log(`✅ [데이터 바인딩] ${elementId}: ${formattedDate}`);
+                }
+            } catch (error) {
+                console.error(`❌ [데이터 바인딩] ${elementId} 처리 실패:`, error);
+                el.textContent = fallbackText || '대기 중';
             }
         }
 
@@ -625,12 +637,12 @@
                     last_updated: phaseData.last_updated,
                     next_automation: phaseData.next_automation
                 });
-                setSafeText('last-update', phaseData.last_updated);
-                setSafeText('next-automation', phaseData.next_automation);
+                setSafeText('last-update', phaseData.last_updated, '⏳ 대기 중');
+                setSafeText('next-automation', phaseData.next_automation, '⏳ 대기 중');
             } else {
                 console.error('❌ Phase 26 진행도 데이터 로드 실패');
-                setSafeText('last-update', null);
-                setSafeText('next-automation', null);
+                setSafeText('last-update', null, '⏳ 데이터 없음');
+                setSafeText('next-automation', null, '⏳ 데이터 없음');
             }
 
             // ✅ 정기적 업데이트
@@ -656,9 +668,12 @@
                 // Phase 26 데이터 갱신
                 const newPhaseData = await loadPhaseData();
                 if (newPhaseData) {
-                    setSafeText('last-update', newPhaseData.last_updated);
-                    setSafeText('next-automation', newPhaseData.next_automation);
+                    setSafeText('last-update', newPhaseData.last_updated, '⏳ 대기 중');
+                    setSafeText('next-automation', newPhaseData.next_automation, '⏳ 대기 중');
                     console.log('🔄 [30초 갱신] Phase 26 데이터 업데이트 완료');
+                } else {
+                    setSafeText('last-update', null, '⏳ 재시도 중');
+                    setSafeText('next-automation', null, '⏳ 재시도 중');
                 }
             }, 30000); // 30초마다 모든 데이터 새로고침
         }
