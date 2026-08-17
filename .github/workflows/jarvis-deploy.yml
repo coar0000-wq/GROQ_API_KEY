@@ -2,7 +2,7 @@ name: JARVIS LUNA - Automatic Deployment & Evolution
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 매시간 실행
+    - cron: '0 * * * *'  # 매시�??�행
   push:
     branches: [ main ]
   workflow_dispatch:
@@ -45,20 +45,20 @@ jobs:
 import json
 from datetime import datetime
 
-# 대시보드 데이터 로드
+# ?�?�보???�이??로드
 try:
     with open('data/dashboard_data.json', 'r') as f:
         data = json.load(f)
 except:
     data = {}
 
-# 시간대별 통계 기록
+# ?�간?��??�계 기록
 stats = {
     'timestamp': datetime.now().isoformat(),
     'metrics': data
 }
 
-# 일일 통계 누적
+# ?�일 ?�계 ?�적
 try:
     with open('data/daily_dashboard_log.json', 'r') as f:
         log = json.load(f)
@@ -66,13 +66,13 @@ except:
     log = []
 
 log.append(stats)
-# 최근 24시간만 유지
+# 최근 24?�간�??��?
 log = log[-24:]
 
 with open('data/daily_dashboard_log.json', 'w') as f:
     json.dump(log, f, indent=2)
 
-print('✓ Dashboard visualization generated')
+print('??Dashboard visualization generated')
 "
 
     - name: Commit & Push
@@ -80,7 +80,7 @@ print('✓ Dashboard visualization generated')
         git config --local user.email "action@github.com"
         git config --local user.name "JARVIS LUNA"
         git add -A
-        git commit -m "🤖 JARVIS Evolution: $(date '+%Y-%m-%d %H:%M:%S')" || exit 0
+        git commit -m "?�� JARVIS Evolution: $(date '+%Y-%m-%d %H:%M:%S')" || exit 0
         git push
 
     - name: Deploy to GitHub Pages
@@ -90,7 +90,7 @@ print('✓ Dashboard visualization generated')
         publish_dir: ./
         cname: ""
         force_orphan: false
-        commit_message: "🌐 JARVIS Dashboard: $(date '+%Y-%m-%d %H:%M:%S')"
+        commit_message: "?�� JARVIS Dashboard: $(date '+%Y-%m-%d %H:%M:%S')"
 
   jarvis-analysis:
     runs-on: ubuntu-latest
