@@ -17,14 +17,14 @@ def main():
     
     az_data["total_count"] = len(az_data["products"])
     az_data["last_updated"] = datetime.utcnow().isoformat() + "Z"
-    
+
     os.makedirs("data", exist_ok=True)
     with open("data/amazon_products.json", "w", encoding="utf-8") as f:
         json.dump(az_data, f, ensure_ascii=False, indent=2)
-    
-    update_cumulative(az_data["total_count"], "amazon")
 
-def update_cumulative(count, source):
+    update_cumulative(az_data["total_count"], "amazon", new_count)
+
+def update_cumulative(count, source, new_count):
     try:
         with open("data/cumulative_products.json", "r", encoding="utf-8") as f:
             cumulative = json.load(f)
@@ -34,7 +34,8 @@ def update_cumulative(count, source):
     if "sources" not in cumulative:
         cumulative["sources"] = {}
 
-    cumulative["sources"][source] = count
+    # ✅ 수정: 새로운 개수만 더하기 (누적)
+    cumulative["sources"][source] = cumulative["sources"].get(source, 0) + new_count
     baseline = cumulative.get("baseline", 117)
     total = baseline + sum(cumulative["sources"].values())
 
@@ -45,7 +46,7 @@ def update_cumulative(count, source):
     with open("data/cumulative_products.json", "w", encoding="utf-8") as f:
         json.dump(cumulative, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 아마존: {count}개, 누적: {total}개")
+    print(f"✅ 아마존: {new_count}개 발굴, 누적: {total}개")
 
 if __name__ == "__main__":
     main()

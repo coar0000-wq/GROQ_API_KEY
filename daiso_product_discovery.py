@@ -34,7 +34,8 @@ def update_cumulative(count, source, new_count):
     if "sources" not in cumulative:
         cumulative["sources"] = {}
 
-    cumulative["sources"][source] = count
+    # ✅ 수정: 새로운 개수만 더하기 (누적)
+    cumulative["sources"][source] = cumulative["sources"].get(source, 0) + new_count
     baseline = cumulative.get("baseline", 117)
     total = baseline + sum(cumulative["sources"].values())
 
