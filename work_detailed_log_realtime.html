@@ -89,13 +89,13 @@
         }
 
         .log-entry {
-            margin: 10px 0;
-            padding: 10px;
+            margin: 15px 0;
+            padding: 12px;
             background: rgba(0, 255, 0, 0.05);
             border-left: 3px solid var(--primary);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .log-entry.in-progress {
@@ -115,15 +115,16 @@
 
         .log-time {
             color: #888;
-            font-size: 0.9em;
-            min-width: 120px;
-            text-align: right;
+            font-size: 0.85em;
+            text-align: left;
+            order: 2;
         }
 
         .log-task {
-            flex-grow: 1;
-            margin-left: 15px;
             color: var(--primary);
+            font-weight: bold;
+            font-size: 1em;
+            order: 1;
         }
 
         .log-status {
@@ -132,6 +133,7 @@
             text-align: center;
             padding: 5px 10px;
             border-radius: 4px;
+            display: none;  /* 숨김: 새 형식에서는 필요 없음 */
         }
 
         .status-in-progress {
@@ -823,20 +825,19 @@
                 safeSetText('nextTaskInfo', nextTaskText);
             }
 
-            // 최근 진행 중인 작업 (가장 최신)
+            // 최근 진행 중인 작업 (가장 최신) - 새로운 형식
             let currentHtml = '';
             if (events.length > 0) {
                 const lastEvent = events[0];
-                const timeStr = formatSafeDate(lastEvent.timestamp, 'time');
+                const dateTimeStr = formatSafeDate(lastEvent.timestamp, 'full');
                 const taskName = lastEvent.task_name || '알 수 없는 작업';
                 const taskDetails = lastEvent.details || '상세정보 없음';
 
-                if (timeStr !== '정보 없음') {
+                if (dateTimeStr !== '정보 없음') {
                     currentHtml = `
                         <div class="log-entry completed">
-                            <span class="log-time">${timeStr}</span>
-                            <span class="log-task">${taskName} >> ${taskDetails}</span>
-                            <span class="log-status status-completed">완료</span>
+                            <span class="log-task">✅ ${taskName} >> ${taskDetails}</span>
+                            <span class="log-time">${dateTimeStr}</span>
                         </div>
                     `;
                 } else {
@@ -847,21 +848,19 @@
             const currentWorkDefault = '<div class="log-entry completed"><span style="color: #aaa;">진행 중인 작업 없음</span></div>';
             safeSetHTML('currentWorkLog', currentHtml || currentWorkDefault);
 
-            // 오늘 완료된 작업 (최신 6개) - 안전한 DOM 접근
+            // 오늘 완료된 작업 (최신 6개) - 새로운 형식
             let completedHtml = '';
             const recentEvents = events.slice(0, 6);
             recentEvents.forEach(task => {
-                const dateStr = formatSafeDate(task.timestamp, 'date');
-                const timeStr = formatSafeDate(task.timestamp, 'time');
+                const dateTimeStr = formatSafeDate(task.timestamp, 'full');
                 const taskName = task.task_name || '알 수 없는 작업';
                 const taskDetails = task.details || '상세정보 없음';
 
-                if (dateStr !== '정보 없음' && timeStr !== '정보 없음') {
+                if (dateTimeStr !== '정보 없음') {
                     completedHtml += `
                         <div class="log-entry completed">
-                            <span class="log-time">${dateStr} ${timeStr}</span>
-                            <span class="log-task">${taskName} >> ${taskDetails}</span>
-                            <span class="log-status status-completed">✅</span>
+                            <span class="log-task">✅ ${taskName} >> ${taskDetails}</span>
+                            <span class="log-time">${dateTimeStr}</span>
                         </div>
                     `;
                 }
@@ -869,20 +868,18 @@
             const completedDefault = '<div class="log-entry completed"><span style="color: #aaa;">완료된 작업 없음</span></div>';
             safeSetHTML('todayCompletedLog', completedHtml || completedDefault);
 
-            // 최근 작업 히스토리 (전체) - 안전한 DOM 접근
+            // 최근 작업 히스토리 (전체) - 새로운 형식
             let historyHtml = '';
             events.forEach(task => {
-                const dateStr = formatSafeDate(task.timestamp, 'date');
-                const timeStr = formatSafeDate(task.timestamp, 'time');
+                const dateTimeStr = formatSafeDate(task.timestamp, 'full');
                 const taskName = task.task_name || '알 수 없는 작업';
                 const taskDetails = task.details || '상세정보 없음';
 
-                if (dateStr !== '정보 없음' && timeStr !== '정보 없음') {
+                if (dateTimeStr !== '정보 없음') {
                     historyHtml += `
                         <div class="log-entry completed">
-                            <span class="log-time">${dateStr} ${timeStr}</span>
-                            <span class="log-task">${taskName} >> ${taskDetails}</span>
-                            <span class="log-status status-completed">✅</span>
+                            <span class="log-task">✅ ${taskName} >> ${taskDetails}</span>
+                            <span class="log-time">${dateTimeStr}</span>
                         </div>
                     `;
                 }
