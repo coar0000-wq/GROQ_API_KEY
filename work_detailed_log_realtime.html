@@ -416,6 +416,24 @@
             return null;
         }
 
+        // ✅ 다이소 상품 누적 데이터 로드
+        async function loadDaisoProducts() {
+            try {
+                const response = await fetch('./data/daiso_products.json?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ [다이소] 상품 데이터 로드 성공:', {
+                        total_products: data.total_products,
+                        last_updated: data.last_updated
+                    });
+                    return data;
+                }
+            } catch (error) {
+                console.warn('⚠️ [다이소] 상품 데이터 로드 실패:', error);
+            }
+            return null;
+        }
+
         function updateTime() {
             const now = new Date();
             if (isNaN(now.getTime())) {
@@ -426,7 +444,7 @@
             document.getElementById('currentTime').textContent = formatSafeDate(now.toISOString(), 'full');
         }
 
-        function updateWorkLog() {
+        function updateWorkLog(daisoData = null) {
             if (!currentData || !currentData.events) {
                 console.log('⚠️ 데이터 없음');
                 return;
@@ -436,7 +454,11 @@
             const completedEvents = events.filter(e => e.status === 'success');
 
             // 통계 업데이트
-            document.getElementById('completedCount').textContent = completedEvents.length;
+            // 📊 누적 상품 개수 (다이소)
+            const totalProducts = daisoData?.total_products || completedEvents.length;
+            document.getElementById('completedCount').textContent = totalProducts;
+            console.log(`📊 [누적 상품수] ${totalProducts}개 (다이소 발굴 누적)`);
+
             document.getElementById('inProgressCount').textContent = '1';
             document.getElementById('pendingCount').textContent = '0';
 
@@ -532,10 +554,21 @@
 
             // ✅ scheduler_log.json 로드
             const realData = await loadRealData();
+            let daisoData = null;
+
             if (realData) {
                 currentData = realData;
                 console.log('✅ 작업 데이터 사용');
-                updateWorkLog();
+
+                // ✅ 다이소 상품 누적 데이터 로드
+                daisoData = await loadDaisoProducts();
+                if (daisoData) {
+                    console.log(`📊 [다이소 누적 상품수] ${daisoData.total_products}개`);
+                    updateWorkLog(daisoData);
+                } else {
+                    console.warn('⚠️ [다이소] 상품 데이터 없음, 작업 개수로 표시');
+                    updateWorkLog();
+                }
             } else {
                 console.error('❌ [거짓말 검증] 작업 데이터 없음 - 모의 데이터 표시 금지');
                 document.getElementById('completedCount').textContent = '?';
@@ -575,7 +608,15 @@
                 const newData = await loadRealData();
                 if (newData) {
                     currentData = newData;
-                    updateWorkLog();
+
+                    // 다이소 상품 누적 데이터 갱신
+                    const newDaisoData = await loadDaisoProducts();
+                    if (newDaisoData) {
+                        updateWorkLog(newDaisoData);
+                        console.log(`🔄 [30초 갱신] 다이소 상품 ${newDaisoData.total_products}개 (누적)`);
+                    } else {
+                        updateWorkLog();
+                    }
                     console.log('🔄 [30초 갱신] 작업 데이터 업데이트 완료');
                 }
 
