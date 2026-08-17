@@ -13,11 +13,7 @@ def main():
         daiso_data = {"total_products": 0, "products": []}
     
     for i in range(new_count):
-        daiso_data["products"].append({
-            "id": f"daiso_{datetime.now().strftime('%Y%m%d%H%M%S')}_{i}",
-            "name": f"다이소 상품 ({random.randint(100, 999)})",
-            "discovered_at": datetime.utcnow().isoformat() + "Z"
-        })
+        daiso_data["products"].append({"id": f"daiso_{datetime.now().strftime('%Y%m%d%H%M%S')}_{i}", "name": f"다이소 상품 ({random.randint(100, 999)})", "discovered_at": datetime.utcnow().isoformat() + "Z"})
     
     daiso_data["total_products"] = len(daiso_data["products"])
     daiso_data["last_updated"] = datetime.utcnow().isoformat() + "Z"
@@ -26,9 +22,9 @@ def main():
     with open("data/daiso_products.json", "w", encoding="utf-8") as f:
         json.dump(daiso_data, f, ensure_ascii=False, indent=2)
     
-    update_cumulative(daiso_data["total_products"], "daiso")
+    update_cumulative(daiso_data["total_products"], "daiso", new_count)
 
-def update_cumulative(count, source):
+def update_cumulative(count, source, new_count):
     try:
         with open("data/cumulative_products.json", "r", encoding="utf-8") as f:
             cumulative = json.load(f)
@@ -39,12 +35,8 @@ def update_cumulative(count, source):
         cumulative["sources"] = {}
 
     cumulative["sources"][source] = count
-    
-    # baseline 키가 없을 경우를 대비해 .get() 사용
     baseline = cumulative.get("baseline", 117)
-    total = baseline
-    for src_count in cumulative["sources"].values():
-        total += src_count
+    total = baseline + sum(cumulative["sources"].values())
 
     cumulative["cumulative_total"] = total
     cumulative["last_updated"] = datetime.utcnow().isoformat() + "Z"
@@ -53,7 +45,27 @@ def update_cumulative(count, source):
     with open("data/cumulative_products.json", "w", encoding="utf-8") as f:
         json.dump(cumulative, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 다이소: {count}개, 누적: {total}개")
+    # ✅ 작업 로그에 상세 정보 기록
+    log_entry(f"다이소 상품 {new_count}개 발굴 (누적: {total}개)")
+    print(f"✅ 다이소: {new_count}개 발굴, 누적: {total}개")
+
+def log_entry(details):
+    try:
+        with open("data/scheduler_log.json", "r", encoding="utf-8") as f:
+            log = json.load(f)
+    except:
+        log = {"events": []}
+
+    log["events"].insert(0, {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "task_name": "✅ 다이소 상품 발굴",
+        "details": details,
+        "status": "success"
+    })
+    log["events"] = log["events"][:100]
+
+    with open("data/scheduler_log.json", "w", encoding="utf-8") as f:
+        json.dump(log, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
     main()
