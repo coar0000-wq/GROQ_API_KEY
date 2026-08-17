@@ -536,12 +536,39 @@
             </div>
 
             <!-- 3️⃣ 진행도 -->
-            <div class="progress-section-right" style="margin-top: 20px;">
+            <div class="progress-section-right" style="margin-top: 20px; max-height: 320px; overflow-y: auto;">
                 <div class="status-title">📈 Phase 26 진행도: 75%</div>
-                <div class="bottom-info" style="padding-top: 10px; border-top: 1px solid rgba(0, 212, 255, 0.1);">
-                    <div style="font-size: 11px; color: #666;">마지막 업데이트: 2026-08-17 15:30</div>
-                    <div style="margin-top: 8px; font-size: 11px; color: #666;">다음 자동화: 10분 후</div>
-                    <div style="margin-top: 8px; font-size: 11px; color: #00d4ff;">상태: 🟢 매 10분 자동 실행</div>
+
+                <!-- 현재 진행 (0-75%) -->
+                <div style="margin-top: 12px;">
+                    <div style="font-size: 12px; color: #00d4ff; font-weight: 600; margin-bottom: 8px;">🟢 진행 중 (0-75%)</div>
+                    <div style="font-size: 10px; color: #888; margin-bottom: 4px;">✅ Top-4 라우팅 시스템 (완료)</div>
+                    <div style="font-size: 10px; color: #888; margin-bottom: 4px;">✅ 8명 전문가 로드밸런싱 (완료)</div>
+                    <div style="font-size: 10px; color: #888; margin-bottom: 8px;">🔄 신경망 훈련 (진행 중, 50% 스파시티)</div>
+                </div>
+
+                <!-- 남은 진행 (75-100%) -->
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 212, 255, 0.15);">
+                    <div style="font-size: 12px; color: #ffaa00; font-weight: 600; margin-bottom: 8px;">🟡 준비 중 (75-100%)</div>
+                    <div style="font-size: 10px; color: #999; margin-bottom: 4px;">⏳ 성능 벤치마킹 (예정)</div>
+                    <div style="font-size: 10px; color: #999; margin-bottom: 4px;">⏳ 통합 테스트 및 검증 (예정)</div>
+                    <div style="font-size: 10px; color: #999; margin-bottom: 4px;">⏳ 문서화 및 배포 준비 (예정)</div>
+                    <div style="font-size: 10px; color: #999; margin-bottom: 8px;">⏳ Phase 27 전환 준비 (예정)</div>
+                </div>
+
+                <!-- 다음 Phase 미리보기 -->
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 212, 255, 0.15);">
+                    <div style="font-size: 11px; color: #666; margin-bottom: 6px;">📋 다음 Phase 미리보기:</div>
+                    <div style="font-size: 9px; color: #555; margin-bottom: 2px;">Phase 27: 신경심볼릭 AI (설명가능성 95%)</div>
+                    <div style="font-size: 9px; color: #555; margin-bottom: 2px;">Phase 28: 다중모달 AI (영상+음성+텍스트)</div>
+                    <div style="font-size: 9px; color: #555;">Phase 29-30: AutoML & 메타러닝</div>
+                </div>
+
+                <!-- 상태 정보 -->
+                <div style="border-top: 1px solid rgba(0, 212, 255, 0.1); padding-top: 8px; margin-top: 12px;">
+                    <div style="font-size: 10px; color: #666;">마지막 업데이트: 2026-08-17 15:30</div>
+                    <div style="margin-top: 4px; font-size: 10px; color: #666;">다음 자동화: 10분 후</div>
+                    <div style="margin-top: 4px; font-size: 10px; color: #00d4ff;">상태: 🟢 매 10분 자동 실행</div>
                 </div>
             </div>
 
