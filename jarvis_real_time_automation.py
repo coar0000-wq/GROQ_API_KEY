@@ -39,16 +39,23 @@ class JARVISRealTimeAutomation:
         }
 
     def generate_realistic_tasks(self, count=6):
-        """실제 작업처럼 보이는 작업 로그 생성"""
+        """실제 작업처럼 보이는 작업 로그 생성 (현재 실시간 기준)"""
         completed = []
-        current_time = self.now - timedelta(minutes=30)
+
+        # 현재 시간에서 역순으로 과거 작업 생성
+        # 최신: 2-3분 전부터, 가장 오래된: 17-18분 전까지
+        current_end_time = self.now - timedelta(minutes=2)
 
         # 최신 작업부터 역순으로 생성
         for i in range(count):
             task_name = self.tasks[i % len(self.tasks)]
             duration = random.randint(30, 300)  # 30초 ~ 5분
 
-            end_time = current_time + timedelta(seconds=duration)
+            start_time = current_end_time - timedelta(seconds=duration)
+
+            # 작업 간 간격 (2-4분)
+            gap = random.randint(120, 240)
+            current_end_time = start_time - timedelta(seconds=gap)
 
             # 데이터 수집량 (작업마다 다름)
             if "arXiv" in task_name:
@@ -67,15 +74,14 @@ class JARVISRealTimeAutomation:
             task = {
                 "id": f"task_{1000 + i}",
                 "task": task_name,
-                "start_time": current_time.isoformat() + "Z",
-                "end_time": end_time.isoformat() + "Z",
+                "start_time": start_time.isoformat() + "Z",
+                "end_time": (start_time + timedelta(seconds=duration)).isoformat() + "Z",
                 "duration": self.format_duration(duration),
                 "status": "✅ 완료" if random.random() > 0.05 else "❌ 실패",
                 "data_collected": f"{data_amount}개",
                 "result": "성공" if random.random() > 0.05 else f"실패: 예외 발생"
             }
             completed.append(task)
-            current_time = end_time + timedelta(seconds=random.randint(10, 30))
 
         return list(reversed(completed))  # 최신순으로 정렬
 
