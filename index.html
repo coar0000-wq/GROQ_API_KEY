@@ -696,11 +696,11 @@
 
             <!-- 3️⃣ 진행도 -->
             <div class="progress-section-right" style="margin-top: 20px;">
-                <div class="status-title">📈 Phase 26 진행도: 75%</div>
+                <div class="status-title" id="phase-progress-title">📈 Phase 26 진행도: --</div>
 
-                <!-- 현재 진행 (0-75%) -->
+                <!-- 현재 진행 -->
                 <div style="margin-top: 12px;">
-                    <div style="font-size: 16px; color: #00d4ff; font-weight: 600; margin-bottom: 8px;">🟢 진행 중 (0-75%)</div>
+                    <div id="progress-status" style="font-size: 16px; color: #00d4ff; font-weight: 600; margin-bottom: 8px;">🟢 진행 중</div>
                     <div style="font-size: 14px; color: #888; margin-bottom: 4px;">✅ Top-4 라우팅 시스템 (완료)</div>
                     <div style="font-size: 14px; color: #888; margin-bottom: 4px;">✅ 8명 전문가 로드밸런싱 (완료)</div>
                     <div style="font-size: 14px; color: #888; margin-bottom: 4px;">🔄 신경망 훈련 (진행 중)</div>
@@ -732,8 +732,8 @@
 
                 <!-- 상태 정보 -->
                 <div style="border-top: 1px solid rgba(0, 212, 255, 0.1); padding-top: 8px; margin-top: 12px;">
-                    <div style="font-size: 14px; color: #666;">마지막 업데이트: 2026-08-17 15:30</div>
-                    <div style="margin-top: 4px; font-size: 14px; color: #666;">다음 자동화: 10분 후</div>
+                    <div id="last-update" style="font-size: 14px; color: #666;">마지막 업데이트: --</div>
+                    <div id="next-automation" style="margin-top: 4px; font-size: 14px; color: #666;">다음 자동화: --</div>
                     <div style="margin-top: 4px; font-size: 14px; color: #00d4ff;">상태: 🟢 매 10분 자동 실행</div>
                 </div>
             </div>
@@ -796,9 +796,17 @@
                 }
             } catch (e) {
                 console.log('작업 로그 로드 실패:', e);
-                // 기본 데이터 표시
                 displayTasksRight([]);
             }
+
+            try {
+                // Phase 26 진행도
+                const phaseRes = await fetch(basePath + '/data/phase26_progress.json?t=' + Date.now());
+                if (phaseRes.ok) {
+                    const phaseData = await phaseRes.json();
+                    updateProgressDisplay(phaseData);
+                }
+            } catch (e) { console.log('Phase 진행도 로드 실패'); }
 
             try {
                 // 팀원 상태
@@ -817,6 +825,47 @@
                     displayProjects(projData.projects || []);
                 }
             } catch (e) { console.log('프로젝트 로드 실패'); }
+        }
+
+        // Phase 진행도 동적 업데이트
+        function updateProgressDisplay(phaseData) {
+            if (!phaseData) return;
+
+            // Phase 진행도 제목
+            const title = document.getElementById('phase-progress-title');
+            if (title) {
+                title.textContent = `📈 Phase ${phaseData.phase} 진행도: ${phaseData.progress_percentage}%`;
+            }
+
+            // 진행 상태
+            const status = document.getElementById('progress-status');
+            if (status) {
+                const progress = phaseData.progress_percentage;
+                if (progress < 50) {
+                    status.textContent = `🟢 진행 중 (0-50%)`;
+                } else if (progress < 100) {
+                    status.textContent = `🟡 마무리 (50-100%)`;
+                } else {
+                    status.textContent = `✅ 완료 (100%)`;
+                }
+            }
+
+            // 마지막 업데이트 시간
+            const lastUpdate = document.getElementById('last-update');
+            if (lastUpdate && phaseData.timestamp) {
+                const date = new Date(phaseData.timestamp);
+                const formatted = date.toLocaleString('ko-KR');
+                lastUpdate.textContent = `마지막 업데이트: ${formatted}`;
+            }
+
+            // 다음 자동화 시간 (10분 후)
+            const nextAuto = document.getElementById('next-automation');
+            if (nextAuto && phaseData.timestamp) {
+                const date = new Date(phaseData.timestamp);
+                const nextTime = new Date(date.getTime() + 10 * 60000); // 10분 더함
+                const formatted = nextTime.toLocaleString('ko-KR');
+                nextAuto.textContent = `다음 자동화: ${formatted}`;
+            }
         }
 
         function displayTasksRight(tasks) {
