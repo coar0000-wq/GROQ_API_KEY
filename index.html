@@ -14,6 +14,26 @@
             padding: 0;
         }
 
+        /* 원자 애니메이션 */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .atom-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin-left: 15px;
+            vertical-align: middle;
+            animation: spin 3s linear infinite;
+        }
+
+        .atom-icon.inactive {
+            animation: none;
+            opacity: 0.5;
+        }
+
         .main-wrapper {
             display: flex;
             min-height: 100vh;
@@ -523,7 +543,23 @@
         <div class="right-panel">
             <!-- 1️⃣ 제목 -->
             <div>
-                <div class="right-title">AGI Evolution OS</div>
+                <div class="right-title">
+                    AGI Evolution OS
+                    <svg class="atom-icon" id="atom-indicator" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 중심 핵 -->
+                        <circle cx="50" cy="50" r="8" fill="#00d4ff" opacity="0.9"/>
+                        <!-- 궤도 1 -->
+                        <ellipse cx="50" cy="50" rx="25" ry="15" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.6"/>
+                        <!-- 궤도 2 -->
+                        <ellipse cx="50" cy="50" rx="35" ry="22" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.4" transform="rotate(60 50 50)"/>
+                        <!-- 궤도 3 -->
+                        <ellipse cx="50" cy="50" rx="30" ry="18" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.3" transform="rotate(120 50 50)"/>
+                        <!-- 전자 -->
+                        <circle cx="75" cy="50" r="3" fill="#00d4ff"/>
+                        <circle cx="40" cy="68" r="3" fill="#00d4ff"/>
+                        <circle cx="35" cy="40" r="3" fill="#00d4ff"/>
+                    </svg>
+                </div>
                 <div class="right-subtitle">도현이를 위한 AGI System</div>
             </div>
 
@@ -579,6 +615,27 @@
         const isGitHubPages = window.location.pathname.includes('/jarvis-luna/');
         const basePath = isGitHubPages ? '/jarvis-luna' : '.';
 
+        // 원자 아이콘 상태 업데이트
+        function updateAtomIcon(tasks) {
+            const atomIcon = document.getElementById('atom-indicator');
+            if (!atomIcon) return;
+
+            // 최근 작업 시간 확인
+            if (tasks && tasks.length > 0) {
+                const latestTask = tasks[tasks.length - 1];
+                const taskTime = new Date(latestTask.end_time || latestTask.timestamp);
+                const now = new Date();
+                const diffSeconds = (now - taskTime) / 1000;
+
+                // 30초 이내: 작업 중 (회전), 그 외: 대기 중 (멈춤)
+                if (diffSeconds < 30) {
+                    atomIcon.classList.remove('inactive');
+                } else {
+                    atomIcon.classList.add('inactive');
+                }
+            }
+        }
+
         // 데이터 로드 및 표시
         async function loadData() {
             try {
@@ -587,6 +644,7 @@
                 if (workRes.ok) {
                     const workData = await workRes.json();
                     displayTasksRight(workData.completed_today || []);
+                    updateAtomIcon(workData.completed_today || []);
                 }
             } catch (e) {
                 console.log('작업 로그 로드 실패:', e);
