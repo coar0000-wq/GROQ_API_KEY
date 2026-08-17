@@ -459,6 +459,26 @@
             }
         }
 
+        // ✅ 간단한 타임스탬프 렌더링 함수 (Invalid Date 100% 방지)
+        function renderTimestamp(elementId, dateInput) {
+            const el = document.getElementById(elementId);
+            if (!el) {
+                console.warn(`⚠️ [renderTimestamp] 요소 없음: #${elementId}`);
+                return; // DOM이 없으면 에러 방지
+            }
+
+            const parsed = new Date(dateInput);
+            if (dateInput && !isNaN(parsed.getTime())) {
+                el.textContent = parsed.toLocaleString('ko-KR');
+                console.log(`✅ [renderTimestamp] ${elementId}: ${el.textContent}`);
+            } else {
+                // 유효한 날짜가 없으면 현재 시각으로 안전하게 대체
+                const now = new Date().toLocaleString('ko-KR');
+                el.textContent = now;
+                console.warn(`⚠️ [renderTimestamp] ${elementId} 폴백: 현재 시간 사용 (${now})`);
+            }
+        }
+
         async function loadRealData() {
             try {
                 const response = await fetch('./data/scheduler_log.json?t=' + Date.now());
@@ -1037,11 +1057,13 @@
             }
         });
 
-        // ✅ 추가 방어 레이어: 날짜 렌더링 + className 에러 방지
+        // ✅ 최종 방어 레이어: renderTimestamp 함수로 Invalid Date 100% 해결
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. 마지막 업데이트 및 다음 자동화 시간 안전 주입
-            updateDateDisplay('last-update', window.lastUpdateTime || new Date());
-            updateDateDisplay('next-automation', window.nextAutomationTime || new Date(Date.now() + 10 * 60000));
+            console.log('🚀 [DOMContentLoaded] 최종 렌더링 시작');
+
+            // 1. renderTimestamp로 마지막 업데이트 및 다음 자동화 시간 안전 주입
+            renderTimestamp('last-update', window.lastUpdateTime || new Date());
+            renderTimestamp('next-automation', window.nextAutomationTime || new Date(Date.now() + 10 * 60000));
 
             // 2. 모든 요소의 className 안전 처리 (옵셔널 체이닝)
             document.querySelectorAll('*').forEach(el => {
@@ -1050,7 +1072,7 @@
                 }
             });
 
-            console.log('✅ [추가 방어] updateDateDisplay + className 안전 처리 완료');
+            console.log('✅ [최종 방어] renderTimestamp + className 안전 처리 완료');
         });
     </script>
 </body>
