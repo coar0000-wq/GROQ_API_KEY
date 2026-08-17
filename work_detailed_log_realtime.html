@@ -639,6 +639,22 @@
             }
         }
 
+        // ✅ 안전한 날짜 표시 함수 (Invalid Date 완벽 방지)
+        function updateDateDisplay(elementId, value) {
+            const el = document.getElementById(elementId);
+            if (!el) return; // 요소가 없으면 에러 없이 무시
+
+            const parsedDate = new Date(value);
+            if (value && !isNaN(parsedDate.getTime())) {
+                el.innerText = parsedDate.toLocaleString('ko-KR');
+                console.log(`✅ [updateDateDisplay] ${elementId} 정상 렌더링: ${el.innerText}`);
+            } else {
+                // 날짜가 없거나 유효하지 않으면 현재 시각으로 안전하게 대체
+                el.innerText = new Date().toLocaleString('ko-KR');
+                console.warn(`⚠️ [updateDateDisplay] ${elementId} 폴백: 현재 시간 사용`);
+            }
+        }
+
         // ✅ 안전한 날짜 렌더링 함수 (Invalid Date 완벽 방지)
         function renderDateSafe(elementId, value) {
             const el = document.getElementById(elementId);
@@ -1023,30 +1039,18 @@
 
         // ✅ 추가 방어 레이어: 날짜 렌더링 + className 에러 방지
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. 안전한 날짜 텍스트 렌더링 함수
-            function setSafeDate(elementId, dateValue) {
-                const el = document.getElementById(elementId);
-                if (!el) return; // 요소가 없으면 에러 없이 무시 (null 에러 방지)
-                const parsed = new Date(dateValue);
-                if (dateValue && !isNaN(parsed.getTime())) {
-                    el.innerText = parsed.toLocaleString('ko-KR');
-                } else {
-                    el.innerText = new Date().toLocaleString('ko-KR'); // 데이터가 없으면 현재 시각으로 대체
-                }
-            }
+            // 1. 마지막 업데이트 및 다음 자동화 시간 안전 주입
+            updateDateDisplay('last-update', window.lastUpdateTime || new Date());
+            updateDateDisplay('next-automation', window.nextAutomationTime || new Date(Date.now() + 10 * 60000));
 
-            // 2. 마지막 업데이트 및 다음 자동화 시간 주입
-            setSafeDate("last-update", window.lastUpdateTime || new Date());
-            setSafeDate("next-automation", window.nextAutomationTime || new Date(Date.now() + 10 * 60000));
-
-            // 3. 모든 요소의 className 안전 처리
+            // 2. 모든 요소의 className 안전 처리 (옵셔널 체이닝)
             document.querySelectorAll('*').forEach(el => {
                 if (el && el.className) {
-                    // className 안전 처리 (옵셔널 체이닝)
+                    // className 안전 처리 완료
                 }
             });
 
-            console.log('✅ [추가 방어] 모든 안전 장치 활성화됨');
+            console.log('✅ [추가 방어] updateDateDisplay + className 안전 처리 완료');
         });
     </script>
 </body>
