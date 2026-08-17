@@ -713,19 +713,21 @@
                     <div style="margin-bottom: 8px;">✅ 마케팅 전략 수립</div>
                 </div>
 
-                <!-- 🏆 베스트셀러 추천 -->
-                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 212, 255, 0.1);">
-                    <div style="font-size: 13px; color: #ffaa00; font-weight: 600; margin-bottom: 8px;">🏆 베스트셀러 추천 TOP 5</div>
-                    <div id="bestseller-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
-                        <!-- 데이터 로드됨 -->
-                    </div>
-                </div>
             </div>
 
             <!-- 4️⃣ 올리브영 카테고리별 분석 -->
-            <div id="oliveyoung-analysis" style="background: rgba(255, 105, 180, 0.03); border: 1px solid rgba(255, 105, 180, 0.1); border-radius: 8px; padding: 15px; margin-top: 20px;">
-                <!-- 데이터 로드 대기 중 -->
+            <div id="oliveyoung-analysis" style="background: rgba(255, 105, 180, 0.03); border: 1px solid rgba(255, 105, 180, 0.1); border-radius: 8px; padding: 15px;">
                 <div style="color: #888; text-align: center; padding: 20px; font-size: 12px;">💄 올리브영 데이터 수집 중...</div>
+            </div>
+
+            <!-- 5️⃣ 네이버 쇼핑 분석 -->
+            <div id="naver-analysis" style="background: rgba(0, 255, 100, 0.03); border: 1px solid rgba(0, 255, 100, 0.1); border-radius: 8px; padding: 15px; margin-top: 20px;">
+                <div style="color: #888; text-align: center; padding: 20px; font-size: 12px;">🏪 네이버 쇼핑 데이터 수집 중...</div>
+            </div>
+
+            <!-- 6️⃣ 월마트 분석 -->
+            <div id="walmart-analysis" style="background: rgba(0, 150, 200, 0.03); border: 1px solid rgba(0, 150, 200, 0.1); border-radius: 8px; padding: 15px; margin-top: 20px;">
+                <div style="color: #888; text-align: center; padding: 20px; font-size: 12px;">🛒 월마트 데이터 수집 중...</div>
             </div>
 
             <!-- 3️⃣ 작업 상세 로그 -->
@@ -867,6 +869,24 @@
                     displayOliveYoungAnalysis(oliveData);
                 }
             } catch (e) { console.log('올리브영 데이터 로드 실패'); }
+
+            try {
+                // 네이버 쇼핑 분석
+                const naverRes = await fetch(basePath + '/data/naver_shopping_products.json?t=' + Date.now());
+                if (naverRes.ok) {
+                    const naverData = await naverRes.json();
+                    displayNaverAnalysis(naverData);
+                }
+            } catch (e) { console.log('네이버 쇼핑 데이터 로드 실패'); }
+
+            try {
+                // 월마트 분석
+                const walmartRes = await fetch(basePath + '/data/walmart_products.json?t=' + Date.now());
+                if (walmartRes.ok) {
+                    const walmartData = await walmartRes.json();
+                    displayWalmartAnalysis(walmartData);
+                }
+            } catch (e) { console.log('월마트 데이터 로드 실패'); }
 
             try {
                 // 베스트셀러 상품
@@ -1011,25 +1031,86 @@
                 </div>`;
             });
 
-            // 베스트셀러
-            if (oliveData.bestsellers && oliveData.bestsellers.length > 0) {
-                html += '<h4 style="color: #ff69b4; margin-top: 12px; margin-bottom: 8px;">⭐ 베스트셀러</h4>';
-                oliveData.bestsellers.slice(0, 5).forEach((item, idx) => {
-                    html += `<div style="padding: 6px; font-size: 11px; color: #aaa; border-bottom: 1px solid rgba(255, 105, 180, 0.1);">
-                        <span style="color: #ff69b4; font-weight: 600;">${item.rank}. ${item.product}</span>
-                        <div style="color: #888; font-size: 10px; margin-top: 2px;">
-                            📊 평점: ${item.rating}점 • 💬 ${item.review_count}개
-                        </div>
-                    </div>`;
-                });
-            }
-
             // 크로스 채널 기회
             if (oliveData.analysis && oliveData.analysis.vs_daiso && oliveData.analysis.vs_daiso.cross_sell_opportunities) {
                 html += '<h4 style="color: #00d4ff; margin-top: 12px; margin-bottom: 8px;">🔄 크로스셀 기회</h4>';
                 oliveData.analysis.vs_daiso.cross_sell_opportunities.forEach(opp => {
                     html += `<div style="padding: 6px; font-size: 11px; color: #888; border-bottom: 1px solid rgba(0, 212, 255, 0.1);">
                         💡 ${opp}
+                    </div>`;
+                });
+            }
+
+            container.innerHTML = html;
+        }
+
+        // 네이버 쇼핑 분석 표시
+        function displayNaverAnalysis(naverData) {
+            if (!naverData) return;
+
+            const container = document.getElementById('naver-analysis');
+            if (!container) return;
+
+            let html = '<h3 style="color: #00ff64; margin-bottom: 12px;">🏪 네이버 쇼핑 카테고리 분석</h3>';
+
+            // 상품 수 집계
+            const totalProducts = Object.values(naverData.categories || {}).reduce((sum, cat) => sum + cat.count, 0);
+            html += `<div style="background: rgba(0, 255, 100, 0.08); padding: 8px; border-radius: 4px; margin-bottom: 8px; border-left: 2px solid #00ff64;">
+                <div style="color: #00ff64; font-weight: 600;">총 ${totalProducts}개 상품 수집</div>
+            </div>`;
+
+            // 카테고리별 상품 수
+            Object.entries(naverData.categories || {}).forEach(([category, data]) => {
+                html += `<div style="background: rgba(0, 255, 100, 0.05); padding: 6px; border-radius: 4px; margin-bottom: 6px; border-left: 2px solid #00ff64;">
+                    <div style="color: #00ff64; font-weight: 500; font-size: 12px;">
+                        📦 ${category}: ${data.count}개
+                    </div>
+                </div>`;
+            });
+
+            // 크로스 기회
+            if (naverData.analysis && naverData.analysis.cross_opportunities) {
+                html += '<h4 style="color: #ffaa00; margin-top: 12px; margin-bottom: 8px;">💼 크로스 채널 기회</h4>';
+                naverData.analysis.cross_opportunities.slice(0, 4).forEach(opp => {
+                    html += `<div style="padding: 6px; font-size: 11px; color: #aaa;">
+                        📈 ${opp}
+                    </div>`;
+                });
+            }
+
+            container.innerHTML = html;
+        }
+
+        // 월마트 분석 표시
+        function displayWalmartAnalysis(walmartData) {
+            if (!walmartData) return;
+
+            const container = document.getElementById('walmart-analysis');
+            if (!container) return;
+
+            let html = '<h3 style="color: #0096c8; margin-bottom: 12px;">🛒 월마트(Walmart) 카테고리 분석</h3>';
+
+            // 상품 수 집계
+            const totalProducts = Object.values(walmartData.categories || {}).reduce((sum, cat) => sum + cat.count, 0);
+            html += `<div style="background: rgba(0, 150, 200, 0.08); padding: 8px; border-radius: 4px; margin-bottom: 8px; border-left: 2px solid #0096c8;">
+                <div style="color: #0096c8; font-weight: 600;">총 ${totalProducts}개 상품 수집 (USD)</div>
+            </div>`;
+
+            // 카테고리별 상품 수
+            Object.entries(walmartData.categories || {}).forEach(([category, data]) => {
+                html += `<div style="background: rgba(0, 150, 200, 0.05); padding: 6px; border-radius: 4px; margin-bottom: 6px; border-left: 2px solid #0096c8;">
+                    <div style="color: #0096c8; font-weight: 500; font-size: 12px;">
+                        🌍 ${category}: ${data.count}개
+                    </div>
+                </div>`;
+            });
+
+            // 글로벌 기회
+            if (walmartData.analysis && walmartData.analysis.global_insights && walmartData.analysis.global_insights.global_opportunities) {
+                html += '<h4 style="color: #ff9900; margin-top: 12px; margin-bottom: 8px;">🌎 글로벌 수익 기회</h4>';
+                walmartData.analysis.global_insights.global_opportunities.slice(0, 4).forEach(opp => {
+                    html += `<div style="padding: 6px; font-size: 11px; color: #aaa;">
+                        🚀 ${opp}
                     </div>`;
                 });
             }
