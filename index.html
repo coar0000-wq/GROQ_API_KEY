@@ -272,12 +272,12 @@
         }
 
         .status-log {
-            background: rgba(0, 212, 255, 0.03);
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            border-radius: 8px;
-            padding: 15px;
-            max-height: 250px;
-            overflow-y: auto;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            max-height: none;
+            overflow: visible;
         }
 
         .status-log::-webkit-scrollbar {
@@ -481,6 +481,13 @@
                 <div class="right-subtitle">도현이를 위한 AGI System</div>
             </div>
 
+            <!-- 작업 상세 로그 (박스 없음) -->
+            <div class="status-log">
+                <div class="status-title">📋 작업 상세 로그</div>
+                <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px;">
+                    <!-- 데이터 로드됨 -->
+                </div>
+            </div>
 
             <!-- 팀원 상태 -->
             <div class="team-status-right">
