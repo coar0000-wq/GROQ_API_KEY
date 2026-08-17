@@ -26,7 +26,7 @@
         },
         {
           "name": "Phase 5: 멀티에이전트 조율",
-          "progress": 95.0,
+          "progress": 95.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -42,17 +42,17 @@
         },
         {
           "name": "질병 진단 (Vision Transformer)",
-          "progress": 98.0,
+          "progress": 98.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "환자 예후 분석 (LSTM)",
-          "progress": 91.0,
+          "progress": 91.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "임상시험 자동화",
-          "progress": 81.0,
+          "progress": 81.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -68,17 +68,17 @@
         },
         {
           "name": "의료 AI SaaS (MVP)",
-          "progress": 89.0,
+          "progress": 89.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "Satellite AI (위성영상)",
-          "progress": 75.0,
+          "progress": 75.5,
           "status": "🟢 진행 중"
         },
         {
           "name": "자율에이전트 SaaS",
-          "progress": 71.0,
+          "progress": 71.5,
           "status": "🟢 진행 중"
         }
       ]
@@ -122,5 +122,5 @@
     "last_update": "2026-08-17T14:30:00Z",
     "next_update": "2026-08-17T14:40:00Z"
   },
-  "lastUpdate": "2026-08-16T23:50:39.552595Z"
+  "lastUpdate": "2026-08-17T00:31:38.549280Z"
 }
