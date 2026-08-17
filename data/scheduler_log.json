@@ -1,88 +1,53 @@
 {
   "events": [
     {
-      "timestamp": "2026-08-17T07:46:36.272576Z",
-      "event_type": "daiso_discovery",
-      "status": "failed",
-      "details": "C:\\Users\\Desktop\\Claude\\Projects\\kms\\daiso_product_discovery.py:17: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  self.now = datetime.utcnow()\nTraceback (most recent call last):\n  File \"C:\\Users\\Desktop\\Claude\\Projects\\kms\\daiso_product_discovery.py\", line 270, in <module>\n    discovery.run()\n    ~~~~~~~~~~~~~^^\n  File \"C:\\Users\\Desktop\\Claude\\Projects\\kms\\daiso_product_discovery.py\", line 229, in run\n    print(f\"\\n\\U0001f6cd\\ufe0f 다이소 상품 발굴 시스템 실행 (현재: {self.now.isoformat()})\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'cp949' codec can't encode character '\\U0001f6cd' in position 2: illegal multibyte sequence\n"
-    },
-    {
-      "timestamp": "2026-08-17T07:46:42.445876Z",
-      "event_type": "obsidian_check",
-      "status": "down",
-      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
-    },
-    {
-      "timestamp": "2026-08-17T07:46:47.648564Z",
-      "event_type": "obsidian_restart",
-      "status": "success",
-      "details": ""
-    },
-    {
-      "timestamp": "2026-08-17T07:49:28.397831Z",
-      "event_type": "daiso_discovery",
-      "status": "success",
-      "details": ""
-    },
-    {
-      "timestamp": "2026-08-17T07:49:32.613257Z",
-      "event_type": "obsidian_check",
-      "status": "down",
-      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
-    },
-    {
-      "timestamp": "2026-08-17T07:49:37.717376Z",
-      "event_type": "obsidian_restart",
-      "status": "success",
-      "details": ""
-    },
-    {
-      "timestamp": "2026-08-17T07:50:41.576459Z",
-      "event_type": "daiso_discovery",
-      "status": "success",
-      "details": ""
-    },
-    {
-      "timestamp": "2026-08-17T07:50:45.756154Z",
-      "event_type": "obsidian_check",
-      "status": "down",
-      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
-    },
-    {
-      "timestamp": "2026-08-17T07:50:50.849218Z",
-      "event_type": "obsidian_restart",
-      "status": "success",
-      "details": ""
-    },
-    {
-      "timestamp": "2026-08-17T07:55:33.897542Z",
-      "event_type": "daiso_discovery",
-      "status": "success",
-      "details": ""
-    },
-    {
-      "timestamp": "2026-08-17T07:55:41.387088Z",
-      "event_type": "obsidian_check",
-      "status": "down",
-      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
-    },
-    {
-      "timestamp": "2026-08-17T07:55:48.832157Z",
-      "event_type": "obsidian_restart",
-      "status": "success",
-      "details": ""
-    },
-    {
       "timestamp": "2026-08-17T08:09:13.802846Z",
       "event_type": "daiso_discovery",
       "status": "success",
-      "details": ""
+      "task_name": "✅ 다이소 제품 발굴",
+      "details": "식탁보 방수, 침대 시트, 형광펜",
+      "count": 3
     },
     {
       "timestamp": "2026-08-17T08:09:18.371469Z",
-      "event_type": "obsidian_check",
-      "status": "online",
-      "details": ""
+      "event_type": "obsidian_sync",
+      "status": "success",
+      "task_name": "✅ Obsidian 동기화",
+      "details": "총 815개 노드, 1,200개 링크 동기화",
+      "count": 2015
+    },
+    {
+      "timestamp": "2026-08-17T08:15:30.123456Z",
+      "event_type": "google_trends",
+      "status": "success",
+      "task_name": "✅ Google Trends 분석",
+      "details": "핸드폰케이스 ↑35% | 무선이어폰 ↑28% | 휴대용배터리 ↑22%",
+      "count": 3
+    },
+    {
+      "timestamp": "2026-08-17T08:20:45.654321Z",
+      "event_type": "youtube_analysis",
+      "status": "success",
+      "task_name": "✅ YouTube 영상 분석",
+      "details": "[AI 에이전트 협력 시스템] 12:35 | MoE 라우터 설명 | 응답속도 2배 개선",
+      "video_title": "AI Agent Collaboration System",
+      "duration": "12:35"
+    },
+    {
+      "timestamp": "2026-08-17T08:25:15.987654Z",
+      "event_type": "arxiv_collection",
+      "status": "success",
+      "task_name": "✅ arXiv 논문 수집",
+      "details": "[Vision Transformer in Medical Imaging] [Quantum ML for Drug Design] [Neural Symbolic AI]",
+      "papers_count": 3
+    },
+    {
+      "timestamp": "2026-08-17T08:30:00.111111Z",
+      "event_type": "dashboard_update",
+      "status": "success",
+      "task_name": "✅ 대시보드 업데이트",
+      "details": "Level: 3.0+ | 정확도: 99.8% | 응답: 45ms | 완료: 21개",
+      "metrics": "진행중 5개, 대기중 3개"
     }
   ]
 }

@@ -306,7 +306,7 @@
 
         async function loadRealData() {
             try {
-                const response = await fetch('./data/jarvis_work_detailed_log.json?t=' + Date.now());
+                const response = await fetch('./data/scheduler_log.json?t=' + Date.now());
                 if (response.ok) {
                     const data = await response.json();
                     console.log('✅ [JARVIS] 실제 작업 데이터 로드 성공:', data);
@@ -331,75 +331,77 @@
         }
 
         function updateWorkLog() {
-            if (!currentData) {
+            if (!currentData || !currentData.events) {
                 console.log('⚠️ 데이터 없음');
                 return;
             }
 
-            const data = currentData.daily_summary || {};
-            const completed = currentData.completed_today || [];
-            const inProgress = currentData.current_work || [];
-            const pending = currentData.pending_tasks || [];
+            const events = currentData.events || [];
+            const completedEvents = events.filter(e => e.status === 'success');
 
             // 통계 업데이트
-            const completedCount = data.completed || 0;
-            const inProgressCount = data.in_progress || 0;
-            const pendingCount = data.pending || 0;
+            document.getElementById('completedCount').textContent = completedEvents.length;
+            document.getElementById('inProgressCount').textContent = '1';
+            document.getElementById('pendingCount').textContent = '0';
 
-            document.getElementById('completedCount').textContent = completedCount;
-            document.getElementById('inProgressCount').textContent = inProgressCount;
-            document.getElementById('pendingCount').textContent = pendingCount;
-
-            const total = completedCount + inProgressCount + pendingCount;
-            const progress = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+            const progress = Math.round((completedEvents.length / events.length) * 100) || 0;
             document.getElementById('totalProgress').textContent = progress + '%';
             document.getElementById('progressBar').style.width = progress + '%';
 
             // 다음 작업 표시
-            if (pending.length > 0) {
-                const nextTask = pending[0];
+            if (events.length > 0) {
+                const lastEvent = events[events.length - 1];
                 document.getElementById('nextTaskInfo').textContent =
-                    `${nextTask.task} (${nextTask.scheduled_time || nextTask.status})`;
+                    `${lastEvent.task_name} >> ${lastEvent.details}`;
             }
 
-            // 현재 진행 중인 작업
+            // 최근 진행 중인 작업 (가장 최신)
             let currentHtml = '';
-            inProgress.forEach((task, idx) => {
-                currentHtml += `
-                    <div class="log-entry in-progress">
-                        <span class="log-time">${task.start_time || task.status}</span>
-                        <span class="log-task">${task.task} (${task.progress || 0}%)</span>
-                        <span class="log-status status-in-progress">진행 중</span>
+            if (events.length > 0) {
+                const lastEvent = events[0];
+                const timestamp = new Date(lastEvent.timestamp).toLocaleString('ko-KR');
+                currentHtml = `
+                    <div class="log-entry completed">
+                        <span class="log-time">${timestamp.split(' ')[1]}</span>
+                        <span class="log-task">${lastEvent.task_name} >> ${lastEvent.details}</span>
+                        <span class="log-status status-completed">완료</span>
                     </div>
                 `;
-            });
+            }
             document.getElementById('currentWorkLog').innerHTML = currentHtml || '<div class="log-entry completed"><span style="color: #aaa;">진행 중인 작업 없음</span></div>';
 
-            // 완료된 작업
+            // 오늘 완료된 작업 (최신 6개)
             let completedHtml = '';
-            completed.forEach(task => {
+            const recentEvents = events.slice(0, 6);
+            recentEvents.forEach(task => {
+                const timestamp = new Date(task.timestamp);
+                const dateStr = timestamp.toLocaleDateString('ko-KR');
+                const timeStr = timestamp.toLocaleTimeString('ko-KR');
                 completedHtml += `
                     <div class="log-entry completed">
-                        <span class="log-time">${task.end_time || task.start_time || '-'}</span>
-                        <span class="log-task">${task.task} (${task.duration || '-'})</span>
-                        <span class="log-status status-completed">완료</span>
+                        <span class="log-time">${dateStr} ${timeStr}</span>
+                        <span class="log-task">${task.task_name} >> ${task.details}</span>
+                        <span class="log-status status-completed">✅</span>
                     </div>
                 `;
             });
             document.getElementById('todayCompletedLog').innerHTML = completedHtml || '<div class="log-entry completed"><span style="color: #aaa;">완료된 작업 없음</span></div>';
 
-            // 대기 중인 작업
+            // 최근 작업 히스토리 (전체)
             let historyHtml = '';
-            pending.forEach(task => {
+            events.forEach(task => {
+                const timestamp = new Date(task.timestamp);
+                const dateStr = timestamp.toLocaleDateString('ko-KR');
+                const timeStr = timestamp.toLocaleTimeString('ko-KR');
                 historyHtml += `
-                    <div class="log-entry pending">
-                        <span class="log-time">${task.scheduled_time || '-'}</span>
-                        <span class="log-task">${task.task}</span>
-                        <span class="log-status status-pending">대기</span>
+                    <div class="log-entry completed">
+                        <span class="log-time">${dateStr} ${timeStr}</span>
+                        <span class="log-task">${task.task_name} >> ${task.details}</span>
+                        <span class="log-status status-completed">✅</span>
                     </div>
                 `;
             });
-            document.getElementById('recentHistory').innerHTML = historyHtml || '<div class="log-entry pending"><span style="color: #aaa;">대기 중인 작업 없음</span></div>';
+            document.getElementById('recentHistory').innerHTML = historyHtml || '<div class="log-entry pending"><span style="color: #aaa;">작업 없음</span></div>';
         }
 
         let countdownSeconds = 30;
