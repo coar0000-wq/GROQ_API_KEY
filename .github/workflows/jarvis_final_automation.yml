@@ -116,10 +116,20 @@ jobs:
           fi
 
       # ============================================================
-      # [6/6] 자동 커밋 및 푸시
+      # [6/6] Obsidian 그래프뷰 동기화
       # ============================================================
 
-      - name: 📤 [6/6] 결과 커밋 및 푸시
+      - name: 🧠 [6/6] Obsidian 동기화
+        run: |
+          echo "🧠 Obsidian 그래프뷰 동기화 중..."
+          python scripts/sync_obsidian.py
+          echo "✅ Obsidian 동기화 완료"
+
+      # ============================================================
+      # [7/7] 자동 커밋 및 푸시
+      # ============================================================
+
+      - name: 📤 [7/7] 결과 커밋 및 푸시
         run: |
           git config --local user.email "jarvis@automation.local"
           git config --local user.name "JARVIS Final Automation"
@@ -149,9 +159,14 @@ jobs:
           echo "  • Google 검색: ${{ steps.google_search.outputs.status }}"
           echo "  • 신경망 훈련: ${{ steps.neural_network.outputs.status }}"
           echo ""
+          echo "🧠 Obsidian 동기화:"
+          echo "  ✅ 일일 보고서 저장"
+          echo "  ✅ 그래프뷰 업데이트"
+          echo "  ✅ 통계 페이지 생성"
+          echo ""
           echo "📊 실행 기록:"
           echo "  • 시간: $(date '+%Y-%m-%d %H:%M:%S')"
-          echo "  • 상태: 실제 데이터 기록 완료"
+          echo "  • 상태: 실제 데이터 + Obsidian 동기화 완료"
           echo ""
           echo "🔄 다음 실행: 10분 후"
           echo "=================================================="

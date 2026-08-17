@@ -483,8 +483,8 @@
 
             <!-- 작업 상세 로그 (박스 없음) -->
             <div class="status-log">
-                <div class="status-title">📋 작업 상세 로그</div>
-                <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="status-title">📋 작업 상세 로그 (최신 6개)</div>
+                <div id="task-details-right" style="display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow: hidden;">
                     <!-- 데이터 로드됨 -->
                 </div>
             </div>
@@ -521,7 +521,7 @@
     <script>
         // 기본 URL 판단 (GitHub Pages vs 로컬)
         const isGitHubPages = window.location.pathname.includes('/jarvis-luna/');
-        const basePath = isGitHubPages ? '/jarvis-luna' : '';
+        const basePath = isGitHubPages ? '/jarvis-luna' : '.';
 
         // 데이터 로드 및 표시
         async function loadData() {
@@ -563,7 +563,10 @@
 
             // 실제 데이터만 표시 (거짓 데이터 제거)
             if (tasks && tasks.length > 0) {
-                tasks.forEach(task => {
+                // 최신 항목이 위로 오도록 역순 정렬 + 최대 6개만
+                const recentTasks = tasks.reverse().slice(0, 6);
+
+                recentTasks.forEach(task => {
                     let timestamp = '';
                     // end_time 또는 timestamp 사용
                     const timeStr = task.end_time || task.timestamp;
@@ -577,11 +580,15 @@
                         const seconds = String(date.getSeconds()).padStart(2, '0');
                         timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
                     }
-                    html += `<div class="status-item">
+
+                    // 상태 표시
+                    const statusEmoji = task.status && task.status.includes('완료') ? '✅' : '❌';
+
+                    html += `<div class="status-item" style="opacity: 0.9; font-size: 13px;">
                         <span class="status-dot"></span>
-                        <div style="display: flex; justify-content: space-between; width: 100%; flex-direction: column; gap: 4px;">
-                            <span>${task.task || task.name || '작업'}</span>
-                            <span style="font-size: 11px; color: #666;">${timestamp}</span>
+                        <div style="display: flex; justify-content: space-between; width: 100%; flex-direction: column; gap: 3px;">
+                            <span>${statusEmoji} ${task.task || task.name || '작업'}</span>
+                            <span style="font-size: 10px; color: #999;">${timestamp}</span>
                         </div>
                     </div>`;
                 });
