@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-08-17T00:31:38.525006",
+  "timestamp": "2026-08-17T02:06:38.014286",
   "level": 3.0,
   "evolution": 100,
   "accuracy": 99.8,
   "availability": 99.99,
-  "actual_data_collected": 35,
+  "actual_data_collected": 15,
   "tasks_completed": 0,
-  "last_work_timestamp": "2026-08-17T00:31:37.940202",
+  "last_work_timestamp": "2026-08-17T02:06:27.535656",
   "business": {
     "daiso": 99.0,
     "marketing": 95.41,
@@ -23,6 +23,6 @@
     "project_files_changed": 12,
     "last_run": "2026-08-16T20:10:35"
   },
-  "data_collected_today": 35,
+  "data_collected_today": 15,
   "tasks_completed_today": 0
 }
