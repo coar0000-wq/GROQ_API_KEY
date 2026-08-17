@@ -627,6 +627,17 @@
             return await loadAllProductFiles();
         }
 
+        // ✅ 날짜 유효성 검사 함수
+        function isValidDate(d) {
+            if (!d) return false;
+            try {
+                const dateObj = new Date(d);
+                return !isNaN(dateObj.getTime());
+            } catch (e) {
+                return false;
+            }
+        }
+
         // ✅ 안전한 날짜 렌더링 함수 (Invalid Date 완벽 방지)
         function renderDateSafe(elementId, value) {
             const el = document.getElementById(elementId);
@@ -636,24 +647,72 @@
             }
 
             try {
-                if (!value) {
-                    el.innerText = new Date().toLocaleString('ko-KR');
-                    console.log(`📅 [renderDateSafe] 빈 값 → 현재 시간: ${el.innerText}`);
+                if (!isValidDate(value)) {
+                    const fallbackTime = new Date().toLocaleString('ko-KR');
+                    el.innerText = fallbackTime;
+                    console.warn(`⚠️ [renderDateSafe] 유효하지 않은 날짜: "${value}" → 현재 시간: ${fallbackTime}`);
                     return;
                 }
 
                 const dateObj = new Date(value);
-                if (isNaN(dateObj.getTime())) {
-                    el.innerText = new Date().toLocaleString('ko-KR');
-                    console.warn(`⚠️ [renderDateSafe] 유효하지 않은 날짜: "${value}" → 현재 시간으로 대체`);
-                    return;
-                }
-
                 el.innerText = dateObj.toLocaleString('ko-KR');
                 console.log(`✅ [renderDateSafe] 정상 렌더링: ${el.innerText}`);
             } catch (error) {
                 console.error(`❌ [renderDateSafe] 에러:`, error.message);
                 el.innerText = new Date().toLocaleString('ko-KR');
+            }
+        }
+
+        // ✅ 스케줄 정보 업데이트 (안전한 폴백 처리)
+        async function updateScheduleInfo() {
+            try {
+                const response = await fetch('./data/phase_26_progress.json?t=' + Date.now());
+                if (!response.ok) throw new Error('phase_26_progress.json 로드 실패');
+
+                const data = await response.json();
+
+                // JSON 내부의 실제 키 이름과 일치 확인
+                const rawLast = data.last_updated || data.lastUpdate || data.timestamp;
+                const rawNext = data.next_automation || data.nextAutomation || new Date(Date.now() + 600000);
+
+                // 유효한 날짜인지 검증 후 렌더링
+                renderDateSafe('last-update', isValidDate(rawLast) ? rawLast : null);
+                renderDateSafe('next-automation', isValidDate(rawNext) ? rawNext : new Date(Date.now() + 600000).toISOString());
+
+                console.log('✅ [updateScheduleInfo] 스케줄 정보 업데이트 완료:', {
+                    last_updated: rawLast,
+                    next_automation: rawNext
+                });
+
+            } catch (error) {
+                console.error(`❌ [updateScheduleInfo] 에러: ${error.message}`);
+
+                // 폴백: scheduler_log.json에서 데이터 가져오기
+                try {
+                    const fallbackResponse = await fetch('./data/scheduler_log.json?t=' + Date.now());
+                    if (fallbackResponse.ok) {
+                        const fallbackData = fallbackResponse.json();
+                        if (fallbackData.events && fallbackData.events.length > 0) {
+                            const lastEvent = fallbackData.events[0];
+                            const lastTime = lastEvent.timestamp || lastEvent.time || new Date();
+                            const nextTime = new Date(new Date(lastTime).getTime() + 600000);
+
+                            renderDateSafe('last-update', lastTime);
+                            renderDateSafe('next-automation', nextTime.toISOString());
+                            console.log('✅ [updateScheduleInfo] 폴백 데이터 사용 (scheduler_log.json)');
+                            return;
+                        }
+                    }
+                } catch (fallbackError) {
+                    console.warn(`⚠️ [updateScheduleInfo] 폴백 실패:`, fallbackError.message);
+                }
+
+                // 최종 폴백: 현재 시간
+                const now = new Date().toISOString();
+                const next10min = new Date(Date.now() + 600000).toISOString();
+                renderDateSafe('last-update', now);
+                renderDateSafe('next-automation', next10min);
+                console.log('✅ [updateScheduleInfo] 최종 폴백: 현재 시간 사용');
             }
         }
 
@@ -809,6 +868,9 @@
         // 초기화 - 실제 데이터만 로드 (거짓 데이터 절대 금지)
         async function initialize() {
             updateTime();
+
+            // ✅ 스케줄 정보 업데이트 (안전한 폴백 처리)
+            await updateScheduleInfo();
 
             // ✅ scheduler_log.json 로드
             const realData = await loadRealData();
