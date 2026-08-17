@@ -59,6 +59,12 @@
       "event_type": "daiso_discovery",
       "status": "success",
       "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T07:55:41.387088Z",
+      "event_type": "obsidian_check",
+      "status": "down",
+      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
     }
   ]
 }
