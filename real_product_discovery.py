@@ -1,3 +1,6 @@
+import time
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -10,7 +13,7 @@
 
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from bs4 import BeautifulSoup
 import logging
@@ -22,7 +25,7 @@ class RealProductDiscovery:
     """실제 데이터 기반 상품 발굴"""
 
     def __init__(self):
-        self.now = datetime.utcnow()
+        self.now = datetime.now(timezone.utc)
         self.products_data = {
             "timestamp": self.now.isoformat() + "Z",
             "data_sources": [],
@@ -54,7 +57,7 @@ class RealProductDiscovery:
                     headers = {
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                     }
-                    response = requests.get(url, headers=headers, timeout=10)
+                    response = requests.get(url, headers=headers, timeout=10, verify=False)
                     response.encoding = 'utf-8'
 
                     if response.status_code == 200:
@@ -166,7 +169,7 @@ class RealProductDiscovery:
                 })
                 return []
 
-            pytrends = TrendReq(hl='ko_KR', tz=360)
+            pytrends = TrendReq(hl="ko-KR", tz=540)
 
             keywords = [
                 "다이소 인기상품",
@@ -179,7 +182,7 @@ class RealProductDiscovery:
             trends_data = []
             for keyword in keywords:
                 try:
-                    pytrends.build_payload([keyword], cat=0, timeframe='now 1-m')
+                    pytrends.build_payload([keyword], cat=0, timeframe='now 1-m', geo="KR", geo="KR")
                     interest = pytrends.interest_over_time()
 
                     trends_data.append({
