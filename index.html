@@ -634,16 +634,16 @@
                         const now = new Date();
                         const diffMin = Math.floor((now - lastUpdate) / 60000);
 
-                        if (diffMin < 3) {
-                            // 최근 3분 이내 = 저장 중
+                        if (diffMin < 30) {
+                            // 최근 30분 이내 = 저장 중 (방금 저장함)
                             statusEl.textContent = '🟢 저장 중';
                             statusEl.style.color = '#00d4ff';
-                        } else if (diffMin < 15) {
-                            // 3-15분 = 동기화 완료
+                        } else if (diffMin < 35) {
+                            // 30-35분 = 동기화 완료 (저장 완료 상태 유지)
                             statusEl.textContent = '🟢 동기화 완료';
                             statusEl.style.color = '#66d9ff';
                         } else {
-                            // 15분 이상 = 대기 중
+                            // 35분 이상 = 대기 중 (다음 실행 대기 중)
                             statusEl.textContent = '🟡 대기 중';
                             statusEl.style.color = '#ffaa00';
                         }
