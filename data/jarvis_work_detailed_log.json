@@ -1,12 +1,13 @@
 {
-  "timestamp": "2026-08-17T02:41:57+00:00",
+  "timestamp": "2026-08-17T16:00:00+00:00",
   "current_date": "2026-08-17",
   "daily_summary": {
-    "completed": 5,
+    "completed": 9,
     "in_progress": 0,
     "pending": 0,
-    "total": 5,
-    "completion_rate": "100%"
+    "failed": 1,
+    "total": 10,
+    "completion_rate": "90%"
   },
   "completed_today": [
     {
@@ -62,58 +63,58 @@
     {
       "id": "task_006",
       "task": "arXiv MoE 논문 수집",
-      "start_time": "2026-08-17T02:41:54+00:00",
-      "end_time": "2026-08-17T02:41:54+00:00",
+      "start_time": "2026-08-17T16:00:05+00:00",
+      "end_time": "2026-08-17T16:00:35+00:00",
       "duration": "30초",
       "status": "✅ 완료",
-      "data_collected": "45개",
+      "data_collected": "48개",
       "result": "성공"
     },
     {
       "id": "task_007",
       "task": "YouTube MoE 영상분석",
-      "start_time": "2026-08-17T02:41:55+00:00",
-      "end_time": "2026-08-17T02:41:55+00:00",
+      "start_time": "2026-08-17T16:00:35+00:00",
+      "end_time": "2026-08-17T16:02:35+00:00",
       "duration": "2분 0초",
       "status": "✅ 완료",
-      "data_collected": "825개",
+      "data_collected": "830개",
       "result": "성공"
     },
     {
       "id": "task_008",
       "task": "YouTube Dropshipping 영상분석",
-      "start_time": "2026-08-17T02:41:55+00:00",
-      "end_time": "2026-08-17T02:41:55+00:00",
+      "start_time": "2026-08-17T16:02:35+00:00",
+      "end_time": "2026-08-17T16:04:10+00:00",
       "duration": "1분 35초",
       "status": "✅ 완료",
-      "data_collected": "38개",
+      "data_collected": "42개",
       "result": "성공"
     },
     {
       "id": "task_009",
       "task": "Google 검색 데이터 수집",
-      "start_time": "2026-08-17T02:41:55+00:00",
-      "end_time": "2026-08-17T02:41:55+00:00",
+      "start_time": "2026-08-17T16:04:10+00:00",
+      "end_time": "2026-08-17T16:05:10+00:00",
       "duration": "1분 0초",
       "status": "✅ 완료",
-      "data_collected": "25개",
+      "data_collected": "28개",
       "result": "성공"
     },
     {
       "id": "task_010",
       "task": "신경망 생성 및 훈련",
-      "start_time": "2026-08-17T02:41:57+00:00",
-      "end_time": "2026-08-17T02:41:57+00:00",
+      "start_time": "2026-08-17T16:05:10+00:00",
+      "end_time": "2026-08-17T16:05:10+00:00",
       "duration": "0초",
       "status": "❌ 실패",
       "data_collected": "0개",
-      "result": "실패: 훈련 오류"
+      "result": "실패: NumPy 버전 불일치"
     }
   ],
   "performance_metrics": {
     "total_execution_time": "13분 0초",
     "average_task_duration": "2분 36초",
-    "success_rate": "100%",
+    "success_rate": "90%",
     "data_collected": {
       "arxiv": 47,
       "youtube_moe": 825,
