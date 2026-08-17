@@ -313,7 +313,7 @@
             <span class="loading"></span>
             자동 새로고침: <span id="refreshCountdown">30</span>초 후
             <br/>
-            <small style="color: #666;">매 10분마다 자동 수집</small>
+            <small style="color: #666;">매 30초마다 실시간 동기화</small>
         </div>
     </div>
 
@@ -321,6 +321,16 @@
         // 실제 데이터 로드
         let workLog = null;
         let currentData = null;
+
+        // ⚠️ 함수 중복 주의: 총 7개의 날짜 관련 함수가 있음
+        // - formatSafeDate (라인 326): 가장 기본적인 포맷팅
+        // - parseDateOrNow (라인 402): 유효하지 않으면 현재 시간 반환
+        // - setSafeText (라인 442): DOM에 날짜 설정
+        // - updateDateDisplay (라인 665): innerText 직접 설정
+        // - renderDateSafe (라인 681): 유효성 검증 후 렌더링 (현재 추천)
+        // - setSafeDateText (라인 759): 라벨과 함께 설정
+        // - renderTimestamp (라인 465): 간단한 timestamp 렌더링
+        // TODO: 향후 이들을 하나의 유틸리티 함수로 통합 권장
 
         // ✅ 날짜 검증 & 안전 포맷팅 함수
         function formatSafeDate(dateString, format = 'full') {
@@ -620,11 +630,13 @@
 
                 // 누적 카운트 로드
                 const cumulative = await loadCumulativeCount();
-                const newlyDiscovered = currentTotal - (cumulative.baseline || cumulative.baseline_products || 117);
+                // ✅ Critical Fix: cumulative.baseline 필드명 명확히 (baseline_products 제거)
+                const baselineValue = cumulative.baseline || 117;
+                const newlyDiscovered = currentTotal - baselineValue;
                 const totalCumulativeProducts = cumulative.cumulative_total + Math.max(0, newlyDiscovered);
 
                 console.log('📊 [누적 상품 계산]:', {
-                    baseline: cumulative.baseline_products,
+                    baseline: baselineValue,  // ✅ 명확한 필드명
                     current: currentTotal,
                     newlyDiscovered: Math.max(0, newlyDiscovered),
                     cumulativeTotal: cumulative.cumulative_total,
@@ -646,16 +658,18 @@
             return null;
         }
 
-        async function loadDaisoProducts() {
-            return await loadAllProductFiles();
-        }
-
-        // ✅ 날짜 유효성 검사 함수
+        // ✅ 날짜 유효성 검사 함수 (엄격한 검증)
         function isValidDate(d) {
             if (!d) return false;
+            // ✅ Fix: 빈 문자열, null, undefined 명시적 제외
+            if (typeof d === 'string' && d.trim() === '') return false;
+
             try {
                 const dateObj = new Date(d);
-                return !isNaN(dateObj.getTime());
+                // ✅ Fix: NaN 체크 + 상식적 범위 검증 (1900-2100)
+                if (isNaN(dateObj.getTime())) return false;
+                const year = dateObj.getFullYear();
+                return year >= 1900 && year <= 2100;
             } catch (e) {
                 return false;
             }
@@ -804,34 +818,38 @@
 
             const events = currentData.events || [];
             const completedEvents = events.filter(e => e.status === 'success');
+            const completedTaskCount = completedEvents.length; // ✅ Critical Fix: 변수명 분리
 
             // 통계 업데이트 - 안전한 DOM 접근
             // 📊 누적 상품 개수 (다이소)
-            const totalProducts = daisoData?.total_products || completedEvents.length;
+            // ✅ Critical Fix: daisoData.total_products 유효성 검증 추가
+            const totalProducts = (daisoData && daisoData.total_products) ? daisoData.total_products : completedTaskCount;
             safeSetText('completedCount', totalProducts.toString());
-            console.log(`📊 [누적 상품수] ${totalProducts}개 (다이소 발굴 누적)`);
+            console.log(`📊 [누적 상품수] ${totalProducts}개 (다이소 발굴 누적) | 완료된 작업: ${completedTaskCount}개`);
 
             safeSetText('inProgressCount', '1');
             safeSetText('pendingCount', '0');
 
-            const progress = Math.round((completedEvents.length / events.length) * 100) || 0;
+            const progress = Math.round((completedTaskCount / events.length) * 100) || 0;
             safeSetText('totalProgress', progress + '%');
             safeSetStyle('progressBar', 'width', progress + '%');
 
             // 다음 작업 표시 - 안전한 DOM 접근
             if (events.length > 0) {
-                const lastEvent = events[events.length - 1];
-                const nextTaskText = `${lastEvent.task_name} >> ${lastEvent.details}`;
+                // ✅ Critical Fix: 명확한 변수명 사용 (oldestEvent)
+                const oldestEvent = events[events.length - 1];
+                const nextTaskText = `${oldestEvent.task_name} >> ${oldestEvent.details}`;
                 safeSetText('nextTaskInfo', nextTaskText);
             }
 
             // 최근 진행 중인 작업 (가장 최신) - 새로운 형식
             let currentHtml = '';
             if (events.length > 0) {
-                const lastEvent = events[0];
-                const dateTimeStr = formatSafeDate(lastEvent.timestamp, 'full');
-                const taskName = lastEvent.task_name || '알 수 없는 작업';
-                const taskDetails = lastEvent.details || '상세정보 없음';
+                // ✅ Critical Fix: 명확한 변수명 사용 (latestEvent)
+                const latestEvent = events[0];
+                const dateTimeStr = formatSafeDate(latestEvent.timestamp, 'full');
+                const taskName = latestEvent.task_name || '알 수 없는 작업';
+                const taskDetails = latestEvent.details || '상세정보 없음';
 
                 if (dateTimeStr !== '정보 없음') {
                     currentHtml = `
@@ -848,9 +866,10 @@
             const currentWorkDefault = '<div class="log-entry completed"><span style="color: #aaa;">진행 중인 작업 없음</span></div>';
             safeSetHTML('currentWorkLog', currentHtml || currentWorkDefault);
 
-            // 오늘 완료된 작업 (최신 6개) - 새로운 형식
+            // 오늘 완료된 작업 (최신 N개) - 새로운 형식
             let completedHtml = '';
-            const recentEvents = events.slice(0, 6);
+            // ✅ Fix: 하드코딩된 6을 상수로 변경
+            const recentEvents = events.slice(0, RECENT_EVENTS_LIMIT);
             recentEvents.forEach(task => {
                 const dateTimeStr = formatSafeDate(task.timestamp, 'full');
                 const taskName = task.task_name || '알 수 없는 작업';
@@ -888,13 +907,18 @@
             safeSetHTML('recentHistory', historyHtml || historyDefault);
         }
 
-        let countdownSeconds = 30;
+        // ✅ 상수 정의 (하드코딩된 숫자 제거)
+        const RECENT_EVENTS_LIMIT = 6;  // 최근 작업 표시 개수
+        const REFRESH_INTERVAL = 30000; // 30초 (라인 986에서 사용)
+        const COUNTDOWN_DISPLAY = 30;   // 사용자에게 표시되는 카운트다운
+
+        let countdownSeconds = COUNTDOWN_DISPLAY;
         function updateCountdown() {
             countdownSeconds--;
             safeSetText('refreshCountdown', countdownSeconds.toString());
 
             if (countdownSeconds <= 0) {
-                countdownSeconds = 30;
+                countdownSeconds = COUNTDOWN_DISPLAY;
                 updateWorkLog();
             }
         }
@@ -956,6 +980,7 @@
             // ✅ 정기적 업데이트
             setInterval(updateTime, 1000);
             setInterval(updateCountdown, 1000);
+            // ✅ Fix: 타임아웃 주석 명확히 (30초가 10분이 아님)
             setInterval(async () => {
                 // 작업 데이터 갱신
                 const newData = await loadRealData();
@@ -983,7 +1008,7 @@
                     renderDateSafe('last-update', null);
                     renderDateSafe('next-automation', null);
                 }
-            }, 30000); // 30초마다 모든 데이터 새로고침
+            }, REFRESH_INTERVAL); // ✅ 상수로 변경: 매 30초 실시간 동기화
         }
 
         // DOM 완전 로드 후 초기화
