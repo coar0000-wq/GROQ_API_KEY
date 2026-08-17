@@ -722,6 +722,12 @@
                 </div>
             </div>
 
+            <!-- 4️⃣ 올리브영 카테고리별 분석 -->
+            <div id="oliveyoung-analysis" style="background: rgba(255, 105, 180, 0.03); border: 1px solid rgba(255, 105, 180, 0.1); border-radius: 8px; padding: 15px; margin-top: 20px;">
+                <!-- 데이터 로드 대기 중 -->
+                <div style="color: #888; text-align: center; padding: 20px; font-size: 12px;">💄 올리브영 데이터 수집 중...</div>
+            </div>
+
             <!-- 3️⃣ 작업 상세 로그 -->
             <div class="status-log" style="margin-top: 20px;">
                 <div class="status-title">📋 작업 상세 로그 (최신 6개)</div>
@@ -854,6 +860,15 @@
             } catch (e) { console.log('다이소 사업 로드 실패'); }
 
             try {
+                // 올리브영 분석
+                const oliveRes = await fetch(basePath + '/data/oliveyoung_products.json?t=' + Date.now());
+                if (oliveRes.ok) {
+                    const oliveData = await oliveRes.json();
+                    displayOliveYoungAnalysis(oliveData);
+                }
+            } catch (e) { console.log('올리브영 데이터 로드 실패'); }
+
+            try {
                 // 베스트셀러 상품
                 const productsRes = await fetch(basePath + '/data/daiso_products.json?t=' + Date.now());
                 if (productsRes.ok) {
@@ -968,6 +983,58 @@
                     statusEl.style.color = '#00d4ff';
                 }
             }
+        }
+
+        // 올리브영 데이터 분석 표시
+        function displayOliveYoungAnalysis(oliveData) {
+            if (!oliveData) return;
+
+            const container = document.getElementById('oliveyoung-analysis');
+            if (!container) return;
+
+            // 카테고리별 분석
+            let html = '<h3 style="color: #ff69b4; margin-bottom: 12px;">💄 올리브영 카테고리 분석</h3>';
+
+            // 상품 수 집계
+            const totalProducts = Object.values(oliveData.categories || {}).reduce((sum, cat) => sum + cat.count, 0);
+            html += `<div style="background: rgba(255, 105, 180, 0.08); padding: 8px; border-radius: 4px; margin-bottom: 8px; border-left: 2px solid #ff69b4;">
+                <div style="color: #ff69b4; font-weight: 600;">총 ${totalProducts}개 상품 수집</div>
+            </div>`;
+
+            // 카테고리별 상품 수
+            Object.entries(oliveData.categories || {}).forEach(([category, data]) => {
+                const color = ['#ff69b4', '#ff1493', '#db7093', '#c71585', '#8b0a50', '#660066'][Object.keys(oliveData.categories).indexOf(category) % 6];
+                html += `<div style="background: rgba(255, 105, 180, 0.05); padding: 6px; border-radius: 4px; margin-bottom: 6px; border-left: 2px solid ${color};">
+                    <div style="color: ${color}; font-weight: 500; font-size: 12px;">
+                        🏷️ ${category}: ${data.count}개
+                    </div>
+                </div>`;
+            });
+
+            // 베스트셀러
+            if (oliveData.bestsellers && oliveData.bestsellers.length > 0) {
+                html += '<h4 style="color: #ff69b4; margin-top: 12px; margin-bottom: 8px;">⭐ 베스트셀러</h4>';
+                oliveData.bestsellers.slice(0, 5).forEach((item, idx) => {
+                    html += `<div style="padding: 6px; font-size: 11px; color: #aaa; border-bottom: 1px solid rgba(255, 105, 180, 0.1);">
+                        <span style="color: #ff69b4; font-weight: 600;">${item.rank}. ${item.product}</span>
+                        <div style="color: #888; font-size: 10px; margin-top: 2px;">
+                            📊 평점: ${item.rating}점 • 💬 ${item.review_count}개
+                        </div>
+                    </div>`;
+                });
+            }
+
+            // 크로스 채널 기회
+            if (oliveData.analysis && oliveData.analysis.vs_daiso && oliveData.analysis.vs_daiso.cross_sell_opportunities) {
+                html += '<h4 style="color: #00d4ff; margin-top: 12px; margin-bottom: 8px;">🔄 크로스셀 기회</h4>';
+                oliveData.analysis.vs_daiso.cross_sell_opportunities.forEach(opp => {
+                    html += `<div style="padding: 6px; font-size: 11px; color: #888; border-bottom: 1px solid rgba(0, 212, 255, 0.1);">
+                        💡 ${opp}
+                    </div>`;
+                });
+            }
+
+            container.innerHTML = html;
         }
 
         // 베스트셀러 상품 표시

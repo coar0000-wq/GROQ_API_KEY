@@ -29,19 +29,24 @@ jobs:
         run: |
           python jarvis_real_time_automation.py
 
-      - name: 🛍️ Run Real Data Product Discovery
+      - name: 🛍️ Run Real Data Product Discovery (Daiso)
         run: |
           python -m pip install beautifulsoup4 pytrends --break-system-packages
           python real_product_discovery.py
         env:
           AMAZON_API_KEY: ${{ secrets.AMAZON_API_KEY }}
 
+      - name: 💄 Run Real Data Product Discovery (OliveYoung)
+        run: |
+          python -m pip install beautifulsoup4 requests --break-system-packages
+          python oliveyoung_discovery.py
+
       - name: ✅ Commit and push changes
         run: |
           git config --local user.email "jarvis@github.com"
           git config --local user.name "JARVIS Automation"
-          git add data/jarvis_work_detailed_log.json data/phase26_progress.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "⚡ JARVIS 실시간 자동화: $(date -u +'%Y-%m-%d %H:%M UTC')" && git push origin main)
+          git add data/jarvis_work_detailed_log.json data/phase26_progress.json data/real_products.json data/oliveyoung_products.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "⚡ JARVIS 실시간 자동화 + 다이소/올리브영 데이터: $(date -u +'%Y-%m-%d %H:%M UTC')" && git push origin main)
 
       - name: 📊 Verify update
         run: |
