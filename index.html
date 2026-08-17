@@ -814,9 +814,12 @@
 
         // 데이터 로드 및 표시
         async function loadData() {
+            console.log('🔄 데이터 로드 시작 - basePath:', basePath);
+
             try {
                 // 작업 로그
                 const workRes = await fetch(basePath + '/data/jarvis_work_detailed_log.json?t=' + Date.now());
+                console.log('📝 작업 로그 URL:', basePath + '/data/jarvis_work_detailed_log.json');
                 if (workRes.ok) {
                     const workData = await workRes.json();
                     displayTasksRight(workData.completed_today || []);
@@ -839,17 +842,33 @@
             try {
                 // 다이소 사업
                 const daisoRes = await fetch(basePath + '/data/daiso_business_plan.json?t=' + Date.now());
+                console.log('🛍️ 다이소 URL:', basePath + '/data/daiso_business_plan.json', '상태:', daisoRes.status);
                 if (daisoRes.ok) {
                     const daisoData = await daisoRes.json();
+                    console.log('✅ 다이소 데이터 로드');
                     updateDaisoDisplay(daisoData);
                 }
-            } catch (e) { console.log('다이소 사업 로드 실패'); }
+            } catch (e) { console.log('❌ 다이소 사업 로드 실패', e); }
+
+            try {
+                // 다이소 상품
+                const daisoProductRes = await fetch(basePath + '/data/daiso_products.json?t=' + Date.now());
+                console.log('📦 다이소 상품 URL:', basePath + '/data/daiso_products.json', '상태:', daisoProductRes.status);
+                if (daisoProductRes.ok) {
+                    const daisoProductData = await daisoProductRes.json();
+                    console.log('✅ 다이소 상품 데이터 로드:', daisoProductData.total_products + '개');
+                    totalProductsCount.daiso = daisoProductData.total_products;
+                    updateTotalProducts();
+                }
+            } catch (e) { console.log('❌ 다이소 상품 로드 실패', e); }
 
             try {
                 // 올리브영 분석
                 const oliveRes = await fetch(basePath + '/data/oliveyoung_products.json?t=' + Date.now());
+                console.log('🏪 올리브영 URL:', basePath + '/data/oliveyoung_products.json', '상태:', oliveRes.status);
                 if (oliveRes.ok) {
                     const oliveData = await oliveRes.json();
+                    console.log('✅ 올리브영 데이터 로드:', oliveData.total_count + '개');
                     updateOliveYoungCount(oliveData);
                 }
             } catch (e) { console.log('올리브영 데이터 로드 실패'); }
@@ -857,29 +876,35 @@
             try {
                 // 네이버 쇼핑 분석
                 const naverRes = await fetch(basePath + '/data/naver_shopping_products.json?t=' + Date.now());
+                console.log('🛒 네이버 URL:', basePath + '/data/naver_shopping_products.json', '상태:', naverRes.status);
                 if (naverRes.ok) {
                     const naverData = await naverRes.json();
+                    console.log('✅ 네이버 데이터 로드:', naverData.total_count + '개');
                     updateNaverCount(naverData);
                 }
-            } catch (e) { console.log('네이버 쇼핑 데이터 로드 실패'); }
+            } catch (e) { console.log('❌ 네이버 쇼핑 데이터 로드 실패', e); }
 
             try {
                 // 월마트 분석
                 const walmartRes = await fetch(basePath + '/data/walmart_products.json?t=' + Date.now());
+                console.log('🇺🇸 월마트 URL:', basePath + '/data/walmart_products.json', '상태:', walmartRes.status);
                 if (walmartRes.ok) {
                     const walmartData = await walmartRes.json();
+                    console.log('✅ 월마트 데이터 로드:', walmartData.total_count + '개');
                     updateWalmartCount(walmartData);
                 }
-            } catch (e) { console.log('월마트 데이터 로드 실패'); }
+            } catch (e) { console.log('❌ 월마트 데이터 로드 실패', e); }
 
             try {
                 // 아마존 분석
                 const amazonRes = await fetch(basePath + '/data/amazon_products.json?t=' + Date.now());
+                console.log('🔵 아마존 URL:', basePath + '/data/amazon_products.json', '상태:', amazonRes.status);
                 if (amazonRes.ok) {
                     const amazonData = await amazonRes.json();
+                    console.log('✅ 아마존 데이터 로드:', amazonData.total_count + '개');
                     updateAmazonCount(amazonData);
                 }
-            } catch (e) { console.log('아마존 데이터 로드 실패'); }
+            } catch (e) { console.log('❌ 아마존 데이터 로드 실패', e); }
 
             try {
                 // 베스트셀러 상품
@@ -907,6 +932,16 @@
                     displayProjects(projData.projects || []);
                 }
             } catch (e) { console.log('프로젝트 로드 실패'); }
+
+            // 최종 합계 로그
+            console.log('\n📊 실시간 상품 합계:');
+            console.log('다이소:', totalProductsCount.daiso + '개');
+            console.log('올리브영:', totalProductsCount.olive + '개');
+            console.log('네이버:', totalProductsCount.naver + '개');
+            console.log('월마트:', totalProductsCount.walmart + '개');
+            console.log('아마존:', totalProductsCount.amazon + '개');
+            const total = Object.values(totalProductsCount).reduce((sum, count) => sum + count, 0);
+            console.log('📈 총합계:', total + '개\n');
         }
 
         // Phase 진행도 동적 업데이트

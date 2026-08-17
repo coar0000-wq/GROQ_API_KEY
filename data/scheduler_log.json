@@ -1,0 +1,64 @@
+{
+  "events": [
+    {
+      "timestamp": "2026-08-17T07:46:36.272576Z",
+      "event_type": "daiso_discovery",
+      "status": "failed",
+      "details": "C:\\Users\\Desktop\\Claude\\Projects\\kms\\daiso_product_discovery.py:17: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  self.now = datetime.utcnow()\nTraceback (most recent call last):\n  File \"C:\\Users\\Desktop\\Claude\\Projects\\kms\\daiso_product_discovery.py\", line 270, in <module>\n    discovery.run()\n    ~~~~~~~~~~~~~^^\n  File \"C:\\Users\\Desktop\\Claude\\Projects\\kms\\daiso_product_discovery.py\", line 229, in run\n    print(f\"\\n\\U0001f6cd\\ufe0f 다이소 상품 발굴 시스템 실행 (현재: {self.now.isoformat()})\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'cp949' codec can't encode character '\\U0001f6cd' in position 2: illegal multibyte sequence\n"
+    },
+    {
+      "timestamp": "2026-08-17T07:46:42.445876Z",
+      "event_type": "obsidian_check",
+      "status": "down",
+      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
+    },
+    {
+      "timestamp": "2026-08-17T07:46:47.648564Z",
+      "event_type": "obsidian_restart",
+      "status": "success",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T07:49:28.397831Z",
+      "event_type": "daiso_discovery",
+      "status": "success",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T07:49:32.613257Z",
+      "event_type": "obsidian_check",
+      "status": "down",
+      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
+    },
+    {
+      "timestamp": "2026-08-17T07:49:37.717376Z",
+      "event_type": "obsidian_restart",
+      "status": "success",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T07:50:41.576459Z",
+      "event_type": "daiso_discovery",
+      "status": "success",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T07:50:45.756154Z",
+      "event_type": "obsidian_check",
+      "status": "down",
+      "details": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/health (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다\"))"
+    },
+    {
+      "timestamp": "2026-08-17T07:50:50.849218Z",
+      "event_type": "obsidian_restart",
+      "status": "success",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T07:55:33.897542Z",
+      "event_type": "daiso_discovery",
+      "status": "success",
+      "details": ""
+    }
+  ]
+}
