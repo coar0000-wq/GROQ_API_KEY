@@ -180,16 +180,26 @@
         .status-dot {
             margin-left: 8px;
             display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            vertical-align: middle;
         }
 
         /* 녹색 깜빡이는 애니메이션 */
         @keyframes green-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            0%, 100% { background-color: #00ff00; opacity: 1; }
+            50% { background-color: #00aa00; opacity: 0.5; }
         }
 
         .status-dot.green-pulse {
+            background-color: #00ff00;
             animation: green-pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+        }
+
+        .status-dot.offline {
+            background-color: #666;
         }
 
         .left-image-area {
@@ -609,19 +619,19 @@
             <div class="left-panel-content">
                 <div class="left-metrics">
                     <div class="left-metric-card">
-                        <div class="left-metric-label">도현 (CEO) <span class="status-dot green-pulse">🟢</span></div>
+                        <div class="left-metric-label">도현 (CEO) <span class="status-dot green-pulse"></span></div>
                         <div class="left-metric-value" style="font-size: 18px;">감시중</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">JARVIS (AI) <span class="status-dot green-pulse">🟢</span></div>
+                        <div class="left-metric-label">JARVIS (AI) <span class="status-dot green-pulse"></span></div>
                         <div class="left-metric-value" style="font-size: 18px;">자동화</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">GitHub Actions <span class="status-dot green-pulse">🟢</span></div>
+                        <div class="left-metric-label">GitHub Actions <span class="status-dot green-pulse"></span></div>
                         <div class="left-metric-value" style="font-size: 18px;">실행 중</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">Obsidian <span class="status-dot">⚫</span></div>
+                        <div class="left-metric-label">Obsidian <span class="status-dot offline"></span></div>
                         <div class="left-metric-value" style="font-size: 18px; color: #999;">오프라인</div>
                     </div>
                 </div>
