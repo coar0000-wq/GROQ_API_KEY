@@ -1,6 +1,6 @@
 {
-  "total_products": 18,
-  "last_updated": "2026-08-17T07:55:33.882534Z",
+  "total_products": 21,
+  "last_updated": "2026-08-17T08:09:13.796148Z",
   "products": [
     {
       "id": "product_0001",
@@ -265,9 +265,69 @@
       "rating": "4.5⭐",
       "stock_status": "재고충분",
       "verified": true
+    },
+    {
+      "id": "product_0019",
+      "name": "식탁보 방수",
+      "category": "주방용품",
+      "cost_price": "$4,000",
+      "selling_price": "$6,000",
+      "margin_percent": "50%",
+      "discovered_date": "2026-08-17T08:09:13.796148Z",
+      "monthly_sales": 70,
+      "monthly_revenue": "$420,000",
+      "monthly_profit": "$140,000",
+      "rating": "4.5⭐",
+      "stock_status": "재고충분",
+      "verified": true
+    },
+    {
+      "id": "product_0020",
+      "name": "침대 시트",
+      "category": "홈 데코",
+      "cost_price": "$5,000",
+      "selling_price": "$7,250",
+      "margin_percent": "45%",
+      "discovered_date": "2026-08-17T08:09:13.796148Z",
+      "monthly_sales": 90,
+      "monthly_revenue": "$652,500",
+      "monthly_profit": "$202,500",
+      "rating": "4.5⭐",
+      "stock_status": "재고충분",
+      "verified": true
+    },
+    {
+      "id": "product_0021",
+      "name": "형광펜",
+      "category": "문구용품",
+      "cost_price": "$5,500",
+      "selling_price": "$8,250",
+      "margin_percent": "50%",
+      "discovered_date": "2026-08-17T08:09:13.796148Z",
+      "monthly_sales": 100,
+      "monthly_revenue": "$825,000",
+      "monthly_profit": "$275,000",
+      "rating": "4.5⭐",
+      "stock_status": "재고충분",
+      "verified": true
     }
   ],
   "bestsellers": [
+    {
+      "id": "product_0021",
+      "name": "형광펜",
+      "category": "문구용품",
+      "cost_price": "$5,500",
+      "selling_price": "$8,250",
+      "margin_percent": "50%",
+      "discovered_date": "2026-08-17T08:09:13.796148Z",
+      "monthly_sales": 100,
+      "monthly_revenue": "$825,000",
+      "monthly_profit": "$275,000",
+      "rating": "4.5⭐",
+      "stock_status": "재고충분",
+      "verified": true
+    },
     {
       "id": "product_0018",
       "name": "종이클립",
@@ -276,6 +336,21 @@
       "selling_price": "$7,250",
       "margin_percent": "45%",
       "discovered_date": "2026-08-17T07:55:33.882534Z",
+      "monthly_sales": 90,
+      "monthly_revenue": "$652,500",
+      "monthly_profit": "$202,500",
+      "rating": "4.5⭐",
+      "stock_status": "재고충분",
+      "verified": true
+    },
+    {
+      "id": "product_0020",
+      "name": "침대 시트",
+      "category": "홈 데코",
+      "cost_price": "$5,000",
+      "selling_price": "$7,250",
+      "margin_percent": "45%",
+      "discovered_date": "2026-08-17T08:09:13.796148Z",
       "monthly_sales": 90,
       "monthly_revenue": "$652,500",
       "monthly_profit": "$202,500",
@@ -343,6 +418,21 @@
       "verified": true
     },
     {
+      "id": "product_0019",
+      "name": "식탁보 방수",
+      "category": "주방용품",
+      "cost_price": "$4,000",
+      "selling_price": "$6,000",
+      "margin_percent": "50%",
+      "discovered_date": "2026-08-17T08:09:13.796148Z",
+      "monthly_sales": 70,
+      "monthly_revenue": "$420,000",
+      "monthly_profit": "$140,000",
+      "rating": "4.5⭐",
+      "stock_status": "재고충분",
+      "verified": true
+    },
+    {
       "id": "product_0006",
       "name": "냉장고 칸막이",
       "category": "주방용품",
@@ -370,55 +460,21 @@
       "rating": "4.5⭐",
       "stock_status": "재고충분",
       "verified": true
-    },
-    {
-      "id": "product_0016",
-      "name": "물때제거 브러시",
-      "category": "주방용품",
-      "cost_price": "$3,500",
-      "selling_price": "$5,075",
-      "margin_percent": "45%",
-      "discovered_date": "2026-08-17T07:55:33.882534Z",
-      "monthly_sales": 60,
-      "monthly_revenue": "$304,500",
-      "monthly_profit": "$94,500",
-      "rating": "4.5⭐",
-      "stock_status": "재고충분",
-      "verified": true
-    },
-    {
-      "id": "product_0001",
-      "name": "마커펜",
-      "category": "문구용품",
-      "cost_price": "$1,129",
-      "selling_price": "$8,140",
-      "margin_percent": "621%",
-      "discovered_date": "2026-08-17T06:11:02.960778Z",
-      "monthly_sales": 57,
-      "monthly_revenue": "$463,980",
-      "monthly_profit": "$399,627",
-      "rating": "4.9⭐",
-      "stock_status": "재고충분"
-    },
-    {
-      "id": "product_0009",
-      "name": "포스트잇",
-      "category": "문구용품",
-      "cost_price": "$3,000",
-      "selling_price": "$4,650",
-      "margin_percent": "55%",
-      "discovered_date": "2026-08-17T07:40:16.043229Z",
-      "monthly_sales": 50,
-      "monthly_revenue": "$232,500",
-      "monthly_profit": "$82,500",
-      "rating": "4.5⭐",
-      "stock_status": "재고충분",
-      "verified": true
     }
   ],
   "recommendations": [
     {
       "rank": 1,
+      "product": "형광펜",
+      "category": "문구용품",
+      "reason": "우수한 판매량(100개/월) + 높은 수익성",
+      "monthly_sales": 100,
+      "monthly_profit": "$275,000",
+      "margin": "50%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 2,
       "product": "종이클립",
       "category": "문구용품",
       "reason": "우수한 판매량(90개/월) + 높은 수익성",
@@ -428,43 +484,33 @@
       "status": "🟢 추천"
     },
     {
-      "rank": 2,
+      "rank": 3,
+      "product": "침대 시트",
+      "category": "홈 데코",
+      "reason": "우수한 판매량(90개/월) + 높은 수익성",
+      "monthly_sales": 90,
+      "monthly_profit": "$202,500",
+      "margin": "45%",
+      "status": "🟢 추천"
+    },
+    {
+      "rank": 4,
       "product": "측정 스푼",
       "category": "주방용품",
       "reason": "높은 마진(695%) + 우수한 판매량(81개/월) + 높은 수익성 + 판매량과 마진 균형",
       "monthly_sales": 81,
       "monthly_profit": "$4,144,932",
       "margin": "695%",
-      "status": "🟢 추천"
+      "status": "🟡 고려"
     },
     {
-      "rank": 3,
+      "rank": 5,
       "product": "풀",
       "category": "문구용품",
       "reason": "우수한 판매량(80개/월) + 높은 수익성",
       "monthly_sales": 80,
       "monthly_profit": "$198,000",
       "margin": "55%",
-      "status": "🟢 추천"
-    },
-    {
-      "rank": 4,
-      "product": "쿠션 커버",
-      "category": "홈 데코",
-      "reason": "우수한 판매량(80개/월) + 높은 수익성",
-      "monthly_sales": 80,
-      "monthly_profit": "$198,000",
-      "margin": "55%",
-      "status": "🟡 고려"
-    },
-    {
-      "rank": 5,
-      "product": "방석",
-      "category": "홈 데코",
-      "reason": "우수한 판매량(70개/월) + 높은 수익성",
-      "monthly_sales": 70,
-      "monthly_profit": "$140,000",
-      "margin": "50%",
       "status": "🟡 고려"
     }
   ]
