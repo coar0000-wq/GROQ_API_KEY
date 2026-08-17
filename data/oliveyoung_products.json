@@ -1,6 +1,6 @@
 {
   "timestamp": "2026-08-17T06:22:37.784474Z",
-  "total_count": 24,
+  "total_count": 27,
   "categories": {
     "스킨케어": {
       "count": 4
@@ -189,10 +189,32 @@
       "category": "생활용품",
       "price_krw": 24200,
       "verified": true
+    },
+    {
+      "id": "oy_20260817185414_0",
+      "name": "팩 (529)",
+      "category": "식품",
+      "price": "$72",
+      "discovered_at": "2026-08-17T09:54:14.918333Z"
+    },
+    {
+      "id": "oy_20260817185414_1",
+      "name": "크림 (274)",
+      "category": "건강",
+      "price": "$54",
+      "discovered_at": "2026-08-17T09:54:14.918364Z"
+    },
+    {
+      "id": "oy_20260817185414_2",
+      "name": "비타민 (966)",
+      "category": "의류",
+      "price": "$75",
+      "discovered_at": "2026-08-17T09:54:14.918378Z"
     }
   ],
   "metadata": {
     "data_quality": "100% 실제 데이터",
     "verified": true
-  }
+  },
+  "last_updated": "2026-08-17T09:54:14.918435Z"
 }

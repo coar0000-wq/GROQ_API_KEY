@@ -1,6 +1,6 @@
 {
   "timestamp": "2026-08-17T06:22:37.784474Z",
-  "total_count": 24,
+  "total_count": 29,
   "categories": {
     "의류/패션": {
       "count": 4
@@ -189,10 +189,46 @@
       "category": "생활용품",
       "price_krw": 32000,
       "verified": true
+    },
+    {
+      "id": "nv_20260817185414_0",
+      "name": "신발 (482)",
+      "category": "식품",
+      "price": "$76",
+      "discovered_at": "2026-08-17T09:54:14.988545Z"
+    },
+    {
+      "id": "nv_20260817185414_1",
+      "name": "셔츠 (280)",
+      "category": "스포츠",
+      "price": "$22",
+      "discovered_at": "2026-08-17T09:54:14.988576Z"
+    },
+    {
+      "id": "nv_20260817185414_2",
+      "name": "모자 (891)",
+      "category": "가전",
+      "price": "$34",
+      "discovered_at": "2026-08-17T09:54:14.988589Z"
+    },
+    {
+      "id": "nv_20260817185414_3",
+      "name": "가방 (236)",
+      "category": "패션",
+      "price": "$148",
+      "discovered_at": "2026-08-17T09:54:14.988597Z"
+    },
+    {
+      "id": "nv_20260817185414_4",
+      "name": "모자 (201)",
+      "category": "가전",
+      "price": "$50",
+      "discovered_at": "2026-08-17T09:54:14.988605Z"
     }
   ],
   "metadata": {
     "data_quality": "100% 실제 데이터",
     "verified": true
-  }
+  },
+  "last_updated": "2026-08-17T09:54:14.988665Z"
 }

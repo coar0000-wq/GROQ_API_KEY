@@ -1,6 +1,6 @@
 {
-  "total_products": 24,
-  "last_updated": "2026-08-17T09:44:13.073596Z",
+  "total_products": 27,
+  "last_updated": "2026-08-17T09:54:14.847256Z",
   "products": [
     {
       "id": "product_0001",
@@ -337,6 +337,33 @@
       "selling_price": "$7,178",
       "profit_margin": "610%",
       "discovered_at": "2026-08-17T09:44:13.073024Z"
+    },
+    {
+      "id": "product_20260817185414_000",
+      "name": "수건 (454)",
+      "category": "인테리어",
+      "cost_price": "$2,544",
+      "selling_price": "$10,837",
+      "profit_margin": "326%",
+      "discovered_at": "2026-08-17T09:54:14.846650Z"
+    },
+    {
+      "id": "product_20260817185414_001",
+      "name": "스폰지 (3402)",
+      "category": "문구용품",
+      "cost_price": "$1,425",
+      "selling_price": "$11,613",
+      "profit_margin": "715%",
+      "discovered_at": "2026-08-17T09:54:14.846686Z"
+    },
+    {
+      "id": "product_20260817185414_002",
+      "name": "그릇 (7079)",
+      "category": "욕실용품",
+      "cost_price": "$880",
+      "selling_price": "$5,781",
+      "profit_margin": "557%",
+      "discovered_at": "2026-08-17T09:54:14.846701Z"
     }
   ],
   "bestsellers": [

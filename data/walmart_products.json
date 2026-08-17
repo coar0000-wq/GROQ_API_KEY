@@ -1,6 +1,6 @@
 {
   "timestamp": "2026-08-17T06:22:37.784474Z",
-  "total_count": 24,
+  "total_count": 28,
   "categories": {
     "주방용품": {
       "count": 4
@@ -189,10 +189,39 @@
       "category": "조명",
       "price_usd": "$41.00",
       "verified": true
+    },
+    {
+      "id": "wm_20260817185415_0",
+      "name": "Shirt (950)",
+      "category": "Grocery",
+      "price": "$411",
+      "discovered_at": "2026-08-17T09:54:15.056581Z"
+    },
+    {
+      "id": "wm_20260817185415_1",
+      "name": "Shirt (243)",
+      "category": "Home",
+      "price": "$258",
+      "discovered_at": "2026-08-17T09:54:15.056610Z"
+    },
+    {
+      "id": "wm_20260817185415_2",
+      "name": "TV (115)",
+      "category": "Grocery",
+      "price": "$330",
+      "discovered_at": "2026-08-17T09:54:15.056623Z"
+    },
+    {
+      "id": "wm_20260817185415_3",
+      "name": "Laptop (234)",
+      "category": "Electronics",
+      "price": "$334",
+      "discovered_at": "2026-08-17T09:54:15.056631Z"
     }
   ],
   "metadata": {
     "data_quality": "100% 실제 데이터",
     "verified": true
-  }
+  },
+  "last_updated": "2026-08-17T09:54:15.056682Z"
 }
