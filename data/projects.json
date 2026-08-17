@@ -2,125 +2,35 @@
   "projects": [
     {
       "id": 1,
-      "category": "🤖 JARVIS 진화 (Level 2.9)",
-      "items": [
-        {
-          "name": "Phase 1: MoE 라우터 (10명 전문가)",
-          "progress": 100,
-          "status": "✅ 완료"
-        },
-        {
-          "name": "Phase 2: 신경심볼릭 AI (설명가능성)",
-          "progress": 100,
-          "status": "✅ 완료"
-        },
-        {
-          "name": "Phase 3: 양자 알고리즘 (신약 설계)",
-          "progress": 99,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "Phase 4: 메타진화 엔진",
-          "progress": 99,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "Phase 5: 멀티에이전트 조율",
-          "progress": 96.0,
-          "status": "🟢 진행 중"
-        }
-      ]
+      "category": "🤖 JARVIS 진화",
+      "items": []
     },
     {
       "id": 2,
       "category": "💊 의료 AI 플랫폼",
-      "items": [
-        {
-          "name": "신약 설계 AI (VQE/QAOA)",
-          "progress": 99,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "질병 진단 (Vision Transformer)",
-          "progress": 99,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "환자 예후 분석 (LSTM)",
-          "progress": 92.0,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "임상시험 자동화",
-          "progress": 82.0,
-          "status": "🟢 진행 중"
-        }
-      ]
+      "items": []
     },
     {
       "id": 3,
       "category": "💼 사업 플랫폼",
-      "items": [
-        {
-          "name": "다이소 드롭쉬핑 (론칭)",
-          "progress": 100,
-          "status": "✅ 완료"
-        },
-        {
-          "name": "의료 AI SaaS (MVP)",
-          "progress": 90.0,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "Satellite AI (위성영상)",
-          "progress": 76.0,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "자율에이전트 SaaS",
-          "progress": 72.0,
-          "status": "🟢 진행 중"
-        }
-      ]
+      "items": []
     },
     {
       "id": 4,
       "category": "🚀 기술 인프라",
-      "items": [
-        {
-          "name": "GitHub Pages 배포",
-          "progress": 100,
-          "status": "✅ 완료"
-        },
-        {
-          "name": "실시간 모니터링 대시보드",
-          "progress": 99,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "Obsidian 자동 동기화",
-          "progress": 99,
-          "status": "🟢 진행 중"
-        },
-        {
-          "name": "자동화 파이프라인 (매 10분)",
-          "progress": 99,
-          "status": "✅ 작동 중"
-        }
-      ]
+      "items": []
     }
   ],
   "summary": {
     "total_projects": 4,
     "categories": 4,
-    "total_items": 17,
-    "completed": 3,
-    "in_progress": 14,
-    "average_progress": 84.6,
-    "success_rate": "100%",
+    "total_items": 0,
+    "completed": 0,
+    "in_progress": 0,
+    "average_progress": 0,
+    "success_rate": "0%",
     "verification": "✅ 실제 데이터만 사용",
-    "last_update": "2026-08-17T14:30:00Z",
-    "next_update": "2026-08-17T14:40:00Z"
-  },
-  "lastUpdate": "2026-08-17T02:06:38.038772Z"
+    "last_update": "2026-08-17T14:30:00+00:00",
+    "next_update": "2026-08-17T14:40:00+00:00"
+  }
 }

@@ -2,7 +2,10 @@ name: 🚀 JARVIS 최종 자동화 (매 10분 - 실제 데이터 기반)
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    # 정각 매시간 + 20분, 40분 (3번/시간 = 더 안정적)
+    - cron: '0 * * * *'
+    - cron: '20 * * * *'
+    - cron: '40 * * * *'
   workflow_dispatch:
 
 permissions:

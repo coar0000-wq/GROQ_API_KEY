@@ -1,98 +1,31 @@
 {
-  "timestamp": "2026-08-17T14:30:00.000000",
-  "team_members": [
-    {
-      "id": "member_001",
-      "name": "도현 (CEO)",
-      "role": "전체 운영",
-      "status": "🟢 활동 중",
-      "current_task": "Level 2.9 대시보드 검증",
-      "progress": 100,
-      "last_update": "2026-08-17T14:30:00",
-      "tasks_today": 5,
-      "success_rate": "100%"
-    },
-    {
-      "id": "member_002",
-      "name": "의료 AI 팀장",
-      "role": "신약 개발",
-      "status": "🟢 활동 중",
-      "current_task": "Phase 3 양자 신약 설계 (VQE)",
-      "progress": 91,
-      "last_update": "2026-08-17T14:25:00",
-      "tasks_today": 8,
-      "success_rate": "100%"
-    },
-    {
-      "id": "member_003",
-      "name": "기술 팀장",
-      "role": "JARVIS 진화",
-      "status": "🟢 활동 중",
-      "current_task": "메타진화 엔진 고도화",
-      "progress": 88,
-      "last_update": "2026-08-17T14:22:00",
-      "tasks_today": 6,
-      "success_rate": "100%"
-    },
-    {
-      "id": "member_004",
-      "name": "사업팀 리드",
-      "role": "사업 전개",
-      "status": "🟢 활동 중",
-      "current_task": "다이소 마케팅 전략 수립",
-      "progress": 72,
-      "last_update": "2026-08-17T14:18:00",
-      "tasks_today": 4,
-      "success_rate": "100%"
-    },
-    {
-      "id": "member_005",
-      "name": "데이터 팀장",
-      "role": "데이터 수집",
-      "status": "🟢 활동 중",
-      "current_task": "YouTube/arXiv 자동수집 파이프라인",
-      "progress": 93,
-      "last_update": "2026-08-17T14:28:00",
-      "tasks_today": 9,
-      "success_rate": "100%"
-    },
-    {
-      "id": "member_006",
-      "name": "연구 팀장",
-      "role": "논문 분석",
-      "status": "🟢 활동 중",
-      "current_task": "양자알고리즘 + 신약 논문 분석",
-      "progress": 85,
-      "last_update": "2026-08-17T14:26:00",
-      "tasks_today": 7,
-      "success_rate": "100%"
-    }
-  ],
+  "timestamp": "2026-08-17T14:30:00+00:00",
+  "team_members": [],
   "team_stats": {
-    "total_members": 6,
-    "active": 6,
+    "total_members": 0,
+    "active": 0,
     "idle": 0,
     "offline": 0,
-    "average_progress": 88.2,
-    "total_tasks_today": 39,
-    "total_success_rate": "100%",
-    "work_efficiency": "95%",
-    "collaboration_score": "98%"
+    "average_progress": 0,
+    "total_tasks_today": 0,
+    "total_success_rate": "0%",
+    "work_efficiency": "0%",
+    "collaboration_score": "0%"
   },
   "daily_stats": {
     "date": "2026-08-17",
-    "work_started": "2026-08-17T06:00:00",
-    "current_time": "2026-08-17T14:30:00",
-    "working_hours": 8.5,
-    "total_completed": 12,
-    "in_progress": 3,
-    "pending": 2,
-    "completion_rate": "71%"
+    "work_started": "2026-08-17T06:00:00+00:00",
+    "current_time": "2026-08-17T14:30:00+00:00",
+    "working_hours": 0,
+    "total_completed": 0,
+    "in_progress": 0,
+    "pending": 0,
+    "completion_rate": "0%"
   },
   "status": {
-    "overall": "✅ 정상 진행",
-    "coordination": "✅ 완벽한 협력",
-    "efficiency": "✅ 95% 효율성",
+    "overall": "🔄 초기화됨",
+    "coordination": "대기 중",
+    "efficiency": "대기 중",
     "data_integrity": "✅ 실제 데이터만 사용"
   }
 }

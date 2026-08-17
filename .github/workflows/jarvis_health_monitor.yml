@@ -2,7 +2,9 @@ name: JARVIS Health Monitor
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    # 30분 간격 (더 안정적)
+    - cron: '0 * * * *'
+    - cron: '30 * * * *'
   workflow_dispatch:
 
 jobs:
