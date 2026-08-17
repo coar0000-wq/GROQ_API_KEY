@@ -652,8 +652,8 @@
                         <div class="left-metric-value" style="font-size: 18px;">실행 중</div>
                     </div>
                     <div class="left-metric-card">
-                        <div class="left-metric-label">Obsidian <span class="status-dot offline"></span></div>
-                        <div class="left-metric-value" style="font-size: 18px; color: #999;">오프라인</div>
+                        <div class="left-metric-label">Obsidian <span class="status-dot" id="obsidian-status-dot"></span></div>
+                        <div class="left-metric-value" id="obsidian-status" style="font-size: 18px; color: #999;">대기 중</div>
                     </div>
                 </div>
                 <div class="left-image-area" style="background: #ffffff;"></div>
@@ -879,6 +879,7 @@
         // Obsidian 저장 상태 업데이트
         function updateObsidianStatus() {
             const statusEl = document.getElementById('obsidian-status');
+            const statusDot = document.getElementById('obsidian-status-dot');
             if (!statusEl) return;
 
             // 작업 로그 시간 확인
@@ -890,24 +891,36 @@
                         const now = new Date();
                         const diffMin = Math.floor((now - lastUpdate) / 60000);
 
-                        if (diffMin < 30) {
-                            // 최근 30분 이내 = 저장 중 (방금 저장함)
-                            statusEl.textContent = '🟢 저장 중';
-                            statusEl.style.color = '#00d4ff';
-                        } else if (diffMin < 35) {
-                            // 30-35분 = 동기화 완료 (저장 완료 상태 유지)
-                            statusEl.textContent = '🟢 동기화 완료';
-                            statusEl.style.color = '#66d9ff';
+                        if (diffMin < 10) {
+                            // 최근 10분 이내 = 저장 중
+                            statusEl.textContent = '저장 중';
+                            statusEl.style.color = '#00ff00';
+                            statusDot.className = 'status-dot green-pulse';
+                        } else if (diffMin < 20) {
+                            // 10-20분 = 동기화 완료 (저장 완료 상태 유지)
+                            statusEl.textContent = '동기화 완료';
+                            statusEl.style.color = '#00ff00';
+                            statusDot.className = 'status-dot green-pulse';
                         } else {
-                            // 35분 이상 = 대기 중 (다음 실행 대기 중)
-                            statusEl.textContent = '🟡 대기 중';
+                            // 20분 이상 = 대기 중 (다음 실행 대기 중)
+                            statusEl.textContent = '대기 중';
                             statusEl.style.color = '#ffaa00';
+                            statusDot.className = 'status-dot';
+                            statusDot.style.backgroundColor = '#ffaa00';
                         }
+                    } else {
+                        // 데이터 없음 = 대기 중
+                        statusEl.textContent = '대기 중';
+                        statusEl.style.color = '#ffaa00';
+                        statusDot.className = 'status-dot';
+                        statusDot.style.backgroundColor = '#ffaa00';
                     }
                 })
                 .catch(e => {
-                    statusEl.textContent = '⚫ 오프라인';
+                    // 에러 = 오프라인
+                    statusEl.textContent = '오프라인';
                     statusEl.style.color = '#666';
+                    statusDot.className = 'status-dot offline';
                 });
         }
 
