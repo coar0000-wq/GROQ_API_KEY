@@ -1,83 +1,78 @@
-# 🤖 Gemini API Key 자동 등록 가이드
+# ?�� Gemini API Key ?�동 ?�록 가?�드
 
-## 방법 1: GitHub CLI 사용 (권장) ⭐
-
-### 1단계: GitHub CLI 설치
+## 방법 1: GitHub CLI ?�용 (권장) �?
+### 1?�계: GitHub CLI ?�치
 ```bash
 # Windows (PowerShell 관리자 모드)
 choco install gh
 
-# 또는 직접 다운로드
+# ?�는 직접 ?�운로드
 # https://github.com/cli/cli/releases
 ```
 
-### 2단계: GitHub 로그인
-```bash
+### 2?�계: GitHub 로그??```bash
 gh auth login
 ```
-- 선택: GitHub.com
-- 프로토콜: HTTPS
-- 인증 방식: Personal access token 또는 브라우저 로그인
-
-### 3단계: Secrets 등록 (한 줄 명령어)
+- ?�택: GitHub.com
+- ?�로?�콜: HTTPS
+- ?�증 방식: Personal access token ?�는 브라?��? 로그??
+### 3?�계: Secrets ?�록 (??�?명령??
 ```bash
-echo "AQ.Ab8RN6Locpw6kQHtQioDsZrwFj7NZ6yn-4bxY-UuFfpjWN2adg" | gh secret set GEMINI_API_KEY -R coar0000/kms
+echo "[YOUR_GEMINI_API_KEY]" | gh secret set GEMINI_API_KEY -R coar0000/kms
 ```
 
 **결과:**
 ```
-✓ Set secret GEMINI_API_KEY for coar0000/kms
+??Set secret GEMINI_API_KEY for coar0000/kms
 ```
 
 ---
 
-## 방법 2: GitHub 웹 UI (수동)
+## 방법 2: GitHub ??UI (?�동)
 
-### 1단계: GitHub 저장소 접속
+### 1?�계: GitHub ?�?�소 ?�속
 ```
 https://github.com/coar0000/kms/settings/secrets/actions
 ```
 
-### 2단계: "New repository secret" 클릭
+### 2?�계: "New repository secret" ?�릭
 
-### 3단계: 정보 입력
+### 3?�계: ?�보 ?�력
 ```
 Name:   GEMINI_API_KEY
-Secret: AQ.Ab8RN6Locpw6kQHtQioDsZrwFj7NZ6yn-4bxY-UuFfpjWN2adg
+Secret: [YOUR_GEMINI_API_KEY]
 ```
 
-### 4단계: "Add secret" 클릭
+### 4?�계: "Add secret" ?�릭
 
 ---
 
-## 방법 3: Windows PowerShell 자동화
-
-### 1단계: PowerShell 스크립트 생성
-파일명: `setup_gemini.ps1`
+## 방법 3: Windows PowerShell ?�동??
+### 1?�계: PowerShell ?�크립트 ?�성
+?�일�? `setup_gemini.ps1`
 
 ```powershell
-# GitHub Personal Access Token 입력
+# GitHub Personal Access Token ?�력
 $token = Read-Host "GitHub Token"
 $repo = "coar0000/kms"
-$apiKey = "AQ.Ab8RN6Locpw6kQHtQioDsZrwFj7NZ6yn-4bxY-UuFfpjWN2adg"
+$apiKey = "[YOUR_GEMINI_API_KEY]"
 
-# Base64 인코딩
-$bytes = [System.Text.Encoding]::UTF8.GetBytes($apiKey)
+# Base64 ?�코??$bytes = [System.Text.Encoding]::UTF8.GetBytes($apiKey)
 $base64 = [Convert]::ToBase64String($bytes)
 
-# API 호출
+# API ?�출
 $headers = @{
     "Authorization" = "token $token"
     "Accept" = "application/vnd.github.v3+json"
 }
 
-# 공개 키 조회
+# 공개 ??조회
 $keyUrl = "https://api.github.com/repos/$repo/actions/secrets/public-key"
 $keyResponse = Invoke-RestMethod -Uri $keyUrl -Headers $headers
 
-Write-Host "✅ 공개 키 획득 완료"
+Write-Host "??공개 ???�득 ?�료"
 
-# Secrets 등록
+# Secrets ?�록
 $secretUrl = "https://api.github.com/repos/$repo/actions/secrets/GEMINI_API_KEY"
 $body = @{
     "encrypted_value" = $base64
@@ -86,83 +81,78 @@ $body = @{
 
 Invoke-RestMethod -Uri $secretUrl -Method Put -Headers $headers -Body $body -ContentType "application/json"
 
-Write-Host "✅ GEMINI_API_KEY 등록 완료!"
+Write-Host "??GEMINI_API_KEY ?�록 ?�료!"
 ```
 
-### 2단계: 실행
+### 2?�계: ?�행
 ```powershell
-# PowerShell 관리자 모드에서
+# PowerShell 관리자 모드?�서
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 .\setup_gemini.ps1
 ```
 
 ---
 
-## ✅ 등록 확인
+## ???�록 ?�인
 
-### 1단계: GitHub 저장소 Settings 확인
+### 1?�계: GitHub ?�?�소 Settings ?�인
 ```
 https://github.com/coar0000/kms/settings/secrets/actions
 ```
 
-### 2단계: GEMINI_API_KEY가 보이는지 확인
-- ✅ 표시되면 성공
+### 2?�계: GEMINI_API_KEY가 보이?��? ?�인
+- ???�시?�면 ?�공
 
-### 3단계: GitHub Actions 확인
+### 3?�계: GitHub Actions ?�인
 ```
 https://github.com/coar0000/kms/actions
 ```
 
-- JARVIS-Core-Automation.yml 실행 여부 확인
-- 약 10분 후 자동 실행 시작
+- JARVIS-Core-Automation.yml ?�행 ?��? ?�인
+- ??10�????�동 ?�행 ?�작
 
 ---
 
-## 🚀 등록 후 예상 결과
+## ?? ?�록 ???�상 결과
 
-### 1분 후:
-- ✅ GitHub Actions 워크플로우 시작
-- 📊 5개 플랫폼 상품 동시 발굴
+### 1�???
+- ??GitHub Actions ?�크?�로???�작
+- ?�� 5�??�랫???�품 ?�시 발굴
 
-### 10분 후:
-- ✅ cumulative_products.json 업데이트
-- ✅ scheduler_log.json 신규 항목
-- ✅ Obsidian 자동 동기화
-
-### 매 10분:
-- 🔄 자동 반복 실행
-- 📈 누적 상품 수 증가
-- 📝 작업 로그 기록
-
----
-
-## 🛠️ 트러블슈팅
-
-### "GitHub Token이 유효하지 않음"
-→ Personal Access Token 재발급
-→ https://github.com/settings/tokens
-
-### "권한 부족" 오류
-→ Token 생성 시 "repo" 권한 선택
-→ 저장소 전체 접근 권한 필요
-
-### "Secrets 등록이 안 됨"
-→ 저장소명 확인: coar0000/kms
-→ Token 권한 재확인
-→ 웹 UI에서 수동 등록 시도
+### 10�???
+- ??cumulative_products.json ?�데?�트
+- ??scheduler_log.json ?�규 ??��
+- ??Obsidian ?�동 ?�기??
+### �?10�?
+- ?�� ?�동 반복 ?�행
+- ?�� ?�적 ?�품 ??증�?
+- ?�� ?�업 로그 기록
 
 ---
 
-## 📋 체크리스트
+## ?���??�러블슈??
+### "GitHub Token???�효?��? ?�음"
+??Personal Access Token ?�발�???https://github.com/settings/tokens
 
-- [ ] GitHub CLI 설치 (방법 1) 또는 웹 UI (방법 2)
-- [ ] GitHub 인증 완료
-- [ ] GEMINI_API_KEY 등록 완료
-- [ ] 등록 확인 (Settings에서 보임)
-- [ ] 약 10분 후 GitHub Actions 실행 확인
-- [ ] cumulative_products.json 업데이트 확인
+### "권한 부�? ?�류
+??Token ?�성 ??"repo" 권한 ?�택
+???�?�소 ?�체 ?�근 권한 ?�요
+
+### "Secrets ?�록??????
+???�?�소�??�인: coar0000/kms
+??Token 권한 ?�확??????UI?�서 ?�동 ?�록 ?�도
 
 ---
 
-**🎉 완료! JARVIS 자동화 시스템이 실행 중입니다.**
+## ?�� 체크리스??
+- [ ] GitHub CLI ?�치 (방법 1) ?�는 ??UI (방법 2)
+- [ ] GitHub ?�증 ?�료
+- [ ] GEMINI_API_KEY ?�록 ?�료
+- [ ] ?�록 ?�인 (Settings?�서 보임)
+- [ ] ??10�???GitHub Actions ?�행 ?�인
+- [ ] cumulative_products.json ?�데?�트 ?�인
+
+---
+
+**?�� ?�료! JARVIS ?�동???�스?�이 ?�행 중입?�다.**
 
