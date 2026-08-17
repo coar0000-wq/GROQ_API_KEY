@@ -1,105 +1,33 @@
 {
-  "timestamp": "2026-08-17T23:45:00.000000",
+  "timestamp": "2026-08-17T14:30:00+00:00",
   "current_date": "2026-08-17",
   "daily_summary": {
-    "completed": 12,
-    "in_progress": 2,
-    "pending": 1,
-    "total": 15,
-    "completion_rate": "80%"
+    "completed": 0,
+    "in_progress": 0,
+    "pending": 0,
+    "total": 0,
+    "completion_rate": "0%"
   },
-  "completed_today": [
-    {
-      "id": "task_001",
-      "task": "arXiv MoE 논문 수집",
-      "start_time": "2026-08-17T23:30:00",
-      "end_time": "2026-08-17T23:35:15",
-      "duration": "5분 15초",
-      "status": "✅ 완료",
-      "data_collected": "45개 논문",
-      "result": "실제 API"
-    },
-    {
-      "id": "task_002",
-      "task": "YouTube MoE 영상분석",
-      "start_time": "2026-08-17T23:35:15",
-      "end_time": "2026-08-17T23:37:30",
-      "duration": "2분 15초",
-      "status": "✅ 완료",
-      "data_collected": "825개 데이터포인트",
-      "result": "실제 데이터"
-    },
-    {
-      "id": "task_003",
-      "task": "YouTube Dropshipping 영상분석",
-      "start_time": "2026-08-17T23:37:30",
-      "end_time": "2026-08-17T23:39:45",
-      "duration": "2분 15초",
-      "status": "✅ 완료",
-      "data_collected": "38개 비즈니스 인사이트",
-      "result": "실제 데이터"
-    },
-    {
-      "id": "task_004",
-      "task": "Google 검색 데이터 수집",
-      "start_time": "2026-08-17T23:39:45",
-      "end_time": "2026-08-17T23:41:20",
-      "duration": "1분 35초",
-      "status": "✅ 완료",
-      "data_collected": "25개 검색 쿼리 결과",
-      "result": "실제 데이터"
-    },
-    {
-      "id": "task_005",
-      "task": "신경망 생성 및 훈련",
-      "start_time": "2026-08-17T23:41:20",
-      "end_time": "2026-08-17T23:43:50",
-      "duration": "2분 30초",
-      "status": "✅ 완료",
-      "training_data": "2,500개 샘플",
-      "accuracy": "96.8%",
-      "result": "성공"
-    },
-    {
-      "id": "task_006",
-      "task": "성능 벤치마킹",
-      "start_time": "2026-08-17T23:43:50",
-      "end_time": "2026-08-17T23:44:30",
-      "duration": "40초",
-      "status": "✅ 완료",
-      "metrics": "정확도 96.8%, 응답시간 240ms",
-      "result": "목표 달성"
-    },
-    {
-      "id": "task_007",
-      "task": "Obsidian 동기화",
-      "start_time": "2026-08-17T23:44:30",
-      "end_time": "2026-08-17T23:45:00",
-      "duration": "30초",
-      "status": "✅ 완료",
-      "nodes_updated": "127개 노드",
-      "result": "성공"
-    }
-  ],
+  "completed_today": [],
   "performance_metrics": {
-    "total_execution_time": "13분 45초",
-    "average_task_duration": "196초",
-    "success_rate": "100%",
+    "total_execution_time": "0초",
+    "average_task_duration": "0초",
+    "success_rate": "0%",
     "data_collected": {
-      "arxiv": 45,
-      "youtube_moe": 825,
-      "youtube_dropshipping": 38,
-      "google_search": 25,
-      "obsidian_nodes": 127
+      "arxiv": 0,
+      "youtube_moe": 0,
+      "youtube_dropshipping": 0,
+      "google_search": 0,
+      "obsidian_nodes": 0
     },
     "violations_found": 0,
     "violations_rate": "0%"
   },
   "status": {
-    "overall": "✅ 정상 진행",
-    "data_collection": "✅ 정상",
-    "automation": "✅ 정상",
-    "verification": "✅ 정상",
-    "deployment": "✅ 완료"
+    "overall": "🔄 초기화됨",
+    "data_collection": "대기 중",
+    "automation": "대기 중",
+    "verification": "대기 중",
+    "deployment": "대기 중"
   }
 }

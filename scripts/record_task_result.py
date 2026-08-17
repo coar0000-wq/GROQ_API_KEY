@@ -3,13 +3,13 @@
 """
 📝 JARVIS 작업 결과 기록 스크립트
 각 작업의 성공/실패를 실시간으로 JSON에 기록
+⚠️ 모든 timestamp는 UTC+00:00 ISO 형식 사용
 """
 
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 import sys
-import os
 
 
 def record_task(task_name: str, status: str, data_collected: int = 0, duration_sec: int = 0, error_msg: str = ""):
@@ -25,9 +25,9 @@ def record_task(task_name: str, status: str, data_collected: int = 0, duration_s
 
     log_file = Path('data/jarvis_work_detailed_log.json')
 
-    # 시간 계산
+    # UTC 기반 타임스탐프 (ISO 8601 형식)
     now_utc = datetime.now(timezone.utc)
-    now_iso = now_utc.isoformat()
+    now_iso = now_utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')
 
     # 기존 데이터 읽기
     if log_file.exists():
@@ -94,10 +94,11 @@ def record_task(task_name: str, status: str, data_collected: int = 0, duration_s
 
 
 def create_default_log_structure(timestamp: str) -> dict:
-    """기본 로그 구조 생성"""
+    """기본 로그 구조 생성 (UTC ISO 형식)"""
+    date_str = timestamp.split('T')[0] if 'T' in timestamp else datetime.now(timezone.utc).strftime('%Y-%m-%d')
     return {
         "timestamp": timestamp,
-        "current_date": timestamp.split('T')[0],
+        "current_date": date_str,
         "completed_today": [],
         "performance_metrics": {
             "total_execution_time": "0초",
