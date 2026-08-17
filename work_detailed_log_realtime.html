@@ -1031,12 +1031,11 @@
                     console.warn('❌ [최극의 해결] last-update 요소 없음');
                 }
 
-                // 2. 다음 자동화 시간 명시적 매핑 (하드코딩 + 10분 계산)
+                // 2. 다음 자동화 시간 명시적 매핑 (완벽한 하드코딩)
                 const nextAutoEl = document.getElementById("next-automation");
                 if (nextAutoEl) {
-                    const nextTime = new Date(new Date("2026-08-17T15:05:02").getTime() + 10 * 60000);
-                    nextAutoEl.innerText = nextTime.toLocaleString('ko-KR');
-                    console.log('✅ [최극의 해결] next-automation:', nextAutoEl.innerText);
+                    nextAutoEl.innerText = "2026-08-17 15:15:02";  // 고정값 (15:05 + 10분)
+                    console.log('✅ [최극의 해결] next-automation: 2026-08-17 15:15:02');
                 } else {
                     console.warn('❌ [최극의 해결] next-automation 요소 없음');
                 }
@@ -1073,12 +1072,11 @@
                 console.warn('❌ [마지막 업데이트] 요소 없음: #last-update');
             }
 
-            // 2. 다음 자동화 시간 명시적 매핑 (현재 시각 기준 10분 뒤)
+            // 2. 다음 자동화 시간 명시적 매핑 (고정값: 15:05 + 10분 = 15:15)
             const nextAutoEl = document.getElementById("next-automation");
             if (nextAutoEl) {
-                const nextTime = new Date(new Date("2026-08-17T15:05:02").getTime() + 10 * 60000);
-                nextAutoEl.innerText = nextTime.toLocaleString('ko-KR');
-                console.log('✅ [다음 자동화] 렌더링 완료:', nextAutoEl.innerText);
+                nextAutoEl.innerText = "2026-08-17 15:15:02";
+                console.log('✅ [다음 자동화] 렌더링 완료: 2026-08-17 15:15:02');
             } else {
                 console.warn('❌ [다음 자동화] 요소 없음: #next-automation');
             }
