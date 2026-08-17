@@ -29,6 +29,13 @@ jobs:
         run: |
           python jarvis_real_time_automation.py
 
+      - name: 🛍️ Run Real Data Product Discovery
+        run: |
+          python -m pip install beautifulsoup4 pytrends --break-system-packages
+          python real_product_discovery.py
+        env:
+          AMAZON_API_KEY: ${{ secrets.AMAZON_API_KEY }}
+
       - name: ✅ Commit and push changes
         run: |
           git config --local user.email "jarvis@github.com"

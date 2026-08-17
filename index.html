@@ -686,7 +686,7 @@
                 <div class="right-subtitle">도현이를 위한 AGI System</div>
             </div>
 
-            <!-- 2️⃣ 다이소 사업 현황 -->
+            <!-- 2️⃣ 다이소 사업 현황 + 베스트셀러 -->
             <div style="background: rgba(0, 212, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 8px; padding: 15px; margin-top: 20px;">
                 <div class="status-title" id="daiso-title">💰 Shopify + 다이소 Dropshipping - 준비 완료</div>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px;">
@@ -710,7 +710,15 @@
                 <div style="margin-top: 12px; font-size: 12px; color: #aaa; padding-top: 12px; border-top: 1px solid rgba(0, 212, 255, 0.1);">
                     <div style="margin-bottom: 4px;">✅ Shopify 스토어 완성</div>
                     <div style="margin-bottom: 4px;">✅ 자동화 파이프라인 구축</div>
-                    <div>✅ 마케팅 전략 수립</div>
+                    <div style="margin-bottom: 8px;">✅ 마케팅 전략 수립</div>
+                </div>
+
+                <!-- 🏆 베스트셀러 추천 -->
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0, 212, 255, 0.1);">
+                    <div style="font-size: 13px; color: #ffaa00; font-weight: 600; margin-bottom: 8px;">🏆 베스트셀러 추천 TOP 5</div>
+                    <div id="bestseller-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 11px;">
+                        <!-- 데이터 로드됨 -->
+                    </div>
                 </div>
             </div>
 
@@ -846,6 +854,15 @@
             } catch (e) { console.log('다이소 사업 로드 실패'); }
 
             try {
+                // 베스트셀러 상품
+                const productsRes = await fetch(basePath + '/data/daiso_products.json?t=' + Date.now());
+                if (productsRes.ok) {
+                    const productsData = await productsRes.json();
+                    displayBestsellers(productsData.recommendations || []);
+                }
+            } catch (e) { console.log('베스트셀러 로드 실패'); }
+
+            try {
                 // 팀원 상태
                 const teamRes = await fetch(basePath + '/data/team_status.json?t=' + Date.now());
                 if (teamRes.ok) {
@@ -951,6 +968,38 @@
                     statusEl.style.color = '#00d4ff';
                 }
             }
+        }
+
+        // 베스트셀러 상품 표시
+        function displayBestsellers(recommendations) {
+            const list = document.getElementById('bestseller-list');
+            if (!list) return;
+
+            let html = '';
+            recommendations.slice(0, 5).forEach(rec => {
+                const statusColor = rec.rank <= 3 ? '#00ff00' : '#ffaa00';
+                const statusEmoji = rec.rank <= 3 ? '🟢' : '🟡';
+
+                html += `
+                    <div style="background: rgba(255, 170, 0, 0.08); padding: 6px; border-radius: 4px; border-left: 2px solid ${statusColor};">
+                        <div style="color: ${statusColor}; font-weight: 600; margin-bottom: 2px;">
+                            ${rec.rank}. ${rec.product}
+                        </div>
+                        <div style="color: #aaa; font-size: 10px; margin-bottom: 2px;">
+                            💡 ${rec.reason}
+                        </div>
+                        <div style="color: #888; font-size: 10px;">
+                            📊 ${rec.monthly_sales}개/월 • 💰 ${rec.monthly_profit}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (html === '') {
+                html = '<div style="color: #666; text-align: center; padding: 8px;">상품 데이터 분석 중...</div>';
+            }
+
+            list.innerHTML = html;
         }
 
         function displayTasksRight(tasks) {
