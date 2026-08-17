@@ -14,7 +14,23 @@
             padding: 0;
         }
 
-        /* 원자 애니메이션 - 전자 궤도 */
+        /* 원자 애니메이션 - 궤도 회전 */
+        @keyframes spin-orbit-1 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-orbit-2 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        @keyframes spin-orbit-3 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 전자 궤도 */
         @keyframes orbit1 {
             0% { cx: 75; cy: 50; }
             25% { cx: 50; cy: 25; }
@@ -51,10 +67,28 @@
             filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.6));
         }
 
+        /* 중심 핵 */
         .atom-icon > circle:nth-child(1) {
             animation: nucleus-glow 2.5s ease-in-out infinite;
         }
 
+        /* 궤도 회전 */
+        .atom-icon > ellipse:nth-child(2) {
+            transform-origin: 50px 50px;
+            animation: spin-orbit-1 2.3s linear infinite;
+        }
+
+        .atom-icon > ellipse:nth-child(3) {
+            transform-origin: 50px 50px;
+            animation: spin-orbit-2 2.8s linear infinite;
+        }
+
+        .atom-icon > ellipse:nth-child(4) {
+            transform-origin: 50px 50px;
+            animation: spin-orbit-3 3.2s linear infinite;
+        }
+
+        /* 전자 궤도 */
         .atom-icon > circle:nth-child(5) {
             animation: orbit1 2.3s ease-in-out infinite;
         }
